@@ -143,7 +143,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		pNhapThongTin.add(lblSDT);
 		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
 		
-		lblNhapThongTin = new JLabel("Nhập thông tin nhân viên");
+		lblNhapThongTin = new JLabel("Nhập thông tin đơn đặt phòng");
 		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
 		lblNhapThongTin.setBounds(10, 11, 292, 29);

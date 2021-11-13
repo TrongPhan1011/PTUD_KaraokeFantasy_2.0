@@ -103,14 +103,21 @@ public class Regex {
 		return true;
 	}
 	
-	public boolean regexTimKiemMaNV(JTextField txtTim) {
+	public boolean regexTimNV(JTextField txtTim) {
 		String input = txtTim.getText().trim();
-		String regexMaNV = "^(NV[0-9]{3})$";
-		Pattern pattern = Pattern.compile(regexMaNV);
+		String regexMaNV = "((NV|nv)[0-9]{3})|";
+		String regexTenNV= "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
+		String regexSDT  = "(0[0-9]{9})|";
+		String regexCa   = "([1-3]{1})";
+		String regexNV ="^("+regexMaNV +regexTenNV +regexSDT +regexCa +")$";
+		Pattern pattern = Pattern.compile(regexNV);
 		Matcher matcher = pattern.matcher(input);
-		if(!input.matches(regexMaNV)) {
-			JOptionPane.showMessageDialog(null, "Mã nhân viên tìm kiếm không hợp lệ\nMã nhân viên. Ví dụ: NV001\n");
-			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
+		if(!input.matches(regexNV)) {
+			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001 hoặc nv001"
+																										  +"\n - Tên nhân viên. Ví dụ: Trần Thanh Thiện..."
+																										  +"\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0"
+																										  +"\n - Tìm theo ca: 1, 2, 3"
+											  , "Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTim.requestFocus();
 			txtTim.selectAll();
 			return false;
@@ -143,22 +150,6 @@ public class Regex {
 			return false;
 		}
 		return true;
-	}
-
-	
-	public boolean regexTenNV(JTextField txtTen2) {
-		String input = txtTen2.getText();
-		String regex = "^([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(input);
-		if (!matcher.find()) {
-			JOptionPane.showMessageDialog(null, "Họ tên không hợp lệ!\nMẫu họ tên: Nguyễn Văn A", "Thông báo", JOptionPane.ERROR_MESSAGE);
-			txtTen2.requestFocus();
-			txtTen2.selectAll();
-			return false;
-		} else
-			return true;
-
 	}
 
 	public boolean regexTenMH(JTextField txtTen2) {
@@ -199,8 +190,6 @@ public class Regex {
 		return true;
 	}
 	
-	
-	
 	public boolean regexMatKhau(JPasswordField pwMK) {
 		String input = pwMK.getText().toString().trim();
 		String regexMaNV = "^[A-Z][a-zA-Z0-9 ]{5,}$";
@@ -213,31 +202,6 @@ public class Regex {
 		return true;
 	}
 			
-			
-	public boolean regexTimKiemChucVu(JTextField txtTim) {
-		String input = txtTim.getText().toLowerCase().trim();
-		String regexQL = "^[quản lý]*+$";   			//chạy đc
-		Pattern patternQL = Pattern.compile(regexQL);
-		Matcher matcherQL = patternQL.matcher(input);
-		
-
-		String regexTN = "^[thu ngân]*+$";
-
-		Pattern patternTN = Pattern.compile(regexTN);
-		Matcher matcherTN = patternTN.matcher(input);
-		
-		String regexPV = "^[phục vụ]*+$";
-		Pattern patternPV = Pattern.compile(regexPV);
-		Matcher matcherPV = patternPV.matcher(input);
-		if (!matcherQL.find() && !matcherTN.find() && !matcherPV.find()) {
-//		if (!matcherQL.find()) {
-			JOptionPane.showMessageDialog(null, "Chức vụ không hợp lệ!\nTìm theo chức vụ: phục vụ, thu ngân, quản lý", "Thông báo", JOptionPane.ERROR_MESSAGE);
-			txtTim.requestFocus();
-			txtTim.selectAll();
-			return false;
-		} else
-			return true;
-	}
 	public boolean regexTimKiemLoaiMatHang(JTextField ten) {
 		String in = ten.getText().toLowerCase().trim();
 		
@@ -262,19 +226,6 @@ public class Regex {
 			ten.selectAll();
 			return false;
 		}else
-			return true;
-	}
-	public boolean regexTimKiemCa(JTextField txtTim) {
-		String input = txtTim.getText();
-		String regex = "^[1-3]{1}$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(input);
-		if (!matcher.find()) {
-			JOptionPane.showMessageDialog(null, "Ca làm việc không hợp lệ!\nTìm theo ca: 1, 2, 3", "Thông báo", JOptionPane.ERROR_MESSAGE);
-			txtTim.requestFocus();
-			txtTim.selectAll();
-			return false;
-		} else
 			return true;
 	}
 	

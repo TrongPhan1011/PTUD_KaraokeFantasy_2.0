@@ -40,6 +40,9 @@ import com.toedter.calendar.JDateChooser;
 import connection.ConnectDB;
 import dao.*;
 import entity.*;
+import jiconfont.icons.FontAwesome;
+import jiconfont.swing.IconFontSwing;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -134,14 +137,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 				//lblNgayDen
 		lblNgayDen = new JLabel("Ngày đến:");
 		lblNgayDen.setBounds(10, 267, 74, 19);
-		pNhapThongTin.add(lblNgayDen);
 		lblNgayDen.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblNgayDen);
 		
 		//lblSDT
 		lblSDT = new JLabel("SĐT:");
 		lblSDT.setBounds(10, 160, 46, 28);
-		pNhapThongTin.add(lblSDT);
 		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblSDT);
 		
 		lblNhapThongTin = new JLabel("Nhập thông tin đơn đặt phòng");
 		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,10 +155,10 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		//txtTenKH
 		txtTenKH = new JTextField();
 		txtTenKH.setBounds(145, 110, 175, 39);
-		pNhapThongTin.add(txtTenKH);
 		txtTenKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtTenKH.setColumns(10);
 		txtTenKH.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
+		pNhapThongTin.add(txtTenKH);
 		
 		
 		//test data nhanh
@@ -167,41 +170,45 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		//lblTenKH
 		lblTenKH = new JLabel("Tên khách hàng:");
 		lblTenKH.setBounds(10, 116, 133, 19);
-		pNhapThongTin.add(lblTenKH);
 		lblTenKH.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblTenKH);
 		
 		//lblLoaiKH
 		lblLoaiKH = new JLabel("Loại khách hàng:");
 		lblLoaiKH.setBounds(10, 69, 133, 19);
-		pNhapThongTin.add(lblLoaiKH);
 		lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblLoaiKH);
 		
 		//cbbLoaiKH
 		cboLoaiKH = new JComboBox<Object>(new Object[] {"Thường", "Thành viên", "VIP"});
+		cboLoaiKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cboLoaiKH.setBounds(145, 64, 175, 35);
-		pNhapThongTin.add(cboLoaiKH);
 		cboLoaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboLoaiKH.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
-		cboLoaiKH.setBackground(new Color(235, 235, 235));
+		cboLoaiKH.setBackground(Color.white);
+		pNhapThongTin.add(cboLoaiKH);
 		
 		//chooserNgayDen
 		chooserNgayDen = new JDateChooser();
+		chooserNgayDen.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chooserNgayDen.setBounds(144, 263, 176, 38);
-		pNhapThongTin.add(chooserNgayDen);
 		chooserNgayDen.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		chooserNgayDen.getCalendarButton().setBackground(new Color(102, 0, 153));
 		chooserNgayDen.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgayDen.setDateFormatString("dd/MM/yyyy");
 		chooserNgayDen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		chooserNgayDen.setIcon((ImageIcon) iconCalendar);
+		pNhapThongTin.add(chooserNgayDen);
 		
 		//txtSDT
 		txtSDT = new JTextField();
 		txtSDT.setBounds(144, 160, 176, 41);
-		pNhapThongTin.add(txtSDT);
 		txtSDT.setColumns(10);
 		txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtSDT.setText("0944302210");
+		pNhapThongTin.add(txtSDT);
 		
 		//				txtGioDen = new JTextField("00:00");
 			//				txtGioDen.setColumns(10);
@@ -237,61 +244,65 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		//lblDiaChi
 		lblDiaChi = new JLabel("Địa chỉ:");
 		lblDiaChi.setBounds(10, 216, 61, 20);
-		pNhapThongTin.add(lblDiaChi);
 		lblDiaChi.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblDiaChi);
 		
 		//txtDiaChi
 		txtDiaChi = new JTextField();
 		txtDiaChi.setBounds(145, 212, 175, 40);
-		pNhapThongTin.add(txtDiaChi);
 		txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtDiaChi.setText("118 Hoàng Văn Thụ, P9, Q.Phú Nhuận");
+		pNhapThongTin.add(txtDiaChi);
 		
 		//lblGioDen
 		lblGioDen = new JLabel("Giờ đến:");
 		lblGioDen.setBounds(10, 316, 74, 19);
-		pNhapThongTin.add(lblGioDen);
 		lblGioDen.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblGioDen);
 		
 		//txtGioDen
 		cboGio=new JComboBox<String>();
+		cboGio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cboGio.setBounds(145, 312, 72, 37);
-		pNhapThongTin.add(cboGio);
 		cboGio.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboGio.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
-		cboGio.setBackground(new Color(235, 235, 235));
-		
+		cboGio.setBackground(Color.white);
+		pNhapThongTin.add(cboGio);
+		////
 		cboPhut = new JComboBox<String>();
+		cboPhut.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cboPhut.setBounds(246, 312, 74, 37);
-		pNhapThongTin.add(cboPhut);
 		cboPhut.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboPhut.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
-		cboPhut.setBackground(new Color(235, 235, 235));
+		cboPhut.setBackground(Color.white);
+		pNhapThongTin.add(cboPhut);
+		for(int i=0; i<24; i++)
+			cboGio.addItem(""+i);
+		for(int i=0; i<60; i++)
+			cboPhut.addItem(""+i);
 		
 		JLabel lblHaiCham = new JLabel(" :");
 		lblHaiCham.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHaiCham.setBounds(220, 309, 21, 39);
-		pNhapThongTin.add(lblHaiCham);
 		lblHaiCham.setFont(new Font("SansSerif", Font.PLAIN, 25));
+		pNhapThongTin.add(lblHaiCham);
 		
 		//lblTinhTrangDDP
 		lblTinhTrangDDP = new JLabel("Trạng thái ĐĐP:");
 		lblTinhTrangDDP.setBounds(10, 364, 133, 19);
-		pNhapThongTin.add(lblTinhTrangDDP);
 		lblTinhTrangDDP.setFont(new Font("SansSerif", Font.BOLD, 15));
+		pNhapThongTin.add(lblTinhTrangDDP);
 		
 		//cbbTinhTrangDDP
 		cboTrangThaiDDP = new JComboBox<Object>(new Object[]{"Đã xác nhận", "Chờ xác nhận", "Hủy", "Đã trả phòng"});
+		cboTrangThaiDDP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cboTrangThaiDDP.setBounds(145, 360, 175, 39);
-		pNhapThongTin.add(cboTrangThaiDDP);
 		cboTrangThaiDDP.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboTrangThaiDDP.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
-		cboTrangThaiDDP.setBackground(new Color(235, 235, 235));
+		cboTrangThaiDDP.setBackground(Color.white);
+		pNhapThongTin.add(cboTrangThaiDDP);
 		
-		//su kien
-		cboGio.addItemListener(this);
-
 		//lblTim
 		lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -332,19 +343,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
 		btnTim.setBounds(1156, 11, 104, 33);
-		Image imgTim = Toolkit.getDefaultToolkit().getImage("data\\img\\iconKinhLup.png");
-		Image resizeImgTim = imgTim.getScaledInstance(20, 20, 0);
-		btnTim.setIcon(new ImageIcon(resizeImgTim));
+		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
+		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
-		for(int i=0; i<24; i++)
-			cboGio.addItem(""+i);
-		for(int i=0; i<60; i++)
-			cboPhut.addItem(""+i);
 
 		//lblChonPhong
 		lblChonPhong = new JLabel("Chọn phòng:");
 		lblChonPhong.setFont(new Font("SansSerif", Font.BOLD, 18));
-		lblChonPhong.setBounds(431, 66, 136, 19);
+		lblChonPhong.setBounds(431, 70, 136, 29);
 		pMain.add(lblChonPhong);
 
 		//bangthongtinPhong
@@ -355,7 +361,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		scrollPaneChonPhong.getHorizontalScrollBar();
 		pMain.add(scrollPaneChonPhong);
 
-		String colPhong[] = {"Mã phòng", "Mã loại phòng", "Loại phòng", "Giá phòng", "Tình trạng phòng"};
+		String colPhong[] = {"Mã phòng", "Loại phòng", "Giá phòng", "Tình trạng phòng"};
 		modelPhong=new DefaultTableModel(colPhong, 0);
 
 		tblPhong=new JTable(modelPhong);
@@ -376,14 +382,13 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		tbHeaderPhong.setFont(new Font("SansSerif", Font.BOLD, 14));
 
 		tblPhong.getColumnModel().getColumn(0).setPreferredWidth(100);//maphong
-		tblPhong.getColumnModel().getColumn(1).setPreferredWidth(180);//maloaiphong
-		tblPhong.getColumnModel().getColumn(2).setPreferredWidth(130);//loaiphong
-		tblPhong.getColumnModel().getColumn(3).setPreferredWidth(120);//giaphong
-		tblPhong.getColumnModel().getColumn(4).setPreferredWidth(170);//tinhtrangphong
+		tblPhong.getColumnModel().getColumn(1).setPreferredWidth(120);//loaiphong
+		tblPhong.getColumnModel().getColumn(2).setPreferredWidth(100);//giaphong
+		tblPhong.getColumnModel().getColumn(3).setPreferredWidth(150);//tinhtrangphong
 
 		DefaultTableCellRenderer rightRenderer=new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
-		tblPhong.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		tblPhong.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
 
 		scrollPaneChonPhong.setViewportView(tblPhong);
 
@@ -397,37 +402,24 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		
 		//btnthem,sua,xoa,lammoiDDP
 		btnThemDDP = new FixButton("Thêm");
-		btnThemDDP.setForeground(Color.white);
+		btnThemDDP.setForeground(Color.black);
 		btnThemDDP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemDDP.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnThemDDP.setBackground(new Color(114, 23, 153));
+		btnThemDDP.setBackground(new Color(57, 210, 247));
 		btnThemDDP.setBounds(10, 469, 310, 35);
-		Image imgThemDDP = Toolkit.getDefaultToolkit().getImage("data\\img\\iconGrayThem.png");
-		Image resizeImgThemDDP = imgThemDDP.getScaledInstance(25, 25, 0);
-		btnThemDDP.setIcon(new ImageIcon(resizeImgThemDDP));
+		Icon iconThemDDP = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 20, Color.white);
+		btnThemDDP.setIcon(iconThemDDP);
 		pNhapThongTin.add(btnThemDDP);
 
 		btnSuaDDP = new FixButton("Sửa");
-		btnSuaDDP.setForeground(Color.white);
+		btnSuaDDP.setForeground(Color.black);
 		btnSuaDDP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaDDP.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnSuaDDP.setBackground(new Color(114, 23, 153));
+		btnSuaDDP.setBackground(new Color(133, 217, 191));
 		btnSuaDDP.setBounds(10, 515, 310, 35);
-		Image imgSuaDDP = Toolkit.getDefaultToolkit().getImage("data\\img\\iconTool.png");
-		Image resizeImgSuaDDP = imgSuaDDP.getScaledInstance(25, 25, 0);
-		btnSuaDDP.setIcon(new ImageIcon(resizeImgSuaDDP));
+		Icon iconSuaDDP = IconFontSwing.buildIcon(FontAwesome.WRENCH, 20, Color.white);
+		btnSuaDDP.setIcon(iconSuaDDP);
 		pNhapThongTin.add(btnSuaDDP);
-
-//		btnHuyDDP = new FixButton("Hủy");
-//		btnHuyDDP.setForeground(Color.white);
-//		btnHuyDDP.setFont(new Font("SansSerif", Font.BOLD, 14));
-//		btnHuyDDP.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-//		btnHuyDDP.setBackground(new Color(114, 23, 153));
-//		btnHuyDDP.setBounds(900, 218, 110, 35);
-//		Image imgXoaDDP = Toolkit.getDefaultToolkit().getImage("data\\img\\iconRemove.png");
-//		Image resizeImgXoaDDP = imgXoaDDP.getScaledInstance(25, 25, 0);
-//		btnHuyDDP.setIcon(new ImageIcon(resizeImgXoaDDP));
-//		pMain.add(btnHuyDDP);
 
 		btnLamMoiDDP = new FixButton("Làm mới");
 		btnLamMoiDDP.setForeground(Color.white);
@@ -435,20 +427,20 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		btnLamMoiDDP.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnLamMoiDDP.setBackground(new Color(114, 23, 153));
 		btnLamMoiDDP.setBounds(10, 561, 310, 35);
-		Image imgLamMoiDDP = Toolkit.getDefaultToolkit().getImage("data\\img\\iconReset.png");
-		Image resizeImgLamMoiDDP = imgLamMoiDDP.getScaledInstance(25, 25, 0);
-		btnLamMoiDDP.setIcon(new ImageIcon(resizeImgLamMoiDDP));
+		Icon iconLamMoiDDP = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
+		btnLamMoiDDP.setIcon(iconLamMoiDDP);
 		pNhapThongTin.add(btnLamMoiDDP);
 
 		//sapxep
 		JPanel pSapXep = new JPanel();
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Sắp xếp đơn đặt phòng", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pSapXep.setBackground(new Color(207, 195, 237));
+		pSapXep.setBackground(new Color(178, 192, 237));
 		pSapXep.setBounds(632, 48, 628, 50);
 		pMain.add(pSapXep);
 		pSapXep.setLayout(null);
 
 		cboSapXep = new JComboBox<Object>(new Object[]{"Tăng dần", "Giảm dần"});
+		cboSapXep.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cboSapXep.setBounds(34, 14, 123, 28);
 		cboSapXep.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboSapXep.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
@@ -456,9 +448,10 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		pSapXep.add(cboSapXep);
 
 		chkTatCa = new JCheckBox("Tất cả");
+		chkTatCa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkTatCa.setBackground(new Color(207, 195, 237));
-		chkTatCa.setBounds(193, 15, 95, 27);
+		chkTatCa.setBackground(new Color(178, 192, 237));
+		chkTatCa.setBounds(193, 16, 95, 27);
 		chkTatCa.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -471,15 +464,17 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		pSapXep.add(chkTatCa);
 
 		rdoTheoMaPhong = new JRadioButton("Theo mã phòng");
-		rdoTheoMaPhong.setBounds(307, 15, 133, 27);
+		rdoTheoMaPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdoTheoMaPhong.setBounds(305, 16, 133, 27);
 		rdoTheoMaPhong.setFont(new Font("SansSerif", Font.BOLD, 14));
-		rdoTheoMaPhong.setBackground(new Color(207, 195, 237));
+		rdoTheoMaPhong.setBackground(new Color(178, 192, 237));
 		pSapXep.add(rdoTheoMaPhong);
 
 		rdoTheoLoaiPhong = new JRadioButton("Theo loại phòng");
-		rdoTheoLoaiPhong.setBounds(470, 15, 147, 27);
+		rdoTheoLoaiPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdoTheoLoaiPhong.setBounds(468, 16, 147, 27);
 		rdoTheoLoaiPhong.setFont(new Font("SansSerif", Font.BOLD, 14));
-		rdoTheoLoaiPhong.setBackground(new Color(207, 195, 237));
+		rdoTheoLoaiPhong.setBackground(new Color(178, 192, 237));
 		pSapXep.add(rdoTheoLoaiPhong);
 
 		bg=new ButtonGroup();
@@ -507,22 +502,23 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		tblDDP.setSelectionBackground(new Color(164, 44, 167, 30));
 		tblDDP.setSelectionForeground(new Color(114, 23, 153));
 		tblDDP.setRowHeight(30);
-		//		tblDDP.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tblDDP.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+		
 		JTableHeader tbHeaderDDP = tblDDP.getTableHeader();
 		tbHeaderDDP.setBackground(new Color(164, 44, 167));
 		tbHeaderDDP.setForeground(Color.white);
 		tbHeaderDDP.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-		tblDDP.getColumnModel().getColumn(0).setPreferredWidth(20);//maDDP
-		tblDDP.getColumnModel().getColumn(1).setPreferredWidth(20);//maPhong
-		tblDDP.getColumnModel().getColumn(2).setPreferredWidth(100);//tenKH
-		tblDDP.getColumnModel().getColumn(3).setPreferredWidth(30);//sdt
-		tblDDP.getColumnModel().getColumn(4).setPreferredWidth(40);//ngayDen
-		tblDDP.getColumnModel().getColumn(5).setPreferredWidth(40);//gioDen
-		tblDDP.getColumnModel().getColumn(6).setPreferredWidth(100);//tenNVLap
-		tblDDP.getColumnModel().getColumn(7).setPreferredWidth(50);//ngayLap
-		tblDDP.getColumnModel().getColumn(8).setPreferredWidth(100);//trangThaiDDP
+		tblDDP.getColumnModel().getColumn(0).setPreferredWidth(80);//maDDP
+		tblDDP.getColumnModel().getColumn(1).setPreferredWidth(100);//maPhong
+		tblDDP.getColumnModel().getColumn(2).setPreferredWidth(180);//tenKH
+		tblDDP.getColumnModel().getColumn(3).setPreferredWidth(100);//sdt
+		tblDDP.getColumnModel().getColumn(4).setPreferredWidth(100);//ngayDen
+		tblDDP.getColumnModel().getColumn(5).setPreferredWidth(80);//gioDen
+		tblDDP.getColumnModel().getColumn(6).setPreferredWidth(180);//tenNVLap
+		tblDDP.getColumnModel().getColumn(7).setPreferredWidth(90);//ngayLap
+		tblDDP.getColumnModel().getColumn(8).setPreferredWidth(130);//trangThaiDDP
 
 		DefaultTableCellRenderer rightRenderer2=new DefaultTableCellRenderer();
 		rightRenderer2.setHorizontalAlignment(JLabel.RIGHT);
@@ -543,13 +539,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		lblBackGround.setIcon(new ImageIcon(resizeBG));
 		pMain.add(lblBackGround);
 		
-
+		
+		cboGio.addItemListener(this);
+		
 		loadDSPhongTrongVaDaDat(p);
 
 		btnTim.addActionListener(this);
 		btnThemDDP.addActionListener(this);
 		btnSuaDDP.addActionListener(this);
-//		btnHuyDDP.addActionListener(this);
 		btnLamMoiDDP.addActionListener(this);
 
 		cboSapXep.addActionListener(this);
@@ -605,7 +602,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDanhSachDDPKhongHuy();
 		for(DonDatPhong infoDDP : lstDDP) {
 			KhachHang kh = daoKhachHang.getKHTheoMa(infoDDP.getKhachHang().getMaKhangHang());
-			NhanVien nv = daoNhanVien.getMaVaSDTNV(infoDDP.getNhanVien().getMaNhanVien());
+			NhanVien nv = daoNhanVien.getMaVaSdtNVChoDDP(infoDDP.getNhanVien().getMaNhanVien());
 			modelDDP.addRow(new Object[] {
 					infoDDP.getMaDDP(), infoDDP.getPhong().getMaPhong(), kh.getTenKH(), kh.getSdt(),
 					dfNgay.format(infoDDP.getNgayDen()), dfHienGio.format(infoDDP.getGioDen()), nv.getTenNhanVien(), dfNgay.format(infoDDP.getNgayLap()), infoDDP.getTrangThaiDDP()
@@ -657,7 +654,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		String maLoaiKH = daoLoaiKH.getMaLoaiKHTheoTen(loaiKH);
 
 		String maNV = sHeaderMaNV; //lấy info NV từ maNV
-		NhanVien nv= daoNhanVien.getMaVaSDTNV(maNV);
+		NhanVien nv= daoNhanVien.getMaVaSdtNVChoDDP(maNV);
 
 		/*
 		 * 1. Nếu là kh cũ thì nv sẽ hỏi sđt của kh cũ, rồi tìm kiếm --> thông tin kh  load lên các txt, cbb tương ứng

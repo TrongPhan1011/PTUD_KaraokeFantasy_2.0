@@ -669,7 +669,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					// TODO: handle exception
 					JOptionPane.showMessageDialog(null, "Không tìm thấy mã khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
 				}
-			} else if (regex.regexTenNV(txtTK)) {
+			} else if (regex.regexTimNV(txtTK)) {
 				try {
 					System.out.println("alo 123 5");
 					clearTable();

@@ -192,7 +192,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTK.setForeground(Colors.LightGray);
 		txtTK.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtTK.setBounds(617, 12, 526, 33);
+		txtTK.setBounds(594, 12, 526, 33);
 		txtTK.addFocusListener(new FocusAdapter() { // place holder
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -220,7 +220,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1159, 11, 98, 33);
+		btnTim.setBounds(1130, 11, 127, 33);
 		Image imgTim = Toolkit.getDefaultToolkit().getImage("data\\img\\iconKinhLup.png");
 		Image resizeImgTim = imgTim.getScaledInstance(20, 20, 0);
 		btnTim.setIcon(new ImageIcon(resizeImgTim));
@@ -275,7 +275,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 				JPanel pSapXep = new JPanel();
 				pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Sắp xếp", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 				pSapXep.setBackground(new Color(207, 195, 237));
-				pSapXep.setBounds(353, 57, 904, 47);
+				pSapXep.setBounds(353, 51, 904, 47);
 				pMain.add(pSapXep);
 				pSapXep.setLayout(null);
 				
@@ -357,7 +357,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 				tbHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
 				
 				JScrollPane spPhong = new JScrollPane(tblPhong, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-				spPhong.setBounds(353, 109, 904, 509);
+				spPhong.setBounds(353, 104, 904, 514);
 				spPhong.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 				spPhong.setBackground(new Color(164, 44, 167));
 				spPhong.getHorizontalScrollBar();

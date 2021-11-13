@@ -60,6 +60,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 public class FrmKhachHang extends JPanel implements ActionListener, MouseListener, ItemListener {
 
@@ -77,11 +78,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JButton btnSuaKH;
 	private JButton btnXoaKH;
 	private JButton btnReset;
-	private JTextField txtHoTen;
-	private JTextField txtSDT;
 	private JTextField txtCccd;
 	private JTextField txtPoint;
-	private JTextField txtDiaChi;
 	private JTable tableKH;
 	private DAOLoaiKH daoLoaiKH;
 	private DAOKhachHang daoKhachHang;
@@ -101,6 +99,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private Regex regex;
 	private KhachHang kh;
 	private ButtonGroup bg;
+	private JPanel pNhapThongTin;
+	private JLabel lblNhapThongTin;
+	private JTextField txtHoTen;
+	private JTextField txtSDT;
+	private JTextField txtDiaChi;
 
 	public Panel getFrmKH() {
 		return this.pMain;
@@ -131,16 +134,139 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pMain.setBounds(0, 0, 1281, 629);
 		add(pMain);
 		pMain.setLayout(null);
-
-		JLabel lblQuanLyKH = new JLabel("Quản lý khách hàng");
-		lblQuanLyKH.setFont(new Font("SansSerif", Font.BOLD, 22));
-		lblQuanLyKH.setBounds(31, 11, 251, 33);
-		pMain.add(lblQuanLyKH);
+		
+		
+		pNhapThongTin = new JPanel();
+		pNhapThongTin.setBorder(new LineBorder(new Color(114, 23, 153)));
+		pNhapThongTin.setBackground(Color.WHITE);
+		pNhapThongTin.setBounds(10, 11, 333, 607);
+		pMain.add(pNhapThongTin);
+		pNhapThongTin.setLayout(null);
+		
+		lblNhapThongTin = new JLabel("Nhập thông tin phòng");
+		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
+		lblNhapThongTin.setBounds(10, 11, 313, 29);
+		pNhapThongTin.add(lblNhapThongTin);
+		
+		txtHoTen = new JTextField();
+		txtHoTen.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtHoTen.setColumns(10);
+		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtHoTen.setBounds(153, 64, 170, 27);
+		pNhapThongTin.add(txtHoTen);
+		
+				JLabel lblHoTen = new JLabel("Họ và tên:");
+				lblHoTen.setBounds(10, 64, 90, 27);
+				pNhapThongTin.add(lblHoTen);
+				lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
+				
+						JLabel lblSDT = new JLabel("SĐT:");
+						lblSDT.setBounds(10, 102, 59, 23);
+						pNhapThongTin.add(lblSDT);
+						lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
+						
+								JLabel lblAddress = new JLabel("Địa chỉ:");
+								lblAddress.setBounds(10, 133, 84, 27);
+								pNhapThongTin.add(lblAddress);
+								lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
+								
+								txtSDT = new JTextField();
+								txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 14));
+								txtSDT.setColumns(10);
+								txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+								txtSDT.setBounds(153, 100, 170, 27);
+								pNhapThongTin.add(txtSDT);
+								
+								txtDiaChi = new JTextField();
+								txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 14));
+								txtDiaChi.setColumns(10);
+								txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+								txtDiaChi.setBounds(153, 133, 170, 27);
+								pNhapThongTin.add(txtDiaChi);
+								
+										txtCccd = new JTextField();
+										txtCccd.setBounds(153, 167, 170, 27);
+										pNhapThongTin.add(txtCccd);
+										txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
+										txtCccd.setColumns(10);
+										txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+										
+												JLabel lblCccd = new JLabel("CCCD:");
+												lblCccd.setBounds(10, 171, 65, 23);
+												pNhapThongTin.add(lblCccd);
+												lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
+												
+														dateChooserNgaySinh = new JDateChooser();
+														dateChooserNgaySinh.setBounds(153, 278, 170, 28);
+														pNhapThongTin.add(dateChooserNgaySinh);
+														dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
+														dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+														dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
+														dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+														dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
+														
+																JLabel lblNgaySinh = new JLabel("Ngày sinh:");
+																lblNgaySinh.setBounds(10, 278, 102, 28);
+																pNhapThongTin.add(lblNgaySinh);
+																lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
+																
+																		JLabel lblNgayDangKy = new JLabel("Ngày đăng ký:");
+																		lblNgayDangKy.setBounds(10, 318, 102, 29);
+																		pNhapThongTin.add(lblNgayDangKy);
+																		lblNgayDangKy.setFont(new Font("SansSerif", Font.BOLD, 15));
+																		
+																				dateChooserNgayDangKy = new JDateChooser();
+																				dateChooserNgayDangKy.setBounds(153, 319, 170, 28);
+																				pNhapThongTin.add(dateChooserNgayDangKy);
+																				dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
+																				dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+																				dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
+																				dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+																				dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
+																				
+																						JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
+																						lblLoaiKH.setBounds(10, 211, 124, 19);
+																						pNhapThongTin.add(lblLoaiKH);
+																						lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
+																						
+																								cbbloaiKH = new JComboBox<String>();
+																								cbbloaiKH.setBounds(153, 203, 170, 27);
+																								pNhapThongTin.add(cbbloaiKH);
+																								cbbloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+																								cbbloaiKH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+																								cbbloaiKH.setBackground(new Color(255, 255, 255));
+																								
+																										JLabel lblGioiTinh = new JLabel("Giới tính:");
+																										lblGioiTinh.setBounds(10, 241, 72, 26);
+																										pNhapThongTin.add(lblGioiTinh);
+																										lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
+																										
+																												cbbgioiTinh = new JComboBox<String>();
+																												cbbgioiTinh.setBounds(153, 241, 170, 28);
+																												pNhapThongTin.add(cbbgioiTinh);
+																												cbbgioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
+																												cbbgioiTinh.setBackground(Color.WHITE);
+																												cbbgioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+																												
+																														JLabel lblDiem = new JLabel("Điểm tích lũy:");
+																														lblDiem.setBounds(10, 358, 102, 28);
+																														pNhapThongTin.add(lblDiem);
+																														lblDiem.setFont(new Font("SansSerif", Font.BOLD, 15));
+																														
+																																txtPoint = new JTextField();
+																																txtPoint.setBounds(153, 358, 170, 28);
+																																pNhapThongTin.add(txtPoint);
+																																txtPoint.setFont(new Font("SansSerif", Font.PLAIN, 14));
+																																txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
+																																txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+																																txtPoint.setEditable(isDisplayable());
+																																txtPoint.setColumns(10);
 
 		// lblTim
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(310, 13, 90, 35);
+		lblTim.setBounds(487, 12, 90, 35);
 		pMain.add(lblTim);
 
 		// txtTK
@@ -149,7 +275,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTK.setForeground(Colors.LightGray);
 		txtTK.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtTK.setBounds(400, 12, 526, 33);
+		txtTK.setBounds(577, 11, 526, 33);
 		txtTK.addFocusListener(new FocusAdapter() { // place holder
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -177,178 +303,66 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(942, 11, 98, 33);
+		btnTim.setBounds(1125, 11, 132, 33);
 		Image imgTim = Toolkit.getDefaultToolkit().getImage("data\\img\\iconKinhLup.png");
 		Image resizeImgTim = imgTim.getScaledInstance(20, 20, 0);
 		btnTim.setIcon(new ImageIcon(resizeImgTim));
 		pMain.add(btnTim);
-
-		JLabel lblNhac1 = new JLabel("");
-
-		lblNhac1.setBounds(31, 160, 147, 146);
 		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
-		Image resizeNhac1 = imgNhac1.getScaledInstance(lblNhac1.getWidth(), lblNhac1.getHeight(), 0);
-		lblNhac1.setIcon(new ImageIcon(resizeNhac1));
-		pMain.add(lblNhac1);
-
-		JLabel lblHoTen = new JLabel("Họ và tên:");
-		lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblHoTen.setBounds(146, 65, 90, 19);
-		pMain.add(lblHoTen);
-
-		txtHoTen = new JTextField();
-		txtHoTen.setFont(new Font("SansSerif", Font.PLAIN, 14));
-
-		txtHoTen.setBounds(230, 62, 189, 28);
-		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtHoTen.setBounds(239, 62, 189, 28);
-		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		pMain.add(txtHoTen);
-		txtHoTen.setColumns(10);
-
-		JLabel lblSDT = new JLabel("SĐT:");
-		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblSDT.setBounds(146, 106, 46, 14);
-		pMain.add(lblSDT);
-
-		txtSDT = new JTextField();
-		txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtSDT.setBounds(239, 100, 189, 28);
-		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtSDT.setBounds(239, 101, 189, 28);
-		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		pMain.add(txtSDT);
-		txtSDT.setColumns(10);
-
-		JLabel lblAddress = new JLabel("Địa chỉ:");
-		lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblAddress.setBounds(146, 144, 72, 20);
-		pMain.add(lblAddress);
-
-		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
-		lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblLoaiKH.setBounds(473, 65, 124, 19);
-		pMain.add(lblLoaiKH);
-
-		cbbloaiKH = new JComboBox<String>();
-		cbbloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		cbbloaiKH.setBounds(610, 60, 170, 27);
-		cbbloaiKH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		cbbloaiKH.setBackground(new Color(255, 255, 255));
-
-		pMain.add(cbbloaiKH);
-
-		JLabel lblCccd = new JLabel("CCCD:");
-		lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblCccd.setBounds(473, 108, 65, 14);
-		pMain.add(lblCccd);
-
-		txtCccd = new JTextField();
-		txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtCccd.setBounds(610, 100, 170, 27);
-
-		pMain.add(txtCccd);
-		txtCccd.setColumns(10);
-		txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-
-		JLabel lblGioiTinh = new JLabel("Giới tính:");
-		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblGioiTinh.setBounds(473, 149, 72, 14);
-		pMain.add(lblGioiTinh);
-
-		cbbgioiTinh = new JComboBox<String>();
-		cbbgioiTinh.setBounds(610, 140, 170, 28);
-		cbbgioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		cbbgioiTinh.setBackground(Color.WHITE);
-		cbbgioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		String cbbGioiTinh[] = { "Nam", "Nữ" };
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
 			cbbgioiTinh.addItem(cbbGioiTinh[i]);
 		}
-		pMain.add(cbbgioiTinh);
-
-		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
-		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblNgaySinh.setBounds(840, 63, 102, 18);
-		pMain.add(lblNgaySinh);
-
-		JLabel lblNgayDangKy = new JLabel("Ngày đăng ký:");
-		lblNgayDangKy.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblNgayDangKy.setBounds(840, 103, 102, 20);
-		pMain.add(lblNgayDangKy);
-
-		JLabel lblDiem = new JLabel("Điểm tích lũy:");
-		lblDiem.setFont(new Font("SansSerif", Font.BOLD, 15));
-		lblDiem.setBounds(840, 148, 102, 18);
-		pMain.add(lblDiem);
-
-		txtPoint = new JTextField();
-		txtPoint.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtPoint.setBounds(945, 145, 191, 28);
-		txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		pMain.add(txtPoint);
-		txtPoint.setEditable(isDisplayable());
-		txtPoint.setColumns(10);
-
-		dateChooserNgaySinh = new JDateChooser();
-		dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
-		dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
-		dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
-		dateChooserNgaySinh.setBounds(945, 61, 191, 28);
-		pMain.add(dateChooserNgaySinh);
 
 		btnThemKH = new FixButton("Thêm");
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnThemKH.setBackground(new Color(114, 23, 153));
-		btnThemKH.setBounds(319, 202, 108, 35);
+		btnThemKH.setBounds(10, 425, 313, 35);
 		Image imgThemKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconGrayThem.png");
 		Image resizeImgThemKH = imgThemKH.getScaledInstance(25, 25, 0);
 		btnThemKH.setIcon(new ImageIcon(resizeImgThemKH));
-		pMain.add(btnThemKH);
+		pNhapThongTin.add(btnThemKH);
 
 		btnSuaKH = new FixButton("Sửa");
 		btnSuaKH.setForeground(Color.WHITE);
 		btnSuaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnSuaKH.setBackground(new Color(114, 23, 153));
-		btnSuaKH.setBounds(489, 202, 108, 35);
+		btnSuaKH.setBounds(10, 469, 313, 35);
 		Image imgSuaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconTool.png");
 		Image resizeImgSuaKH = imgSuaKH.getScaledInstance(25, 25, 0);
 		btnSuaKH.setIcon(new ImageIcon(resizeImgSuaKH));
-		pMain.add(btnSuaKH);
+		pNhapThongTin.add(btnSuaKH);
 
 		btnXoaKH = new FixButton("Xóa");
 		btnXoaKH.setForeground(Color.WHITE);
 		btnXoaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnXoaKH.setBackground(new Color(114, 23, 153));
-		btnXoaKH.setBounds(647, 202, 108, 35);
+		btnXoaKH.setBounds(10, 515, 313, 35);
 		Image imgXoaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconRemove.png");
 		Image resizeImgXoaKH = imgXoaKH.getScaledInstance(25, 25, 0);
 		btnXoaKH.setIcon(new ImageIcon(resizeImgXoaKH));
-		pMain.add(btnXoaKH);
+		pNhapThongTin.add(btnXoaKH);
 
 		btnReset = new FixButton("Làm mới");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnReset.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnReset.setBackground(new Color(114, 23, 153));
-		btnReset.setBounds(821, 202, 108, 35);
+		btnReset.setBounds(10, 561, 313, 35);
 		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconReset.png");
 		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
 		btnReset.setIcon(new ImageIcon(resizeImgLamMoiKH));
 
-		pMain.add(btnReset);
+		pNhapThongTin.add(btnReset);
 
 		JScrollPane scrollPaneKH = new JScrollPane();
 		scrollPaneKH.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		scrollPaneKH.setBackground(new Color(164, 44, 167));
-		scrollPaneKH.setBounds(31, 310, 1212, 285);
+		scrollPaneKH.setBounds(353, 106, 904, 512);
 		pMain.add(scrollPaneKH);
 
 		String col[] = { "Mã KH", "Họ và tên KH", "Loại KH", "Giới tính", "Ngày sinh", "Địa chỉ", "SĐT", "CCCD",
@@ -393,28 +407,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		tableKH.setSelectionBackground(new Color(164, 44, 167, 30));
 		scrollPaneKH.setViewportView(tableKH);
 
-		txtDiaChi = new JTextField();
-		txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtDiaChi.setBounds(342, 145, 189, 51);
-		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtDiaChi.setBounds(239, 140, 189, 51);
-		pMain.add(txtDiaChi);
-
-		dateChooserNgayDangKy = new JDateChooser();
-		dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
-		dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
-		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
-		dateChooserNgayDangKy.setBounds(945, 102, 191, 28);
-		pMain.add(dateChooserNgayDangKy);
-
 		JPanel pSapXep = new JPanel();
 		pSapXep.setBackground(new Color(238, 239, 243, 90));
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23, 153), 1, true), "S\u1EAFp x\u1EBFp",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pSapXep.setBounds(239, 248, 897, 51);
+		pSapXep.setBounds(353, 50, 904, 51);
 		pMain.add(pSapXep);
 		// pSapXep.setLayout(null);
 
@@ -428,12 +425,12 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			cbbSort.addItem(cbSort[i]);
 		}
 		pSapXep.setLayout(null);
-		cbbSort.setBounds(26, 14, 136, 28);
+		cbbSort.setBounds(26, 14, 167, 28);
 		pSapXep.add(cbbSort);
 
 		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
 		chkAll.setBackground(new Color(220, 210, 239));
-		chkAll.setBounds(185, 15, 109, 27);
+		chkAll.setBounds(205, 15, 109, 27);
 		pSapXep.add(chkAll);
 		chkAll.addItemListener(new ItemListener() {
 			
@@ -453,19 +450,19 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		rdoTheoMaKH = new JRadioButton("Theo mã khách hàng");
 		rdoTheoMaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaKH.setBackground(new Color(220, 210, 239));
-		rdoTheoMaKH.setBounds(309, 15, 167, 27);
+		rdoTheoMaKH.setBounds(329, 15, 167, 27);
 		pSapXep.add(rdoTheoMaKH);
 
 		rdoTheoTenKH = new JRadioButton("Theo tên khách hàng");
 		rdoTheoTenKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenKH.setBackground(new Color(220, 210, 239));
-		rdoTheoTenKH.setBounds(491, 15, 171, 27);
+		rdoTheoTenKH.setBounds(511, 15, 171, 27);
 		pSapXep.add(rdoTheoTenKH);
 
 		rdoTheoLoaiKH = new JRadioButton("Theo loại khách hàng");
 		rdoTheoLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiKH.setBackground(new Color(220, 210, 239));
-		rdoTheoLoaiKH.setBounds(682, 15, 171, 27);
+		rdoTheoLoaiKH.setBounds(702, 15, 171, 27);
 		pSapXep.add(rdoTheoLoaiKH);
 
 		bg = new ButtonGroup();
@@ -477,7 +474,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setIcon(new ImageIcon("data\\img\\background.png"));
-		lblBackground.setBounds(0, 0, 1281, 606);
+		lblBackground.setBounds(0, 0, 1281, 629);
 		Image imgBackground = Toolkit.getDefaultToolkit().getImage("data\\img\\background.png");
 		Image resizeBG = imgBackground.getScaledInstance(lblBackground.getWidth(), lblBackground.getHeight(), 0);
 		lblBackground.setIcon(new ImageIcon(resizeBG));

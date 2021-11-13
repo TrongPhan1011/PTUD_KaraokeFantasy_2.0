@@ -47,6 +47,7 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 
 public class FrmMatHang extends JPanel implements ActionListener, MouseListener {
@@ -82,6 +83,8 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 	private DecimalFormat dfVND;
 	private MatHang mh;
 	private Regex regex;
+	private JPanel pNhapThongTin;
+	private JLabel lblNhapThongTin;
 	
 	public Panel getFrmMatHang() {
 		return this.pMain;
@@ -104,11 +107,71 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//lblQLNV
-		JLabel lblQLNV = new JLabel("Quản lý mặt hàng");
-		lblQLNV.setFont(new Font("SansSerif", Font.BOLD, 22));
-		lblQLNV.setBounds(37, 10, 255, 33);
-		pMain.add(lblQLNV);
+		
+		pNhapThongTin = new JPanel();
+		pNhapThongTin.setBorder(new LineBorder(new Color(114, 23, 153)));
+		pNhapThongTin.setBackground(Color.WHITE);
+		pNhapThongTin.setBounds(10, 11, 333, 607);
+		pMain.add(pNhapThongTin);
+		pNhapThongTin.setLayout(null);
+		//////////		
+				JLabel lblTenMH = new JLabel("Tên mặt hàng: ");
+				lblTenMH.setBounds(10, 83, 102, 36);
+				pNhapThongTin.add(lblTenMH);
+				lblTenMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+				
+				txtTenMH = new JTextField();
+				txtTenMH.setBounds(122, 82, 201, 37);
+				pNhapThongTin.add(txtTenMH);
+				txtTenMH.setBackground(new Color(255, 255, 255));
+				txtTenMH.setFont(new Font("SansSerif", Font.PLAIN, 14));
+				txtTenMH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+				txtTenMH.setColumns(30);
+				
+				//-----
+				JLabel lblDonGia = new JLabel("Giá bán:");
+				lblDonGia.setBounds(10, 143, 102, 36);
+				pNhapThongTin.add(lblDonGia);
+				lblDonGia.setFont(new Font("SansSerif", Font.PLAIN, 15));
+				
+				txtDonGia = new JTextField();
+				txtDonGia.setBounds(122, 143, 201, 37);
+				pNhapThongTin.add(txtDonGia);
+				txtDonGia.setBackground(new Color(255, 255, 255));
+				txtDonGia.setFont(new Font("SansSerif", Font.PLAIN, 14));
+				txtDonGia.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+				txtDonGia.setColumns(20);
+				
+				lblNhapThongTin = new JLabel("Nhập thông tin nhân viên");
+				lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
+				lblNhapThongTin.setBounds(10, 11, 292, 29);
+				pNhapThongTin.add(lblNhapThongTin);
+				//		//------
+						JLabel lblSoluongMH = new JLabel("Số lượng:");
+						lblSoluongMH.setBounds(10, 202, 84, 36);
+						pNhapThongTin.add(lblSoluongMH);
+						lblSoluongMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+						
+						txtSoLuong = new JTextField();
+						txtSoLuong.setBounds(122, 201, 201, 37);
+						pNhapThongTin.add(txtSoLuong);
+						txtSoLuong.setBackground(new Color(255, 255, 255));
+						txtSoLuong.setFont(new Font("SansSerif", Font.PLAIN, 14));
+						txtSoLuong.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+						txtSoLuong.setColumns(20);
+						
+						JLabel lblSubLMH = new JLabel("Loại mặt hàng: ");
+						lblSubLMH.setBounds(10, 260, 102, 35);
+						pNhapThongTin.add(lblSubLMH);
+						lblSubLMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+						
+						cboLoaiMH = new JComboBox<String>();
+						cboLoaiMH.setBounds(122, 258, 201, 37);
+						pNhapThongTin.add(cboLoaiMH);
+						cboLoaiMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+						cboLoaiMH.setBackground(Color.WHITE);
+		
 //Tim Kiem
 		//txtTim 
 		txtTim = new JTextField();
@@ -116,7 +179,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
-		txtTim.setBounds(452, 15, 396, 33);
+		txtTim.setBounds(589, 11, 539, 33);
 		txtTim.addFocusListener(new FocusAdapter() {	
 			//place holder
 			@Override
@@ -140,7 +203,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		//lblTim
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(374, 15, 90, 35);
+		lblTim.setBounds(511, 11, 90, 35);
 		pMain.add(lblTim);
 				
 		btnTim = new FixButton("Tìm");
@@ -148,148 +211,83 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(870, 15, 98, 33);
+		btnTim.setBounds(1138, 11, 121, 33);
 		Image imgTim = Toolkit.getDefaultToolkit().getImage("data\\img\\iconKinhLup.png");
 		Image resizeImgTim = imgTim.getScaledInstance(20, 20, 0);
 		btnTim.setIcon(new ImageIcon(resizeImgTim));
 		pMain.add(btnTim);
 		
-//imgNhac1
-		JLabel lblNhac1=new JLabel("");
-		lblNhac1.setBounds(25, 105, 120, 135);
-		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
-		Image resizeNhac1 = imgNhac1.getScaledInstance(lblNhac1.getWidth(), lblNhac1.getHeight(), 0);
-		lblNhac1.setIcon(new ImageIcon(resizeNhac1));
-		pMain.add(lblNhac1);
-		
-//imgNhac2
-		JLabel lblNhac2=new JLabel("");
-		lblNhac2.setBounds(1100, 105, 105, 159);
-		Image imgNhac2 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac2.png");
-		Image resizeNhac2 = imgNhac2.getScaledInstance(lblNhac2.getWidth(), lblNhac2.getHeight(), 0);
-		lblNhac2.setIcon(new ImageIcon(resizeNhac2));
-		pMain.add(lblNhac2);
-//////////		
-		JLabel lblTenMH = new JLabel("Tên mặt hàng: ");
-		lblTenMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblTenMH.setBounds(217, 59, 102, 26);
-		pMain.add(lblTenMH);
-		
-		txtTenMH = new JTextField();
-		txtTenMH.setBackground(new Color(255, 255, 255));
-		txtTenMH.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtTenMH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtTenMH.setBounds(329, 58, 310, 30);
-		pMain.add(txtTenMH);
-		txtTenMH.setColumns(30);
-		
-		//-----
-		JLabel lblDonGia = new JLabel("Giá bán:");
-		lblDonGia.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblDonGia.setBounds(217, 99, 130, 26);
-		pMain.add(lblDonGia);
-		
-		txtDonGia = new JTextField();
-		txtDonGia.setBackground(new Color(255, 255, 255));
-		txtDonGia.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtDonGia.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtDonGia.setBounds(329, 98, 310, 30);
-		pMain.add(txtDonGia);
-		txtDonGia.setColumns(20);
-//		//------
-		JLabel lblSoluongMH = new JLabel("Số lượng:");
-		lblSoluongMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSoluongMH.setBounds(654, 59, 84, 26);
-		pMain.add(lblSoluongMH);
-		
-		txtSoLuong = new JTextField();
-		txtSoLuong.setBackground(new Color(255, 255, 255));
-		txtSoLuong.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		txtSoLuong.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtSoLuong.setBounds(766, 58, 310, 30);
-		pMain.add(txtSoLuong);
-		txtSoLuong.setColumns(20);
-		
-		JLabel lblSubLMH = new JLabel("Loại mặt hàng: ");
-		lblSubLMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubLMH.setBounds(654, 99, 102, 26);
-		pMain.add(lblSubLMH);
-		
-		cboLoaiMH = new JComboBox<String>();
-		cboLoaiMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		cboLoaiMH.setBackground(Color.WHITE);
-		cboLoaiMH.setBounds(766, 97, 310, 30);
-		pMain.add(cboLoaiMH);
+
 /////Buttons
 		btnThemKH = new FixButton("Thêm");
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemKH.setBackground(new Color(114, 43, 153));
-		btnThemKH.setBounds(374, 150, 118, 35);
+		btnThemKH.setBounds(10, 385, 313, 42);
 		Image imgThemKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconGrayThem.png");
 		Image resizeImgThemKH = imgThemKH.getScaledInstance(25, 25, 0);
 		btnThemKH.setIcon(new ImageIcon(resizeImgThemKH));
-		pMain.add(btnThemKH);
+		pNhapThongTin.add(btnThemKH);
 		
 		btnSuaMH = new FixButton("Sửa");
 		btnSuaMH.setForeground(Color.WHITE);
 		btnSuaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaMH.setBackground(new Color(114, 43, 153));
-		btnSuaMH.setBounds(537, 150, 118, 35);
+		btnSuaMH.setBounds(10, 443, 313, 42);
 		Image imgSuaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconTool.png");
 		Image resizeImgSuaKH = imgSuaKH.getScaledInstance(25, 25, 0);
 		btnSuaMH.setIcon(new ImageIcon(resizeImgSuaKH));
-		pMain.add(btnSuaMH);
+		pNhapThongTin.add(btnSuaMH);
 		
 		btnXoaMH = new FixButton("Xóa");
 		btnXoaMH.setForeground(Color.WHITE);
 		btnXoaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaMH.setBackground(new Color(114, 43, 153));
-		btnXoaMH.setBounds(702, 150, 125, 35);
+		btnXoaMH.setBounds(10, 499, 313, 42);
 		Image imgXoaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconRemove.png");
 		Image resizeImgXoaKH = imgXoaKH.getScaledInstance(25, 25, 0);
 		btnXoaMH.setIcon(new ImageIcon(resizeImgXoaKH));
-		pMain.add(btnXoaMH);
+		pNhapThongTin.add(btnXoaMH);
 		
 		btnReset = new FixButton("Làm mới");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnReset.setBackground(new Color(114, 43, 153));
-		btnReset.setBounds(868, 150, 144, 35);
+		btnReset.setBounds(10, 552, 313, 44);
 		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconReset.png");
 		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
 		btnReset.setIcon(new ImageIcon(resizeImgLamMoiKH));
-		pMain.add(btnReset);
+		pNhapThongTin.add(btnReset);
 //SapXep
 		JPanel pSapXep = new JPanel();
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Sắp xếp", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pSapXep.setBackground(new Color(207, 195, 237));
-		pSapXep.setBounds(217, 195, 859, 47);
+		pSapXep.setBounds(350, 49, 909, 47);
 		pMain.add(pSapXep);
 		pSapXep.setLayout(null);
 		
 		cboSapXep = new JComboBox<Object>(new Object[]{"Tăng dần", "Giảm dần"});
-		cboSapXep.setBounds(51, 12, 115, 28);
+		cboSapXep.setBounds(51, 12, 135, 28);
 		cboSapXep.setFont(new Font("SansSerif", Font.BOLD, 15));
 		cboSapXep.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboSapXep.setBackground(Color.WHITE);
 		pSapXep.add(cboSapXep);
 		
 		rdoTheoTenMH = new JRadioButton("Theo tên mặt hàng");
-		rdoTheoTenMH.setBounds(312, 15, 170, 27);
+		rdoTheoTenMH.setBounds(357, 13, 170, 27);
 		rdoTheoTenMH.setSelected(true);
 		rdoTheoTenMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenMH.setBackground(new Color(207, 195, 237));
 		pSapXep.add(rdoTheoTenMH);
 		
 		rdoTheoLoaiMH = new JRadioButton("Theo loại mặt hàng");
-		rdoTheoLoaiMH.setBounds(518, 15, 170, 27);
+		rdoTheoLoaiMH.setBounds(560, 13, 170, 27);
 		rdoTheoLoaiMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiMH.setBackground(new Color(207, 195, 237));
 		pSapXep.add(rdoTheoLoaiMH);
 		
 		rdoTheoGiaMH = new JRadioButton("Theo giá ");
-		rdoTheoGiaMH.setBounds(718, 15, 135, 27);
+		rdoTheoGiaMH.setBounds(768, 13, 135, 27);
 		rdoTheoGiaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoGiaMH.setBackground(new Color(207, 195, 237));
 		pSapXep.add(rdoTheoGiaMH);
@@ -297,7 +295,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		chkTatCa = new JCheckBox("Tất cả ");
 		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
 		chkTatCa.setBackground(new Color(207, 195, 237));
-		chkTatCa.setBounds(201, 15, 135, 27);
+		chkTatCa.setBounds(233, 13, 106, 27);
 		pSapXep.add(chkTatCa);
 		
 		ButtonGroup bgRdo=new ButtonGroup();
@@ -328,7 +326,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		tbHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
 		
 		JScrollPane spMatHang = new JScrollPane(tblMH, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		spMatHang.setBounds(37, 249, 1194, 346);
+		spMatHang.setBounds(353, 104, 906, 514);
 		spMatHang.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		spMatHang.setBackground(new Color(164, 44, 167));
 		spMatHang.getHorizontalScrollBar();
@@ -351,13 +349,16 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		tblMH.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 		spMatHang.setViewportView(tblMH);
 ///Background
+		
 		JLabel lblBackGround=new JLabel("");
 		lblBackGround.setIcon(new ImageIcon("data\\img\\background.png"));
-		lblBackGround.setBounds(0, 0, 1281, 606);
+		lblBackGround.setBounds(0, 0, 1281, 629);
 		Image imgBackGround = Toolkit.getDefaultToolkit().getImage("data\\img\\background.png");
 		Image resizeBG = imgBackGround.getScaledInstance(lblBackGround.getWidth(), lblBackGround.getHeight(), 0);
 		lblBackGround.setIcon(new ImageIcon(resizeBG));
 		pMain.add(lblBackGround);
+		
+		
 /// Load loai MH
 		loaiMH = daoLMH.getAllLoaiMatHang();
 		for(LoaiMatHang lmh : loaiMH) {

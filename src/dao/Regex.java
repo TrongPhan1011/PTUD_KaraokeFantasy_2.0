@@ -103,15 +103,24 @@ public class Regex {
 		return true;
 	}
 	
-	public boolean regexTimNV(JTextField txtTim) {
+	public boolean regexTimKiemMaNV(JTextField txtTim) {
 		String input = txtTim.getText().trim();
-<<<<<<< HEAD
 		input = input.toUpperCase();
-		String regexMaNV = "^(NV[0-9]{3})$";
+		String regexMaNV = "^NV[0-9]{3}$";
 		if(!input.matches(regexMaNV)) {
 			JOptionPane.showMessageDialog(null, "Mã nhân viên tìm kiếm không hợp lệ\nMã nhân viên. Ví dụ: NV001\n");
 //			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
-=======
+			txtTim.requestFocus();
+			txtTim.selectAll();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean regexTimNV(JTextField txtTim) {
+		String input = txtTim.getText().trim();
+		input = input.toUpperCase();
+//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 		String regexMaNV = "((NV|nv)[0-9]{3})|";
 		String regexTenNV= "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
 		String regexSDT  = "(0[0-9]{9})|";
@@ -125,7 +134,6 @@ public class Regex {
 																										  +"\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0"
 																										  +"\n - Tìm theo ca: 1, 2, 3"
 											  , "Thông báo", JOptionPane.ERROR_MESSAGE);
->>>>>>> 79c79f06cb89462bccfe9d4f20fec0c3f4dae400
 			txtTim.requestFocus();
 			txtTim.selectAll();
 			return false;
@@ -187,6 +195,7 @@ public class Regex {
 	
 	public boolean regexTimDSHD(JTextField txtDSHD) {
 		String input = txtDSHD.getText().toString().trim();
+		input = input.toUpperCase();
 		String regexMaNV = "^((NV|nv)[0-9]{3})|([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)$";
 		if(!input.matches(regexMaNV)) {
 			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã nhân viên Ví dụ: NV001\n - Tên Khách hàng Ví dụ Hợp hoặc Nguyễn Thị Bích Hợp...");

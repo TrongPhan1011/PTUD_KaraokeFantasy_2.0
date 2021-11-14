@@ -658,6 +658,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	public void loadTimKiem() {
 		Regex regexDao = new Regex();
 		String thongTin = txtTim.getText().trim();
+		thongTin = thongTin.toUpperCase();
 		String regexMaNV = "^((NV|nv)[0-9]{3})$";
 		String regexTenKH = "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
 		ArrayList<HoaDon> lsHD = null;

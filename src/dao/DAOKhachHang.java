@@ -83,7 +83,7 @@ public class DAOKhachHang {
 		ArrayList<KhachHang> list = new ArrayList<>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "select * from KhachHang where tenKH like N'"+info+"'";
+		String sql = "select * from KhachHang where tenKH like N'%"+info+"%'";
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
@@ -227,8 +227,7 @@ public class DAOKhachHang {
 		con.close();
 		return false;
 	}
-	
-	// này nó viết sai r, để t viết lại
+
 	public KhachHang getKH(String info) { 
 		KhachHang kh = new KhachHang();
 		ConnectDB.getinstance();

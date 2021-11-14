@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -55,6 +57,8 @@ import entity.KhachHang;
 import entity.LoaiKH;
 import entity.NhanVien;
 import entity.TaiKhoan;
+import jiconfont.icons.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -85,9 +89,9 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private DAOKhachHang daoKhachHang;
 	private DAOPhatSinhMa daoMaKH;
 	private DefaultTableModel modelKhachHang;
-	private JComboBox<String> cbbloaiKH;
-	private JComboBox<String> cbbgioiTinh;
-	private JComboBox<String> cbbSort;
+	private JComboBox<String> cboloaiKH;
+	private JComboBox<String> cbogioiTinh;
+	private JComboBox<String> cboSort;
 	private JDateChooser dateChooserNgaySinh;
 	private JDateChooser dateChooserNgayDangKy;
 	private SimpleDateFormat dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
@@ -134,134 +138,134 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pMain.setBounds(0, 0, 1281, 629);
 		add(pMain);
 		pMain.setLayout(null);
-		
-		
+
+
 		pNhapThongTin = new JPanel();
 		pNhapThongTin.setBorder(new LineBorder(new Color(114, 23, 153)));
 		pNhapThongTin.setBackground(Color.WHITE);
 		pNhapThongTin.setBounds(10, 11, 333, 607);
 		pMain.add(pNhapThongTin);
 		pNhapThongTin.setLayout(null);
-		
-		lblNhapThongTin = new JLabel("Nhập thông tin phòng");
+
+		lblNhapThongTin = new JLabel("Nhập thông tin khách hàng");
 		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
 		lblNhapThongTin.setBounds(10, 11, 313, 29);
 		pNhapThongTin.add(lblNhapThongTin);
-		
+
 		txtHoTen = new JTextField();
 		txtHoTen.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtHoTen.setColumns(10);
 		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtHoTen.setBounds(153, 64, 170, 27);
 		pNhapThongTin.add(txtHoTen);
-		
-				JLabel lblHoTen = new JLabel("Họ và tên:");
-				lblHoTen.setBounds(10, 64, 90, 27);
-				pNhapThongTin.add(lblHoTen);
-				lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
-				
-						JLabel lblSDT = new JLabel("SĐT:");
-						lblSDT.setBounds(10, 102, 59, 23);
-						pNhapThongTin.add(lblSDT);
-						lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
-						
-								JLabel lblAddress = new JLabel("Địa chỉ:");
-								lblAddress.setBounds(10, 133, 84, 27);
-								pNhapThongTin.add(lblAddress);
-								lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
-								
-								txtSDT = new JTextField();
-								txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 14));
-								txtSDT.setColumns(10);
-								txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-								txtSDT.setBounds(153, 100, 170, 27);
-								pNhapThongTin.add(txtSDT);
-								
-								txtDiaChi = new JTextField();
-								txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 14));
-								txtDiaChi.setColumns(10);
-								txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-								txtDiaChi.setBounds(153, 133, 170, 27);
-								pNhapThongTin.add(txtDiaChi);
-								
-										txtCccd = new JTextField();
-										txtCccd.setBounds(153, 167, 170, 27);
-										pNhapThongTin.add(txtCccd);
-										txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
-										txtCccd.setColumns(10);
-										txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-										
-												JLabel lblCccd = new JLabel("CCCD:");
-												lblCccd.setBounds(10, 171, 65, 23);
-												pNhapThongTin.add(lblCccd);
-												lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
-												
-														dateChooserNgaySinh = new JDateChooser();
-														dateChooserNgaySinh.setBounds(153, 278, 170, 28);
-														pNhapThongTin.add(dateChooserNgaySinh);
-														dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
-														dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-														dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-														dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
-														dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
-														
-																JLabel lblNgaySinh = new JLabel("Ngày sinh:");
-																lblNgaySinh.setBounds(10, 278, 102, 28);
-																pNhapThongTin.add(lblNgaySinh);
-																lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-																
-																		JLabel lblNgayDangKy = new JLabel("Ngày đăng ký:");
-																		lblNgayDangKy.setBounds(10, 318, 102, 29);
-																		pNhapThongTin.add(lblNgayDangKy);
-																		lblNgayDangKy.setFont(new Font("SansSerif", Font.BOLD, 15));
-																		
-																				dateChooserNgayDangKy = new JDateChooser();
-																				dateChooserNgayDangKy.setBounds(153, 319, 170, 28);
-																				pNhapThongTin.add(dateChooserNgayDangKy);
-																				dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
-																				dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-																				dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
-																				dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
-																				dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
-																				
-																						JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
-																						lblLoaiKH.setBounds(10, 211, 124, 19);
-																						pNhapThongTin.add(lblLoaiKH);
-																						lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
-																						
-																								cbbloaiKH = new JComboBox<String>();
-																								cbbloaiKH.setBounds(153, 203, 170, 27);
-																								pNhapThongTin.add(cbbloaiKH);
-																								cbbloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-																								cbbloaiKH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-																								cbbloaiKH.setBackground(new Color(255, 255, 255));
-																								
-																										JLabel lblGioiTinh = new JLabel("Giới tính:");
-																										lblGioiTinh.setBounds(10, 241, 72, 26);
-																										pNhapThongTin.add(lblGioiTinh);
-																										lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-																										
-																												cbbgioiTinh = new JComboBox<String>();
-																												cbbgioiTinh.setBounds(153, 241, 170, 28);
-																												pNhapThongTin.add(cbbgioiTinh);
-																												cbbgioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
-																												cbbgioiTinh.setBackground(Color.WHITE);
-																												cbbgioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-																												
-																														JLabel lblDiem = new JLabel("Điểm tích lũy:");
-																														lblDiem.setBounds(10, 358, 102, 28);
-																														pNhapThongTin.add(lblDiem);
-																														lblDiem.setFont(new Font("SansSerif", Font.BOLD, 15));
-																														
-																																txtPoint = new JTextField();
-																																txtPoint.setBounds(153, 358, 170, 28);
-																																pNhapThongTin.add(txtPoint);
-																																txtPoint.setFont(new Font("SansSerif", Font.PLAIN, 14));
-																																txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-																																txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-																																txtPoint.setEditable(isDisplayable());
-																																txtPoint.setColumns(10);
+
+		JLabel lblHoTen = new JLabel("Họ và tên:");
+		lblHoTen.setBounds(10, 64, 90, 27);
+		pNhapThongTin.add(lblHoTen);
+		lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		JLabel lblSDT = new JLabel("SĐT:");
+		lblSDT.setBounds(10, 102, 59, 23);
+		pNhapThongTin.add(lblSDT);
+		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		JLabel lblAddress = new JLabel("Địa chỉ:");
+		lblAddress.setBounds(10, 133, 84, 27);
+		pNhapThongTin.add(lblAddress);
+		lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		txtSDT = new JTextField();
+		txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtSDT.setColumns(10);
+		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtSDT.setBounds(153, 100, 170, 27);
+		pNhapThongTin.add(txtSDT);
+
+		txtDiaChi = new JTextField();
+		txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtDiaChi.setColumns(10);
+		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtDiaChi.setBounds(153, 133, 170, 27);
+		pNhapThongTin.add(txtDiaChi);
+
+		txtCccd = new JTextField();
+		txtCccd.setBounds(153, 167, 170, 27);
+		pNhapThongTin.add(txtCccd);
+		txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtCccd.setColumns(10);
+		txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+
+		JLabel lblCccd = new JLabel("CCCD:");
+		lblCccd.setBounds(10, 171, 65, 23);
+		pNhapThongTin.add(lblCccd);
+		lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		dateChooserNgaySinh = new JDateChooser();
+		dateChooserNgaySinh.setBounds(153, 278, 170, 28);
+		pNhapThongTin.add(dateChooserNgaySinh);
+		dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
+		dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+		dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
+
+		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
+		lblNgaySinh.setBounds(10, 278, 102, 28);
+		pNhapThongTin.add(lblNgaySinh);
+		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		JLabel lblNgayDangKy = new JLabel("Ngày đăng ký:");
+		lblNgayDangKy.setBounds(10, 318, 102, 29);
+		pNhapThongTin.add(lblNgayDangKy);
+		lblNgayDangKy.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		dateChooserNgayDangKy = new JDateChooser();
+		dateChooserNgayDangKy.setBounds(153, 319, 170, 28);
+		pNhapThongTin.add(dateChooserNgayDangKy);
+		dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
+		dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
+
+		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
+		lblLoaiKH.setBounds(10, 211, 124, 19);
+		pNhapThongTin.add(lblLoaiKH);
+		lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		cboloaiKH = new JComboBox<String>();
+		cboloaiKH.setBounds(153, 203, 170, 27);
+		pNhapThongTin.add(cboloaiKH);
+		cboloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		cboloaiKH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		cboloaiKH.setBackground(new Color(255, 255, 255));
+
+		JLabel lblGioiTinh = new JLabel("Giới tính:");
+		lblGioiTinh.setBounds(10, 241, 72, 26);
+		pNhapThongTin.add(lblGioiTinh);
+		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		cbogioiTinh = new JComboBox<String>();
+		cbogioiTinh.setBounds(153, 241, 170, 28);
+		pNhapThongTin.add(cbogioiTinh);
+		cbogioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		cbogioiTinh.setBackground(Color.WHITE);
+		cbogioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+
+		JLabel lblDiem = new JLabel("Điểm tích lũy:");
+		lblDiem.setBounds(10, 358, 102, 28);
+		pNhapThongTin.add(lblDiem);
+		lblDiem.setFont(new Font("SansSerif", Font.BOLD, 15));
+
+		txtPoint = new JTextField();
+		txtPoint.setBounds(153, 358, 170, 28);
+		pNhapThongTin.add(txtPoint);
+		txtPoint.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
+		txtPoint.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtPoint.setEditable(isDisplayable());
+		txtPoint.setColumns(10);
 
 		// lblTim
 		JLabel lblTim = new JLabel("Tìm kiếm:");
@@ -304,47 +308,44 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
 		btnTim.setBounds(1125, 11, 132, 33);
-		Image imgTim = Toolkit.getDefaultToolkit().getImage("data\\img\\iconKinhLup.png");
-		Image resizeImgTim = imgTim.getScaledInstance(20, 20, 0);
-		btnTim.setIcon(new ImageIcon(resizeImgTim));
+
+		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
+		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
 		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
 		String cbbGioiTinh[] = { "Nam", "Nữ" };
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
-			cbbgioiTinh.addItem(cbbGioiTinh[i]);
+			cbogioiTinh.addItem(cbbGioiTinh[i]);
 		}
 
 		btnThemKH = new FixButton("Thêm");
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnThemKH.setBackground(new Color(114, 23, 153));
+		btnThemKH.setBackground(new Color(57, 210, 247));
 		btnThemKH.setBounds(10, 425, 313, 35);
-		Image imgThemKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconGrayThem.png");
-		Image resizeImgThemKH = imgThemKH.getScaledInstance(25, 25, 0);
-		btnThemKH.setIcon(new ImageIcon(resizeImgThemKH));
+		Icon iconThemKH = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 20, Color.white);
+		btnThemKH.setIcon(iconThemKH);
 		pNhapThongTin.add(btnThemKH);
 
 		btnSuaKH = new FixButton("Sửa");
 		btnSuaKH.setForeground(Color.WHITE);
 		btnSuaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnSuaKH.setBackground(new Color(114, 23, 153));
+		btnSuaKH.setBackground(new Color(133, 217, 191));
 		btnSuaKH.setBounds(10, 469, 313, 35);
-		Image imgSuaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconTool.png");
-		Image resizeImgSuaKH = imgSuaKH.getScaledInstance(25, 25, 0);
-		btnSuaKH.setIcon(new ImageIcon(resizeImgSuaKH));
+		Icon iconSuaKH = IconFontSwing.buildIcon(FontAwesome.WRENCH, 20, Color.white);
+		btnSuaKH.setIcon(iconSuaKH);
 		pNhapThongTin.add(btnSuaKH);
 
 		btnXoaKH = new FixButton("Xóa");
 		btnXoaKH.setForeground(Color.WHITE);
 		btnXoaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnXoaKH.setBackground(new Color(114, 23, 153));
+		btnXoaKH.setBackground(new Color(0xE91940));
 		btnXoaKH.setBounds(10, 515, 313, 35);
-		Image imgXoaKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconRemove.png");
-		Image resizeImgXoaKH = imgXoaKH.getScaledInstance(25, 25, 0);
-		btnXoaKH.setIcon(new ImageIcon(resizeImgXoaKH));
+		Icon iconHuyKH = IconFontSwing.buildIcon(FontAwesome.TIMES_CIRCLE, 20, Color.white);
+		btnXoaKH.setIcon(iconHuyKH);
 		pNhapThongTin.add(btnXoaKH);
 
 		btnReset = new FixButton("Làm mới");
@@ -353,9 +354,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnReset.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnReset.setBackground(new Color(114, 23, 153));
 		btnReset.setBounds(10, 561, 313, 35);
-		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconReset.png");
-		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
-		btnReset.setIcon(new ImageIcon(resizeImgLamMoiKH));
+		Icon iconReset = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
+		btnReset.setIcon(iconReset);
 
 		pNhapThongTin.add(btnReset);
 
@@ -408,60 +408,66 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		scrollPaneKH.setViewportView(tableKH);
 
 		JPanel pSapXep = new JPanel();
-		pSapXep.setBackground(new Color(238, 239, 243, 90));
+		pSapXep.setBackground(new Color(171, 192, 238));
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23, 153), 1, true), "S\u1EAFp x\u1EBFp",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pSapXep.setBounds(353, 50, 904, 51);
 		pMain.add(pSapXep);
 		// pSapXep.setLayout(null);
 
-		cbbSort = new JComboBox<String>();
-		cbbSort.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		cbbSort.setBackground(Color.WHITE);
-		cbbSort.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		cboSort = new JComboBox<String>();
+		cboSort.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		cboSort.setBackground(Color.WHITE);
+		cboSort.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 
 		String cbSort[] = { "Tăng dần", "Giảm dần" };
 		for (int i = 0; i < cbSort.length; i++) {
-			cbbSort.addItem(cbSort[i]);
+			cboSort.addItem(cbSort[i]);
 		}
 		pSapXep.setLayout(null);
-		cbbSort.setBounds(26, 14, 167, 28);
-		pSapXep.add(cbbSort);
+		cboSort.setBounds(26, 14, 167, 28);
+		pSapXep.add(cboSort);
 
 		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkAll.setBackground(new Color(220, 210, 239));
+		chkAll.setBackground(new Color(171, 192, 238));
 		chkAll.setBounds(205, 15, 109, 27);
 		pSapXep.add(chkAll);
 		chkAll.addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==1) {
 					loadDanhSachKH();
 				}
-				else
+				else {
+					bg.clearSelection();
 					clearTable();
+				}
 			}
 		});
 
 
 		// rdoTheoMaKH.setSelected(true);
 		rdoTheoMaKH = new JRadioButton("Theo mã khách hàng");
+
+		rdoTheoMaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoMaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
-		rdoTheoMaKH.setBackground(new Color(220, 210, 239));
+		rdoTheoMaKH.setBackground(new Color(171, 192, 238));
 		rdoTheoMaKH.setBounds(329, 15, 167, 27);
 		pSapXep.add(rdoTheoMaKH);
 
 		rdoTheoTenKH = new JRadioButton("Theo tên khách hàng");
+		rdoTheoTenKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoTenKH.setFont(new Font("SansSerif", Font.BOLD, 14));
-		rdoTheoTenKH.setBackground(new Color(220, 210, 239));
+		rdoTheoTenKH.setBackground(new Color(171, 192, 238));
 		rdoTheoTenKH.setBounds(511, 15, 171, 27);
 		pSapXep.add(rdoTheoTenKH);
 
 		rdoTheoLoaiKH = new JRadioButton("Theo loại khách hàng");
+		rdoTheoTenKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 14));
-		rdoTheoLoaiKH.setBackground(new Color(220, 210, 239));
+		rdoTheoLoaiKH.setBackground(new Color(171, 192, 238));
 		rdoTheoLoaiKH.setBounds(702, 15, 171, 27);
 		pSapXep.add(rdoTheoLoaiKH);
 
@@ -485,7 +491,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// Load tên loại KH
 		ArrayList<LoaiKH> lsLoaiKH = daoLoaiKH.getAllLoaiKH();
 		for (LoaiKH lkh : lsLoaiKH) {
-			cbbloaiKH.addItem(lkh.getTenLoaiKH());
+			cboloaiKH.addItem(lkh.getTenLoaiKH());
 		}
 
 		btnThemKH.addActionListener(this);
@@ -500,7 +506,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		rdoTheoLoaiKH.addActionListener(this);
 	}
 
-//end main
+	//end main
 
 	// Load danh sach tu du lieu
 	public void loadDanhSachKH() {
@@ -557,15 +563,14 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// int optThem = JOptionPane.showConfirmDialog(this, "Bạn có chắn chắn muốn thêm
 		// khách hàng không?", "Thông báo", JOptionPane.YES_NO_OPTION );
 
-		if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-				&& regex.regexDiaChi(txtDiaChi)) {
+		try {
 			String maKH = daoMaKH.getMaKH();
 			String tenKH = txtHoTen.getText().toString();
 			String sdt = txtSDT.getText().toString();
 			String diaChi = txtDiaChi.getText().toString();
 			String cccd = txtCccd.getText().toString();
-			String gioiTinh = cbbgioiTinh.getSelectedItem().toString();
-			LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cbbloaiKH.getSelectedItem().toString()));
+			String gioiTinh = cbogioiTinh.getSelectedItem().toString();
+			LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
 
 			int ngaySinh = dateChooserNgaySinh.getDate().getDate();
 			int thangSinh = dateChooserNgaySinh.getDate().getMonth();
@@ -576,17 +581,25 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			int namDangKy = dateChooserNgayDangKy.getDate().getYear();
 			int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
 
-			@SuppressWarnings("deprecation")
-			KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
-					gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
-			daoKhachHang.themDanhSachKH(kh);
-			// tableKH.getRowCount()
-			loadThongTin(kh);
-			resetAll();
-			JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");
+			
+			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
+					&& regex.regexDiaChi(txtDiaChi)) {
+			
+				@SuppressWarnings("deprecation")
+				KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
+						gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
+				daoKhachHang.themDanhSachKH(kh);
+				// tableKH.getRowCount()
+				loadThongTin(kh);
+				resetAll();
+				JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin","Thông báo" ,  JOptionPane.WARNING_MESSAGE);
 		}
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
-		
+
 	}
 
 	// Nút sửa
@@ -603,8 +616,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					String sdt = txtSDT.getText().toString();
 					String diaChi = txtDiaChi.getText().toString();
 					String cccd = txtCccd.getText().toString();
-					String gioiTinh = cbbgioiTinh.getSelectedItem().toString();
-					LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cbbloaiKH.getSelectedItem().toString()));
+					String gioiTinh = cbogioiTinh.getSelectedItem().toString();
+					LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
 					int ngaySinh = dateChooserNgaySinh.getDate().getDate();
 					int thangSinh = dateChooserNgaySinh.getDate().getMonth();
 					int namSinh = dateChooserNgaySinh.getDate().getYear();
@@ -645,71 +658,24 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgaySinh.setDate(new Date(0));
 		dateChooserNgayDangKy.setDate(new Date(0));
 		txtPoint.setText("");
+		clearTable();
+		bg.clearSelection();
 	}
 
 	// Tìm kiếm
 	private void findKH() {
 		KhachHang kh = daoKhachHang.getKH(txtTK.getText().toLowerCase().trim());
 		ArrayList<KhachHang>kh1 = daoKhachHang.getTenKH(txtTK.getText().toLowerCase().trim());
-		/*
-		 * String loai = ; JTextField tam = new JTextField(); tam.setText(loai);
-		 */
-		ArrayList<KhachHang>kh2 = daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen(txtTK.getText().toString()));
-		if (!txtTK.getText().equals("") && !txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
-			String messTenKH = "\n - Họ tên. Ví dụ: Nguyễn Văn A";
-			String messLKH = "\n - Tìm theo loại khách hàng: khách hàng thường, thành viên, VIP, không còn là khách hàng";
-			String messSDT = "\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0";
-			//System.out.println(regex.regexTimKiemMaLoaiKH(txtTK));
-			//loadDanhSachKH();
-			if (regex.regexTimKiemMaKH(txtTK)) {
+		
+		
+			if(!txtTK.getText().equals("") && !txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
 				try {
-					clearTable();
 					loadThongTin(kh);
 				} catch (Exception e) {
 					// TODO: handle exception
-					JOptionPane.showMessageDialog(null, "Không tìm thấy mã khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
-				}
-			} else if (regex.regexTimNV(txtTK)) {
-				try {
-					System.out.println("alo 123 5");
-					clearTable();
-					loadDanhSachTenKH(kh1);
-				} catch (Exception e) {
-					// TODO: handle exception
-
-					JOptionPane.showMessageDialog(null, "Không tìm thấy tên khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
-				}
-			} else if (regex.regexSDT(txtTK)) {
-				try {
-					System.out.println(regex.regexSDT(txtTK));
-					clearTable();
-					loadThongTin(kh);
-				} catch (Exception e) {
-					// TODO: handle exception
-					JOptionPane.showMessageDialog(null, "Không tìm thấy số điện thoại khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
-				}
-				}
-			else if (regex.regexTimKiemMaLoaiKH(txtTK)) {
-
-				System.out.println("alo 123 5");
-				try {
-					//System.out.println(regex.regexTimKiemMaLoaiKH(txtTK));
-					//clearTable();
-					loadDanhSachTenKHTheoLoai(kh2);
-				} catch (Exception e) {
-					// TODO: handle exception
-					JOptionPane.showMessageDialog(null, "Không tìm thấy loại khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
-				}
-				}
-			
-			  else JOptionPane.showMessageDialog(null,
-			  "Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã khách hàng. Ví dụ: KH001"
-			  + messTenKH + messSDT + messLKH, "Thông báo", JOptionPane.ERROR_MESSAGE);
-			 
-		} else {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo",
+				}JOptionPane.showMessageDialog(null, "Không tìm thấy mã khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
+			}JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo",
 					JOptionPane.WARNING_MESSAGE);
-		}
 	}
 
 	// Xoa khach hang
@@ -734,115 +700,115 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Bạn chưa chọn thông tin khách hàng cần hủy!", "Thông báo",
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.WARNING_MESSAGE);
 		}
 		return false;
 	}
 	//Sap xep theo ma khach hang giam dan
-	
-	  public void sortMaKHGiamDan(KhachHang kh) {
-					clearTable();
-					ArrayList<KhachHang> lsKH = daoKhachHang.sortByMa();
-					for (KhachHang khs : lsKH) {
-						LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-						modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-								khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-								dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-					}
-}
-	  
+
+	public void sortMaKHGiamDan(KhachHang kh) {
+		clearTable();
+		ArrayList<KhachHang> lsKH = daoKhachHang.sortByMa();
+		for (KhachHang khs : lsKH) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
+
 	//Sap xep theo ten khach hang giam dan
-	  public void sortTenKHGiamDan(KhachHang kh) {
-			clearTable();
-			ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
-			Collections.sort(lsKH, new Comparator<KhachHang>() {
-				public int compare(KhachHang o1, KhachHang o2) {
-					return o2.getTenKH().compareTo(o1.getTenKH());
-				}
-			});
-			
-			for (KhachHang khs : lsKH) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+	public void sortTenKHGiamDan(KhachHang kh) {
+		clearTable();
+		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
+		Collections.sort(lsKH, new Comparator<KhachHang>() {
+			public int compare(KhachHang o1, KhachHang o2) {
+				return o2.getTenKH().compareTo(o1.getTenKH());
 			}
-}
-	  //Sap xep theo ten khach hang tang dan
-	  public void sortTenKHTangDan(KhachHang kh) {
-			clearTable();
-			ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
-			Collections.sort(lsKH, new Comparator<KhachHang>() {
-				public int compare(KhachHang o1, KhachHang o2) {
-					return o1.getTenKH().compareTo(o2.getTenKH());
-				}
-			});
-			
-			for (KhachHang khs : lsKH) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
-}
-	  //sap xep loaiKh giam dan
-	  public void sortLoaiKHGiamDan(KhachHang kh) {
-		  	clearTable();
-			ArrayList<KhachHang> lsVip= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên VIP"));
-			for (KhachHang khs : lsVip) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
+		});
 
-			ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
-			for (KhachHang khs : lsThanhVien) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		for (KhachHang khs : lsKH) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
+	//Sap xep theo ten khach hang tang dan
+	public void sortTenKHTangDan(KhachHang kh) {
+		clearTable();
+		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
+		Collections.sort(lsKH, new Comparator<KhachHang>() {
+			public int compare(KhachHang o1, KhachHang o2) {
+				return o1.getTenKH().compareTo(o2.getTenKH());
 			}
+		});
 
-			ArrayList<KhachHang> lsKhachHang= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường"));
-			for (KhachHang khs : lsKhachHang) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
-	  }
-	  
-	  //sap xep loaiKH tang dan
-	  public void sortLoaiKHTangDan(KhachHang kh) {
-		  	clearTable();
-			ArrayList<KhachHang> lsKhachHang= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường"));
-			for (KhachHang khs : lsKhachHang) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
+		for (KhachHang khs : lsKH) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
+	//sap xep loaiKh giam dan
+	public void sortLoaiKHGiamDan(KhachHang kh) {
+		clearTable();
+		ArrayList<KhachHang> lsVip= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên VIP"));
+		for (KhachHang khs : lsVip) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
 
-			ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
-			for (KhachHang khs : lsThanhVien) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
+		ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
+		for (KhachHang khs : lsThanhVien) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+
+		ArrayList<KhachHang> lsKhachHang= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường"));
+		for (KhachHang khs : lsKhachHang) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
+
+	//sap xep loaiKH tang dan
+	public void sortLoaiKHTangDan(KhachHang kh) {
+		clearTable();
+		ArrayList<KhachHang> lsKhachHang= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường"));
+		for (KhachHang khs : lsKhachHang) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+
+		ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
+		for (KhachHang khs : lsThanhVien) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
 
 
-			
-			ArrayList<KhachHang> lsVip= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên VIP"));
-			for (KhachHang khs : lsVip) {
-				LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-				modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-						khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-						dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-			}
-	  }
-	
+
+		ArrayList<KhachHang> lsVip= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên VIP"));
+		for (KhachHang khs : lsVip) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
+
 
 
 	@Override
@@ -860,11 +826,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		if (o.equals(tableKH)) {
 			int row = tableKH.getSelectedRow();
 			txtHoTen.setText(modelKhachHang.getValueAt(row, 1).toString());
-			cbbloaiKH.setSelectedItem(modelKhachHang.getValueAt(row, 2).toString());
+			cboloaiKH.setSelectedItem(modelKhachHang.getValueAt(row, 2).toString());
 			txtSDT.setText(modelKhachHang.getValueAt(row, 6).toString());
 			txtCccd.setText(modelKhachHang.getValueAt(row, 7).toString());
 			txtDiaChi.setText(modelKhachHang.getValueAt(row, 5).toString());
-			cbbgioiTinh.setSelectedItem(modelKhachHang.getValueAt(row, 3).toString());
+			cbogioiTinh.setSelectedItem(modelKhachHang.getValueAt(row, 3).toString());
 			txtPoint.setText(modelKhachHang.getValueAt(row, 9).toString());
 			String ngaySinh = modelKhachHang.getValueAt(row, 4).toString();
 			String ngayDangKy = modelKhachHang.getValueAt(row, 8).toString();
@@ -926,7 +892,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		if (o.equals(btnTim)) {
 			findKH();
 		}
-		if(cbbSort.getSelectedItem()=="Tăng dần") {
+		if(cboSort.getSelectedItem()=="Tăng dần") {
 			if(o.equals(rdoTheoMaKH)) {
 				loadDanhSachKH();
 			}
@@ -935,7 +901,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			if(o.equals(rdoTheoLoaiKH))
 				sortLoaiKHTangDan(kh);
 		}
-		if(cbbSort.getSelectedItem()=="Giảm dần"){
+		if(cboSort.getSelectedItem()=="Giảm dần"){
 			clearTable();
 			if(o.equals(rdoTheoMaKH)) {
 				sortMaKHGiamDan(kh);

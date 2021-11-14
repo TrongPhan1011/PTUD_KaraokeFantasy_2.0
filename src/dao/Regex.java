@@ -144,7 +144,7 @@ public class Regex {
 		String regexMaLKH = "^(LKH[0-9]{3})$";
 		Pattern pattern = Pattern.compile(regexMaLKH);
 		Matcher matcher = pattern.matcher(input);
-		if(!input.matches(regexMaLKH)) {
+		if(!matcher.find()) {
 			txtTK.requestFocus();
 			txtTK.selectAll();
 			return false;

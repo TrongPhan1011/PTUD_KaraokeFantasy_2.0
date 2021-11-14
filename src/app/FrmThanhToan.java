@@ -64,6 +64,7 @@ import entity.NhanVien;
 import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+import javax.swing.SwingConstants;
 
 public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener {
 
@@ -123,6 +124,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	private JButton btnInHoaDon;
 	private DAOCTHD daoCTHD;
 	private double giamGia = 0;
+	private JPanel pLine2;
+	private JLabel lblThongTinHD;
 	
 	public Panel getFrmQLBH() {
 		return this.pMain;
@@ -170,18 +173,13 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		add(pMain);
 		pMain.setLayout(null);
 		
-		JLabel lbbTitle = new JLabel("Quản lý thanh toán");
-		lbbTitle.setFont(new Font("SansSerif", Font.BOLD, 22));
-		lbbTitle.setBounds(24, 10, 268, 33);
-		pMain.add(lbbTitle);
-		
 		JLabel lblSubTimKiem = new JLabel("Tìm kiếm:");
 		lblSubTimKiem.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblSubTimKiem.setBounds(374, 13, 90, 35);
+		lblSubTimKiem.setBounds(438, 10, 83, 35);
 		pMain.add(lblSubTimKiem);
 		
 		txtTim = new JTextField();
-		txtTim.setBounds(474, 12, 281, 33);
+		txtTim.setBounds(520, 11, 357, 33);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
 		
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 14));
@@ -197,7 +195,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnTim = new FixButton("Tìm"); 
 		btnTim.setBackground(new Color(114, 23 ,153));
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnTim.setBounds(786, 11, 98, 33);
+		btnTim.setBounds(887, 12, 98, 33);
 		
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, new Color(255, 255, 255));
 		btnTim.setIcon(iconTim);
@@ -213,7 +211,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnDSHD.setForeground(Color.WHITE);
 		btnDSHD.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnDSHD.setBackground(new Color(114, 23, 153));
-		btnDSHD.setBounds(1015, 13, 232, 33);
+		btnDSHD.setBounds(1025, 12, 232, 33);
 		
 
 		Icon iconDSHD = IconFontSwing.buildIcon(FontAwesome.LIST_ALT, 20, new Color(57, 210, 247));
@@ -222,73 +220,86 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pMain.add(btnDSHD);
 	
 		
-		JLabel lblHeaderPhong = new JLabel("Phòng đang hát");
+		JLabel lblHeaderPhong = new JLabel("Chọn phòng đang hát");
+		lblHeaderPhong.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeaderPhong.setFont(new Font("SansSerif", Font.BOLD, 18));
 	
-		lblHeaderPhong.setBounds(551, 47, 162, 26);
+		lblHeaderPhong.setBounds(10, 16, 208, 26);
 		pMain.add(lblHeaderPhong);
 		
 		pPhong = new JPanel();
 		
 		pPhong.setBackground(Color.white);		//new Color(164, 44, 167,20)
+		pPhong.setLayout(new GridLayout(6, 1, 0, 0));
 
-		
 		JScrollPane scrollPane = new JScrollPane(pPhong);
+		//JScrollPane scrollPane = new JScrollPane(); //pPhong
 		scrollPane.setViewportView(pPhong);
 		scrollPane.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		pPhong.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		
-		scrollPane.setBounds(24, 72, 1223, 102);
+		scrollPane.setBounds(10, 66, 216, 552);
 		pMain.add(scrollPane);
+		
+		JPanel pThongTinDDP = new JPanel();
+		pThongTinDDP.setBackground(new Color(238,239,243));
+		pThongTinDDP.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Thông tin chung", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pThongTinDDP.setBounds(519, 56, 738, 61);
+		pMain.add(pThongTinDDP);
+		pThongTinDDP.setLayout(null);
 		
 		JLabel lblSubPhong = new JLabel("Phòng : ");
 		lblSubPhong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubPhong.setBounds(315, 185, 56, 26);
-		pMain.add(lblSubPhong);
+		lblSubPhong.setBounds(10, 9, 56, 26);
+		pThongTinDDP.add(lblSubPhong);
 		
-		lblMaPhong = new JLabel("");
+		lblMaPhong = new JLabel("1");
 		lblMaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblMaPhong.setBounds(370, 185, 71, 26);
-		pMain.add(lblMaPhong);
+		lblMaPhong.setBounds(62, 9, 98, 26);
+		pThongTinDDP.add(lblMaPhong);
 		
 		JLabel lblSubTenKH = new JLabel("Khách hàng: ");
 		lblSubTenKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubTenKH.setBounds(504, 185, 90, 26);
-		pMain.add(lblSubTenKH);
+		lblSubTenKH.setBounds(10, 33, 90, 26);
+		pThongTinDDP.add(lblSubTenKH);
 		
-		lblMaKH = new JLabel("");
+		lblMaKH = new JLabel("1");
 		lblMaKH.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblMaKH.setBounds(604, 185, 71, 26);
-		pMain.add(lblMaKH);
+		lblMaKH.setBounds(96, 33, 71, 26);
+		pThongTinDDP.add(lblMaKH);
 		
-		lblTenKH = new JLabel("");
+		lblTenKH = new JLabel("1");
 		lblTenKH.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblTenKH.setBounds(648, 185, 201, 26);
-		pMain.add(lblTenKH);
+		lblTenKH.setBounds(170, 33, 252, 26);
+		pThongTinDDP.add(lblTenKH);
 		
 		
 		JLabel lblSubGioVao = new JLabel("Giờ vào: ");
 		lblSubGioVao.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubGioVao.setBounds(887, 185, 61, 26);
-		pMain.add(lblSubGioVao);
+		lblSubGioVao.setBounds(543, 33, 61, 26);
+		pThongTinDDP.add(lblSubGioVao);
 		
-		lblGioVao = new JLabel("");
+		lblGioVao = new JLabel("1");
 		lblGioVao.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblGioVao.setBounds(948, 185, 27, 26);
-		pMain.add(lblGioVao);
+		lblGioVao.setBounds(603, 33, 40, 26);
+		pThongTinDDP.add(lblGioVao);
 		
-		lblPhutVao = new JLabel("");
+		lblPhutVao = new JLabel("1");
 		lblPhutVao.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblPhutVao.setBounds(985, 185, 27, 26);
-		pMain.add(lblPhutVao);
+		lblPhutVao.setBounds(653, 33, 56, 26);
+		pThongTinDDP.add(lblPhutVao);
+		
+		JLabel blbSubAfterGioRa1 = new JLabel(":");
+		blbSubAfterGioRa1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		blbSubAfterGioRa1.setBounds(644, 33, 26, 26);
+		pThongTinDDP.add(blbSubAfterGioRa1);
 		
 	
 		
 		JPanel pDichVu = new JPanel();
 		pDichVu.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Dịch vụ ", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
 		pDichVu.setBackground(new Color(238,239,243,90));
-		pDichVu.setBounds(24, 217, 281, 379);
+		pDichVu.setBounds(228, 58, 281, 560);
 		pMain.add(pDichVu);
 		pDichVu.setLayout(null);
 		
@@ -306,33 +317,33 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		JLabel lblSubTenMH = new JLabel("Tên mặt hàng: ");
 		lblSubTenMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubTenMH.setBounds(10, 78, 102, 26);
+		lblSubTenMH.setBounds(10, 66, 102, 26);
 		pDichVu.add(lblSubTenMH);
 		
 		cbbTenMH = new JComboBox<String>();
 		cbbTenMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbTenMH.setBackground(Color.WHITE);
-		cbbTenMH.setBounds(112, 76, 159, 30);
+		cbbTenMH.setBounds(112, 64, 159, 30);
 		cbbTenMH.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
 		pDichVu.add(cbbTenMH);
 		
 		JLabel lblSoluongMH = new JLabel("Số lượng:");
 		lblSoluongMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSoluongMH.setBounds(10, 130, 84, 26);
+		lblSoluongMH.setBounds(10, 104, 84, 26);
 		pDichVu.add(lblSoluongMH);
 		
 		txtSoLuong = new JTextField();
 		txtSoLuong.setBackground(new Color(255, 255, 255));
 		txtSoLuong.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtSoLuong.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));;
-		txtSoLuong.setBounds(112, 129, 159, 30);
+		txtSoLuong.setBounds(112, 103, 159, 30);
 		pDichVu.add(txtSoLuong);
 		txtSoLuong.setColumns(10);
 		
 		rdbtnGiamSL = new JRadioButton("Giảm số lượng");
 		rdbtnGiamSL.setBackground(new Color(228,210,239));
 		rdbtnGiamSL.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		rdbtnGiamSL.setBounds(112, 170, 147, 35);
+		rdbtnGiamSL.setBounds(112, 140, 159, 35);
 		pDichVu.add(rdbtnGiamSL);
 		
 		btnThemMH = new FixButton("Thêm mặt hàng");
@@ -340,19 +351,19 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnThemMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		
 		btnThemMH.setBackground(new Color(57, 210, 247));
-		btnThemMH.setBounds(56, 231, 176, 33);
+		btnThemMH.setBounds(10, 192, 261, 33);
 		
 		Icon iconThemMH = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 20, new Color(255, 255 ,255));
 		btnThemMH.setIcon(iconThemMH);
 		
 		pDichVu.add(btnThemMH);
 		
-		btnXoaMH = new FixButton("Xóa");
+		btnXoaMH = new FixButton("Xóa mặt hàng");
 		btnXoaMH.setForeground(Color.WHITE);
 		btnXoaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		
 		btnXoaMH.setBackground(new Color(0xE91940));
-		btnXoaMH.setBounds(56, 278, 176, 33);
+		btnXoaMH.setBounds(10, 236, 261, 33);
 		
 		Icon iconXoaMH = IconFontSwing.buildIcon(FontAwesome.TIMES_CIRCLE, 20, new Color(255, 255 ,255));
 		btnXoaMH.setIcon(iconXoaMH);
@@ -362,7 +373,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnLamMoiMH.setForeground(Color.WHITE);
 		btnLamMoiMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnLamMoiMH.setBackground(new Color(114, 23, 153));
-		btnLamMoiMH.setBounds(56, 322, 176, 33);
+		btnLamMoiMH.setBounds(10, 280, 261, 33);
 		
 		Icon iconLamMoiMH = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, new Color(255, 255 ,255));
 		btnLamMoiMH.setIcon(iconLamMoiMH);
@@ -395,176 +406,183 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		tbMatHang.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 		
 		JScrollPane spMatHang = new JScrollPane(tbMatHang);
-		spMatHang.setBounds(315, 217, 697, 305);
+		spMatHang.setBounds(520, 120, 736, 398);
 		spMatHang.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		spMatHang.setBackground(new Color(164, 44, 167));
 		pMain.add(spMatHang);
 		
-		JLabel lblSubGiaPhong = new JLabel("Giá phòng: ");
-		lblSubGiaPhong.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubGiaPhong.setBounds(551, 533, 77, 26);
-		
-		pMain.add(lblSubGiaPhong);
-		
-		lblGiaPhong = new JLabel("");
-		lblGiaPhong.setForeground(Color.RED);
-		lblGiaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblGiaPhong.setBounds(640, 533, 109, 26);
-		pMain.add(lblGiaPhong);
-		
-		lblThoiGian = new JLabel("");
-		lblThoiGian.setForeground(Color.RED);
-		lblThoiGian.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblThoiGian.setBounds(836, 533, 176, 26);
-		pMain.add(lblThoiGian);
-		
-		JLabel lblSubThoiGian = new JLabel("Thời gian: ");
-		lblSubThoiGian.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubThoiGian.setBounds(759, 533, 77, 26);
-		pMain.add(lblSubThoiGian);
-		
-		JLabel lblpSubPhuThu = new JLabel("Phụ thu: ");
-		lblpSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblpSubPhuThu.setBounds(315, 533, 90, 26);
-		pMain.add(lblpSubPhuThu);
-		
-		lblPhuThu = new JLabel("");
-		lblPhuThu.setForeground(Color.RED);
-		lblPhuThu.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblPhuThu.setBounds(381, 533, 169, 26);
-		pMain.add(lblPhuThu);
-		
-		JLabel lblSubThanhTien = new JLabel("Thành tiền: ");
-		lblSubThanhTien.setFont(new Font("SansSerif", Font.PLAIN, 17));
-		lblSubThanhTien.setBounds(739, 570, 90, 26);
-		pMain.add(lblSubThanhTien);
-		
-		lblThanhTien = new JLabel("");
-		lblThanhTien.setForeground(Color.RED);
-		lblThanhTien.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 20));
-		lblThanhTien.setBounds(825, 569, 187, 26);
-		pMain.add(lblThanhTien);
-		
 		JPanel pLine = new JPanel();
 		pLine.setBackground(Color.BLACK);
-		pLine.setBounds(736, 560, 276, 2);
+		pLine.setBounds(736, 582, 276, 2);
 		pMain.add(pLine);
 		
-		JPanel pThanhToan = new JPanel();
-		pThanhToan.setBackground(new Color(238,239,243,90));
-		pThanhToan.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Thanh toán", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pThanhToan.setBounds(1024, 217, 223, 379);
-		pMain.add(pThanhToan);
-		pThanhToan.setLayout(null);
-		
-		JLabel lblSubNhanVien = new JLabel("Nhân viên lập HĐ:");
+		JLabel lblSubNhanVien = new JLabel("Nhân viên lập:");
 		lblSubNhanVien.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblSubNhanVien.setBounds(10, 25, 161, 26);
-		pThanhToan.add(lblSubNhanVien);
+		lblSubNhanVien.setBounds(10, 390, 102, 26);
+		pDichVu.add(lblSubNhanVien);
 		
 		lblNhanVienLap = new JLabel(sHeaderMaNV);
 		lblNhanVienLap.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblNhanVienLap.setBounds(145, 25, 68, 26);
-		pThanhToan.add(lblNhanVienLap);
-		
-		
-		
-		btnThanhToan = new FixButton("Thanh toán");
-		btnThanhToan.setForeground(Color.black);
-		btnThanhToan.setFont(new Font("SansSerif", Font.BOLD, 20));
-		btnThanhToan.setBackground(new Color(57, 210, 247));   //new Color(114, 23, 153)   new Color(57, 210, 247)
-		btnThanhToan.setBounds(25, 267, 176, 44);
-		pThanhToan.add(btnThanhToan);
+		lblNhanVienLap.setBounds(112, 390, 159, 26);
+		pDichVu.add(lblNhanVienLap);
 		
 		Icon iconThanhToan = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 25, new Color(255, 255 ,255));
-		btnThanhToan.setIcon(iconThanhToan);
-		
-		btnLamMoiHD = new FixButton("Làm mới");
-		btnLamMoiHD.setForeground(Color.WHITE);
-		btnLamMoiHD.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnLamMoiHD.setBackground(new Color(114, 23, 153));
-		btnLamMoiHD.setBounds(25, 322, 176, 33);
 		
 		
 		Icon iconLamMoiTT = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, new Color(255, 255 ,255));
-		btnLamMoiHD.setIcon(iconLamMoiTT);
-		
-		
-		pThanhToan.add(btnLamMoiHD);
 		
 		JLabel lblSubPhuThu = new JLabel("Phụ thu: ");
-		lblSubPhuThu.setBounds(10, 71, 61, 26);
-		pThanhToan.add(lblSubPhuThu);
+		lblSubPhuThu.setBounds(10, 427, 61, 26);
+		pDichVu.add(lblSubPhuThu);
 		lblSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		cbbPhuThu = new JComboBox<String>();
-		cbbPhuThu.setBounds(74, 68, 126, 29);
-		pThanhToan.add(cbbPhuThu);
+		cbbPhuThu.setBounds(112, 424, 159, 29);
+		pDichVu.add(cbbPhuThu);
 		cbbPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbPhuThu.setBackground(Color.WHITE);
 		cbbPhuThu.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
 		
 		JLabel lblSubGioRa = new JLabel("Giờ ra: ");
-		lblSubGioRa.setBounds(11, 122, 61, 26);
-		pThanhToan.add(lblSubGioRa);
+		lblSubGioRa.setBounds(11, 464, 61, 26);
+		pDichVu.add(lblSubGioRa);
 		lblSubGioRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		 cbbGioRa = new JComboBox<String>();
-		cbbGioRa.setBounds(75, 116, 56, 29);
-		pThanhToan.add(cbbGioRa);
+		cbbGioRa.setBounds(112, 463, 69, 29);
+		pDichVu.add(cbbGioRa);
 		cbbGioRa.setBackground(Color.WHITE);
 		cbbGioRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbGioRa.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
 		
 		JLabel blbSubAfterGioRa = new JLabel(":");
-		blbSubAfterGioRa.setBounds(133, 125, 6, 14);
-		pThanhToan.add(blbSubAfterGioRa);
+		blbSubAfterGioRa.setHorizontalAlignment(SwingConstants.CENTER);
+		blbSubAfterGioRa.setBounds(181, 464, 20, 26);
+		pDichVu.add(blbSubAfterGioRa);
 		blbSubAfterGioRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		cbbPhutRa = new JComboBox<String>();
-		cbbPhutRa.setBounds(140, 116, 60, 29);
-		pThanhToan.add(cbbPhutRa);
+		cbbPhutRa.setBounds(202, 463, 69, 29);
+		pDichVu.add(cbbPhutRa);
 		cbbPhutRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbPhutRa.setBackground(Color.WHITE);
 		cbbPhutRa.setBorder(new LineBorder(new Color(114, 23 ,153), 1, true));
 		
-//		btnLamMoiHD_1 = new FixButton("Làm mới");
-//		btnLamMoiHD_1.setBounds(24, 236, 176, 33);
-//		pThanhToan.add(btnLamMoiHD_1);
-//		
-		btnInHoaDon = new FixButton("In hóa đơn");
+
+		btnInHoaDon = new FixButton("Xuất hóa đơn tạm");
 		btnInHoaDon.setForeground(Color.WHITE);
 		btnInHoaDon.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnInHoaDon.setBackground(new Color(114, 23, 153));
-		btnInHoaDon.setBounds(25, 223, 176, 33);
+		btnInHoaDon.setBounds(10, 516, 261, 33);
 		
 		Icon iconInHD = IconFontSwing.buildIcon(FontAwesome.PRINT, 20, new Color(255, 255 ,255));
 		btnInHoaDon.setIcon(iconInHD);
-		pThanhToan.add(btnInHoaDon);
+		pDichVu.add(btnInHoaDon);
+		
+		pLine2 = new JPanel();
+		pLine2.setBackground(Color.BLACK);
+		pLine2.setBounds(2, 338, 276, 2);
+		pDichVu.add(pLine2);
+		
+		lblThongTinHD = new JLabel("Thông tin hóa đơn");
+		lblThongTinHD.setHorizontalAlignment(SwingConstants.CENTER);
+		lblThongTinHD.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblThongTinHD.setBounds(10, 351, 261, 35);
+		pDichVu.add(lblThongTinHD);
 
 		
 		
-		JLabel blbSubAfterGioRa1 = new JLabel(":");
-		blbSubAfterGioRa1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		blbSubAfterGioRa1.setBounds(971, 191, 12, 14);
-		pMain.add(blbSubAfterGioRa1);
+		
+		
+		JPanel pThanhToan = new JPanel();
+		pThanhToan.setBackground(new Color(238,239,243));
+		pThanhToan.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Thanh toán", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pThanhToan.setBounds(520, 519, 737, 99);
+		pMain.add(pThanhToan);
+		pThanhToan.setLayout(null);
+		
+		JLabel lblpSubPhuThu = new JLabel("Phụ thu: ");
+		lblpSubPhuThu.setBounds(10, 11, 90, 26);
+		pThanhToan.add(lblpSubPhuThu);
+		lblpSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		lblPhuThu = new JLabel("1");
+		lblPhuThu.setBounds(77, 11, 169, 26);
+		pThanhToan.add(lblPhuThu);
+		lblPhuThu.setForeground(Color.RED);
+		lblPhuThu.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		
+		JLabel lblSubGiaPhong = new JLabel("Giá phòng: ");
+		lblSubGiaPhong.setBounds(244, 11, 77, 26);
+		pThanhToan.add(lblSubGiaPhong);
+		lblSubGiaPhong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		lblGiaPhong = new JLabel("1");
+		lblGiaPhong.setBounds(333, 11, 109, 26);
+		pThanhToan.add(lblGiaPhong);
+		lblGiaPhong.setForeground(Color.RED);
+		lblGiaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		
 	
 		
-		lblThanhToanLoaiKH = new JLabel("");
+		lblThanhToanLoaiKH = new JLabel("1");
+		lblThanhToanLoaiKH.setBounds(10, 33, 90, 26);
+		pThanhToan.add(lblThanhToanLoaiKH);
 		lblThanhToanLoaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
-		lblThanhToanLoaiKH.setBounds(315, 560, 90, 26);
-		pMain.add(lblThanhToanLoaiKH);
 		
-		lblGiamGia = new JLabel("");
+		lblGiamGia = new JLabel("1");
+		lblGiamGia.setBounds(96, 33, 149, 26);
+		pThanhToan.add(lblGiamGia);
 		lblGiamGia.setForeground(Color.RED);
 		lblGiamGia.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
-		lblGiamGia.setBounds(401, 560, 149, 26);
-		pMain.add(lblGiamGia);
+		
+		JLabel lblSubThoiGian = new JLabel("Thời gian: ");
+		lblSubThoiGian.setBounds(244, 33, 77, 26);
+		pThanhToan.add(lblSubThoiGian);
+		lblSubThoiGian.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		
+		lblThoiGian = new JLabel("1");
+		lblThoiGian.setBounds(326, 33, 176, 26);
+		pThanhToan.add(lblThoiGian);
+		lblThoiGian.setForeground(Color.RED);
+		lblThoiGian.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		
+		JLabel lblSubThanhTien = new JLabel("Thành tiền: ");
+		lblSubThanhTien.setBounds(226, 68, 90, 26);
+		pThanhToan.add(lblSubThanhTien);
+		lblSubThanhTien.setFont(new Font("SansSerif", Font.PLAIN, 17));
+		
+		lblThanhTien = new JLabel("1");
+		lblThanhTien.setBounds(312, 67, 187, 26);
+		pThanhToan.add(lblThanhTien);
+		lblThanhTien.setForeground(Color.RED);
+		lblThanhTien.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 20));
+		
+		btnLamMoiHD = new FixButton("Làm mới");
+		btnLamMoiHD.setBounds(541, 55, 186, 33);
+		pThanhToan.add(btnLamMoiHD);
+		btnLamMoiHD.setForeground(Color.WHITE);
+		btnLamMoiHD.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnLamMoiHD.setBackground(new Color(114, 23, 153));
+		btnLamMoiHD.setIcon(iconLamMoiTT);
+		
+		
+		
+		btnThanhToan = new FixButton("Thanh toán");
+		btnThanhToan.setBounds(541, 14, 186, 35);
+		pThanhToan.add(btnThanhToan);
+		btnThanhToan.setForeground(Color.black);
+		btnThanhToan.setFont(new Font("SansSerif", Font.BOLD, 20));
+		btnThanhToan.setBackground(new Color(57, 210, 247));
+		btnThanhToan.setIcon(iconThanhToan);
+		btnThanhToan.addActionListener(this);
+		
+		
+		btnLamMoiHD.addActionListener(this);
 		
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setIcon(new ImageIcon("data\\img\\background.png"));
-		lblBackground.setBounds(0, 0, 1281, 606);
+		lblBackground.setBounds(0, 0, 1281, 629);
 		Image imgBackground = Toolkit.getDefaultToolkit ().getImage ("data\\img\\background.png");
 		Image resizeBG = imgBackground.getScaledInstance(lblBackground.getWidth(), lblBackground.getHeight(), 0);
 		lblBackground.setIcon(new ImageIcon(resizeBG));	
@@ -620,11 +638,9 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		txtTim.addMouseListener(this);
 		
 		btnDSHD.addActionListener(this);
-		btnLamMoiHD.addActionListener(this);
 		btnThemMH.addActionListener(this);
 		btnLamMoiMH.addActionListener(this);
 		btnXoaMH.addActionListener(this);
-		btnThanhToan.addActionListener(this);
 		rdbtnGiamSL.addActionListener(this);
 		btnTim.addActionListener(this);
 		

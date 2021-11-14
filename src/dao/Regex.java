@@ -12,7 +12,7 @@ import com.toedter.calendar.JDateChooser;
 
 public class Regex {
 	public boolean regexDiaChi(JTextField txtDiaChi) {
-		String input = txtDiaChi.getText();
+		String input = txtDiaChi.getText().trim();
 		String regex = "^([ A-Za-z0-9,.a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
@@ -26,7 +26,7 @@ public class Regex {
 	}
 	
 	public boolean regexTen(JTextField txtTen2) {
-		String input = txtTen2.getText();
+		String input = txtTen2.getText().trim();
 		String regex = "^([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
@@ -40,7 +40,7 @@ public class Regex {
 	}
 	
 	public boolean regexSDT(JTextField txtSDT) {
-		String input = txtSDT.getText();
+		String input = txtSDT.getText().trim();
 		String regex = "^(0[0-9]{9}$)";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
@@ -54,7 +54,7 @@ public class Regex {
 	}
 	
 	public boolean regexCCCD(JTextField txtCCCD) {
-		String input = txtCCCD.getText();
+		String input = txtCCCD.getText().trim();
 		String regex = "^([0-9]{12}$)";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
@@ -68,7 +68,7 @@ public class Regex {
 	}
 	
 	public boolean regexSoLuong(JTextField txtSoluong) {
-		String input = txtSoluong.getText();
+		String input = txtSoluong.getText().trim();
 		String regex = "^[1-9]+[0-9]*$";
 		if(!input.matches(regex))
 		{	JOptionPane.showMessageDialog(null, "Số lượng không được để trống, không được nhập chữ và phải lớn hơn 0\nVí dụ: 10", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -105,12 +105,11 @@ public class Regex {
 	
 	public boolean regexTimKiemMaNV(JTextField txtTim) {
 		String input = txtTim.getText().trim();
+		input = input.toUpperCase();
 		String regexMaNV = "^(NV[0-9]{3})$";
-		Pattern pattern = Pattern.compile(regexMaNV);
-		Matcher matcher = pattern.matcher(input);
 		if(!input.matches(regexMaNV)) {
 			JOptionPane.showMessageDialog(null, "Mã nhân viên tìm kiếm không hợp lệ\nMã nhân viên. Ví dụ: NV001\n");
-			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTim.requestFocus();
 			txtTim.selectAll();
 			return false;
@@ -119,11 +118,11 @@ public class Regex {
 	}
 	
 	public boolean regexTimKiemMaKH(JTextField txtTK) {
-		String input = txtTK.getText();
+		String input = txtTK.getText().trim();
+		input = input.toUpperCase();
 		String regexMaKH = "^(KH[0-9]{3})$";
-		Pattern pattern = Pattern.compile(regexMaKH);
-		Matcher matcher = pattern.matcher(input);
 		if(!input.matches(regexMaKH)) {
+			JOptionPane.showMessageDialog(null, "Mã khách hàng không hợp lệ!\n - Ví dụ mã khách hàng: KH001");
 			txtTK.requestFocus();
 			txtTK.selectAll();
 			return false;
@@ -132,12 +131,11 @@ public class Regex {
 	}
 
 	public boolean regexTimKiemMaLoaiKH(JTextField txtTK) {
-		DAOLoaiKH daoLKH = new DAOLoaiKH();
-		String input = daoLKH.getMaLoaiKHTheoTen(txtTK.getText().toString()) ;
-		String regexMaLKH = "^(LKH[0-9]{3})$";
-		Pattern pattern = Pattern.compile(regexMaLKH);
-		Matcher matcher = pattern.matcher(input);
+		String input = txtTK.getText().trim();
+		input = input.toUpperCase();
+		String regexMaLKH = "^LKH[0-9]{3}$";
 		if(!input.matches(regexMaLKH)) {
+			JOptionPane.showMessageDialog(null, "Mã loại khách hàng không hợp lệ!\n - Ví dụ mã loại khách hàng: LKH001");
 			txtTK.requestFocus();
 			txtTK.selectAll();
 			return false;

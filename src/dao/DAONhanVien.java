@@ -85,7 +85,7 @@ public class DAONhanVien implements Serializable{
 	}
 	
 	//Load 1 NV dang lam viec theo manv, sdt
-	public NhanVien getMaVaSDTNV(String info) { 
+	public NhanVien getMaVaSdtNVChoDDP(String info) { 
 		NhanVien nv = new NhanVien();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -128,6 +128,55 @@ public class DAONhanVien implements Serializable{
 			e.printStackTrace();
 		}
 		return nv;
+	}
+	
+	public ArrayList<NhanVien> getMaVaSDTNV(String info) { 
+		ArrayList<NhanVien> lstNV=new ArrayList<NhanVien>();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sqlMa = "select * from [dbo].[NhanVien] where maNhanVien = '"+info+"'";
+		String sqlSDT = "select * from [dbo].[NhanVien] where sdt = '"+info+"'";
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rsMa = stm.executeQuery(sqlMa);
+			while(rsMa.next()) {
+				NhanVien nv=new NhanVien();
+				nv.setMaNhanVien(rsMa.getString(1));
+				nv.setTaiKhoan(new TaiKhoan(rsMa.getString(2)));
+				nv.setTenNhanVien(rsMa.getString(3));
+				nv.setChucVu(rsMa.getString(4));
+				nv.setGioiTinh(rsMa.getString(5));
+				nv.setNgaySinh(rsMa.getDate(6));
+				nv.setDiaChi(rsMa.getString(7));
+				nv.setSdt(rsMa.getString(8));
+				nv.setCccd(rsMa.getString(9));
+				nv.setLuong(rsMa.getDouble(10));
+				nv.setCaLamViec(rsMa.getInt(11));
+				nv.setTrangThaiLamViec(rsMa.getString(12));
+				lstNV.add(nv);
+			}
+			
+			ResultSet rsSDT = stm.executeQuery(sqlSDT);
+			while(rsSDT.next()) {
+				NhanVien nv=new NhanVien();
+				nv.setMaNhanVien(rsSDT.getString(1));
+				nv.setTaiKhoan(new TaiKhoan(rsSDT.getString(2)));
+				nv.setTenNhanVien(rsSDT.getString(3));
+				nv.setChucVu(rsSDT.getString(4));
+				nv.setGioiTinh(rsSDT.getString(5));
+				nv.setNgaySinh(rsSDT.getDate(6));
+				nv.setDiaChi(rsSDT.getString(7));
+				nv.setSdt(rsSDT.getString(8));
+				nv.setCccd(rsSDT.getString(9));
+				nv.setLuong(rsSDT.getDouble(10));
+				nv.setCaLamViec(rsSDT.getInt(11));
+				nv.setTrangThaiLamViec(rsSDT.getString(12));
+				lstNV.add(nv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lstNV;
 	}
 	
 	

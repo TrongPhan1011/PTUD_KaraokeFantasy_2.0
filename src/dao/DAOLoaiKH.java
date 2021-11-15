@@ -11,6 +11,10 @@ import entity.LoaiKH;
 import entity.LoaiMatHang;
 
 public class DAOLoaiKH {
+	/**
+	 * Lấy ra thông tin loại khách hàng trừ LKH004 (không còn là khách hàng)
+	 * @return các thông tin từ bảng loại khách hàng
+	 */
 	public ArrayList<LoaiKH> getAllLoaiKH() {
 		ArrayList<LoaiKH> lsLoaiKH = new ArrayList<LoaiKH>();
 		ConnectDB.getinstance();
@@ -32,7 +36,11 @@ public class DAOLoaiKH {
 		
 		return lsLoaiKH;
 	}
-	
+	/**
+	 * Lấy ra loại khách hàng 
+	 * @param mã khách hàng được nhập vào
+	 * @return thông tin của mã loại khách hàng đã được nhập
+	 */
 	public LoaiKH getLoaiKHTheoMaLoai(String ma) {
 		LoaiKH loaiKH = new LoaiKH();
 		ConnectDB.getinstance();
@@ -53,7 +61,11 @@ public class DAOLoaiKH {
 		
 		return loaiKH;
 	}
-	
+	/**
+	 * 
+	 * @param ten loại khách hàng được nhập
+	 * @return mã loại khách hàng
+	 */
 	
 	public String getMaLoaiKHTheoTen(String ten) {
 		String maLoai ="";

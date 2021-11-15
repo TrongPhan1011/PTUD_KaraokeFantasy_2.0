@@ -55,6 +55,7 @@ import dao.DAOPhatSinhMa;
 import dao.Regex;
 import entity.KhachHang;
 import entity.LoaiKH;
+import entity.MatHang;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
@@ -139,7 +140,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		add(pMain);
 		pMain.setLayout(null);
 
-
+		
 		pNhapThongTin = new JPanel();
 		pNhapThongTin.setBorder(new LineBorder(new Color(114, 23, 153)));
 		pNhapThongTin.setBackground(Color.WHITE);
@@ -152,7 +153,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
 		lblNhapThongTin.setBounds(10, 11, 313, 29);
 		pNhapThongTin.add(lblNhapThongTin);
-
+		
+		//Nhap ho ten
 		txtHoTen = new JTextField();
 		txtHoTen.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtHoTen.setColumns(10);
@@ -165,15 +167,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pNhapThongTin.add(lblHoTen);
 		lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
 
+		//Nhap so dien thoai
 		JLabel lblSDT = new JLabel("SĐT:");
 		lblSDT.setBounds(10, 102, 59, 23);
 		pNhapThongTin.add(lblSDT);
 		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
-
-		JLabel lblAddress = new JLabel("Địa chỉ:");
-		lblAddress.setBounds(10, 133, 84, 27);
-		pNhapThongTin.add(lblAddress);
-		lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		txtSDT = new JTextField();
 		txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -181,6 +179,12 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtSDT.setBounds(153, 100, 170, 27);
 		pNhapThongTin.add(txtSDT);
+		
+		//Nhap dia chi
+		JLabel lblAddress = new JLabel("Địa chỉ:");
+		lblAddress.setBounds(10, 133, 84, 27);
+		pNhapThongTin.add(lblAddress);
+		lblAddress.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		txtDiaChi = new JTextField();
 		txtDiaChi.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -189,6 +193,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtDiaChi.setBounds(153, 133, 170, 27);
 		pNhapThongTin.add(txtDiaChi);
 
+		//Nhap cac cuoc cong dan
 		txtCccd = new JTextField();
 		txtCccd.setBounds(153, 167, 170, 27);
 		pNhapThongTin.add(txtCccd);
@@ -201,6 +206,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pNhapThongTin.add(lblCccd);
 		lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
 
+		//Chon ngay sinh cua khach hang
 		dateChooserNgaySinh = new JDateChooser();
 		dateChooserNgaySinh.setBounds(153, 278, 170, 28);
 		pNhapThongTin.add(dateChooserNgaySinh);
@@ -214,7 +220,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblNgaySinh.setBounds(10, 278, 102, 28);
 		pNhapThongTin.add(lblNgaySinh);
 		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-
+		
+		//chon ngay dang ki
 		JLabel lblNgayDangKy = new JLabel("Ngày đăng ký:");
 		lblNgayDangKy.setBounds(10, 318, 102, 29);
 		pNhapThongTin.add(lblNgayDangKy);
@@ -228,7 +235,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
-
+		
+		//Loai khach hang
 		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
 		lblLoaiKH.setBounds(10, 211, 124, 19);
 		pNhapThongTin.add(lblLoaiKH);
@@ -240,7 +248,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		cboloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboloaiKH.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboloaiKH.setBackground(new Color(255, 255, 255));
-
+		
+		//Chon gioi tinh
 		JLabel lblGioiTinh = new JLabel("Giới tính:");
 		lblGioiTinh.setBounds(10, 241, 72, 26);
 		pNhapThongTin.add(lblGioiTinh);
@@ -252,7 +261,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		cbogioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbogioiTinh.setBackground(Color.WHITE);
 		cbogioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-
+		
+		//diem tich cua khach hang
 		JLabel lblDiem = new JLabel("Điểm tích lũy:");
 		lblDiem.setBounds(10, 358, 102, 28);
 		pNhapThongTin.add(lblDiem);
@@ -317,7 +327,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
 			cbogioiTinh.addItem(cbbGioiTinh[i]);
 		}
-
+		
+		//btnThem
 		btnThemKH = new FixButton("Thêm");
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -328,6 +339,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnThemKH.setIcon(iconThemKH);
 		pNhapThongTin.add(btnThemKH);
 
+		//btn sua thong tin
 		btnSuaKH = new FixButton("Sửa");
 		btnSuaKH.setForeground(Color.WHITE);
 		btnSuaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -337,7 +349,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		Icon iconSuaKH = IconFontSwing.buildIcon(FontAwesome.WRENCH, 20, Color.white);
 		btnSuaKH.setIcon(iconSuaKH);
 		pNhapThongTin.add(btnSuaKH);
-
+		
+		//btn set loaiKH khong con la khach hang
 		btnXoaKH = new FixButton("Xóa");
 		btnXoaKH.setForeground(Color.WHITE);
 		btnXoaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -347,7 +360,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		Icon iconHuyKH = IconFontSwing.buildIcon(FontAwesome.TIMES_CIRCLE, 20, Color.white);
 		btnXoaKH.setIcon(iconHuyKH);
 		pNhapThongTin.add(btnXoaKH);
-
+		
+		//dua cac txt, rdo, cbo ve mac dinh
 		btnReset = new FixButton("Làm mới");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -358,7 +372,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnReset.setIcon(iconReset);
 
 		pNhapThongTin.add(btnReset);
-
+		
+		
 		JScrollPane scrollPaneKH = new JScrollPane();
 		scrollPaneKH.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		scrollPaneKH.setBackground(new Color(164, 44, 167));
@@ -369,12 +384,14 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 				"Ngày đăng ký", "Điểm tích lũy" };
 		modelKhachHang = new DefaultTableModel(col, 0);
 		tableKH = new JTable(modelKhachHang);
-
+		
+		//header cua table
 		JTableHeader tbHeader = tableKH.getTableHeader();
 		tbHeader.setBackground(new Color(164, 44, 167));
 		tbHeader.setForeground(Color.white);
 		tbHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
-
+		
+		//do dai cua tung cot trong table
 		tableKH.getColumnModel().getColumn(0).setPreferredWidth(80);
 		tableKH.getColumnModel().getColumn(1).setPreferredWidth(200);
 		tableKH.getColumnModel().getColumn(2).setPreferredWidth(130);
@@ -386,7 +403,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		tableKH.getColumnModel().getColumn(8).setPreferredWidth(100);
 		tableKH.getColumnModel().getColumn(9).setPreferredWidth(100);
 		tableKH.setAutoResizeMode(tableKH.AUTO_RESIZE_OFF);
-
+		
+		//Chữ canh trái, số canh phải
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
 		tableKH.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
@@ -414,7 +432,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pSapXep.setBounds(353, 50, 904, 51);
 		pMain.add(pSapXep);
 		// pSapXep.setLayout(null);
-
+		
+		//cbo sắp xếp tăng dần hoặc giảm dần
 		cboSort = new JComboBox<String>();
 		cboSort.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboSort.setBackground(Color.WHITE);
@@ -427,17 +446,20 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pSapXep.setLayout(null);
 		cboSort.setBounds(26, 14, 167, 28);
 		pSapXep.add(cboSort);
-
+		
+		//check box giúp hiện toàn bộ danh sách KH
 		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
 		chkAll.setBackground(new Color(171, 192, 238));
 		chkAll.setBounds(205, 15, 109, 27);
 		pSapXep.add(chkAll);
 		chkAll.addItemListener(new ItemListener() {
 
+			//Bật và tắt danh sách
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getStateChange()==1) {
+					bg.clearSelection();
 					loadDanhSachKH();
 				}
 				else {
@@ -448,7 +470,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		});
 
 
-		// rdoTheoMaKH.setSelected(true);
+		//Group rdo giúp sắp xếp
+		
 		rdoTheoMaKH = new JRadioButton("Theo mã khách hàng");
 
 		rdoTheoMaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -478,6 +501,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		bg.clearSelection();
 		// rdoTheoMaKH.setSelected(true);
 
+		//chèn background
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setIcon(new ImageIcon("data\\img\\background.png"));
 		lblBackground.setBounds(0, 0, 1281, 629);
@@ -493,21 +517,26 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		for (LoaiKH lkh : lsLoaiKH) {
 			cboloaiKH.addItem(lkh.getTenLoaiKH());
 		}
-
+		// add actions
+		
 		btnThemKH.addActionListener(this);
 		btnXoaKH.addActionListener(this);
 		btnSuaKH.addActionListener(this);
 		tableKH.addMouseListener(this);
 		btnReset.addActionListener(this);
-		//chkAll.addActionListener(this);
 		btnTim.addActionListener(this);
 		rdoTheoMaKH.addActionListener(this);
 		rdoTheoTenKH.addActionListener(this);
 		rdoTheoLoaiKH.addActionListener(this);
+		cboSort.addActionListener(this);
 	}
 
-	//end main
-
+	//end giao diện
+	
+	/**
+	 * Load danh sách thông tin khách hàng
+	 */
+	
 	// Load danh sach tu du lieu
 	public void loadDanhSachKH() {
 		clearTable();
@@ -530,9 +559,9 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	// load theo ten kh
-	private void loadDanhSachTenKH(ArrayList<KhachHang> kh1) {
-		//clearTable();
-		ArrayList<KhachHang> lstName = daoKhachHang.getTenKH(txtTK.getText());
+	private void loadDanhSachMaVaSoKH(ArrayList<KhachHang> kh1) {
+		clearTable();
+		ArrayList<KhachHang> lstName = daoKhachHang.getMaVaSDTKH(txtTK.getText().toLowerCase().trim());
 		for (KhachHang lskh : lstName) {
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
@@ -540,9 +569,31 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
 		}
 	}
+	private void loadDanhSachTenKH(ArrayList<KhachHang> kh1) {
+		clearTable();
+		ArrayList<KhachHang> lstName = daoKhachHang.getTenKH(txtTK.getText().toLowerCase().trim());
+		for (KhachHang lskh : lstName) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
+					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
+					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+		}
+	}
+
+	private void loadDanhSachKH(ArrayList<KhachHang> lstKH) {
+		clearTable();
+		for (KhachHang lskh : lstKH) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
+					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
+					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+		}
+	}
 	private void loadDanhSachTenKHTheoLoai(ArrayList<KhachHang> kh2) {
-		//clearTable();
-		ArrayList<KhachHang> lstName = daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen(txtTK.getText().toString()));
+		clearTable();
+		String maLoai = daoLoaiKH.getMaLoaiKHTheoTen(txtTK.getText());
+
+		ArrayList<KhachHang> lstName = daoKhachHang.getKHTheoLoai(maLoai);
 		for (KhachHang lskh : lstName) {
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
@@ -552,13 +603,23 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	// Lam moi danh sach
+	/**
+	 * @return danh sách trống
+	 */
 	public void clearTable() {
 		while (tableKH.getRowCount() > 0) {
 			modelKhachHang.removeRow(0);
 		}
 	}
 
+	//check trùng sđt
+	
 	// Nut them
+
+	/**
+	 * Thêm khách hàng vào danh sách 
+	 * 
+	 */
 	public void themKHVaoDanhSach() {
 		// int optThem = JOptionPane.showConfirmDialog(this, "Bạn có chắn chắn muốn thêm
 		// khách hàng không?", "Thông báo", JOptionPane.YES_NO_OPTION );
@@ -579,30 +640,38 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			int ngayDangKy = dateChooserNgayDangKy.getDate().getDate();
 			int thangDangKy = dateChooserNgayDangKy.getDate().getMonth();
 			int namDangKy = dateChooserNgayDangKy.getDate().getYear();
-			int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
-
-			
+			int diemTichLuy = 0;
+			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
 			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-					&& regex.regexDiaChi(txtDiaChi)) {
-			
-				@SuppressWarnings("deprecation")
-				KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
-						gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
-				daoKhachHang.themDanhSachKH(kh);
-				// tableKH.getRowCount()
-				loadThongTin(kh);
-				resetAll();
-				JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");
+					&& regex.regexDiaChi(txtDiaChi) ) {
+				if(daoKhachHang.checkSdtKH(sdt)) {
+					@SuppressWarnings("deprecation")
+					KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
+							gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
+					daoKhachHang.themDanhSachKH(kh);
+					loadThongTin(kh);
+					resetAll();
+					JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");						
+				}else {
+					JOptionPane.showMessageDialog(this,"Số điện thoại đã đăng kí","Thông báo" , JOptionPane.ERROR_MESSAGE);
+				}
+
+
 			}
+
+
 		} catch (Exception e) {
 			// TODO: handle exception
-
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin","Thông báo" ,  JOptionPane.WARNING_MESSAGE);
 		}
 
 	}
 
 	// Nút sửa
+	/**
+	 * Sửa thông tin khách hàng đã được chọn trong danh sách hoặc tìm kiểm
+	 */
+
 	public void suaThongTin() {
 		int row = tableKH.getSelectedRow();
 		if (row >= 0) {
@@ -649,6 +718,10 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	// Làm mới
+	/**
+	 *Làm mới lại tất cả txt và cbo trong frm
+	 */
+
 	public void resetAll() {
 		txtTK.setText("");
 		txtHoTen.setText("");
@@ -662,21 +735,10 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		bg.clearSelection();
 	}
 
-	// Tìm kiếm
-	private void findKH() {
-		KhachHang kh = daoKhachHang.getKH(txtTK.getText().toLowerCase().trim());
-		ArrayList<KhachHang>kh1 = daoKhachHang.getTenKH(txtTK.getText().toLowerCase().trim());
-		
-		
-			if(!txtTK.getText().equals("") && !txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
-				try {
-					loadThongTin(kh);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}JOptionPane.showMessageDialog(null, "Không tìm thấy mã khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
-			}JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo",
-					JOptionPane.WARNING_MESSAGE);
-	}
+	/**
+	 * Xóa 1 khách hàng đã được chon trong danh sách hoặc tìm kiếm
+	 * @return
+	 */
 
 	// Xoa khach hang
 	private boolean cancelKH() {
@@ -704,6 +766,58 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 		return false;
 	}
+
+	// Tìm kiếm
+	/**
+	 * Giúp tìm kiếm khách hàng dựa vào mã, tên, số điện thoại, loại khách hàng
+	 */
+	private void findKH() {
+
+		String input = txtTK.getText().trim();
+		ArrayList<KhachHang> lstKH = null;
+		String regexMaKH = "^((KH|kh)[0-9]{3})$";
+		String regexTenKH= "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
+		String regexSDT  = "^(0[0-9]{9})$";
+
+		if(!txtTK.getText().equals("") && !txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
+			if(regex.regexTimKH(txtTK)) {
+				if(input.matches(regexMaKH)) {
+					lstKH = daoKhachHang.getMaVaSDTKH(input);
+					loadDanhSachMaVaSoKH(lstKH);
+					chkAll.setSelected(false);
+				}
+				if(input.matches(regexSDT)) {
+					lstKH = daoKhachHang.getMaVaSDTKH(input);
+					loadDanhSachMaVaSoKH(lstKH);
+					chkAll.setSelected(false);
+				}
+				if(input.matches(regexTenKH)) {
+					lstKH = daoKhachHang.getTenKH(input);
+					loadDanhSachTenKH(lstKH);
+					chkAll.setSelected(false);
+				}
+				if(regex.regexTimKiemLoaiKH(txtTK)) {
+					lstKH = daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen(input));
+					loadDanhSachTenKHTheoLoai(lstKH);
+				}
+				if(lstKH.size() == 0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!");
+					loadDanhSachKH(lstKH);
+				}
+			}
+		}else {
+			chkAll.setSelected(false);
+			clearTable();
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+		}
+
+	}
+
+	/**
+	 * Sắp xếp sau khi chọn vào giảm dần
+	 * @param kh
+	 */
+
 	//Sap xep theo ma khach hang giam dan
 
 	public void sortMaKHGiamDan(KhachHang kh) {
@@ -717,6 +831,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
+
 	//Sap xep theo ten khach hang giam dan
 	public void sortTenKHGiamDan(KhachHang kh) {
 		clearTable();
@@ -724,23 +839,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		Collections.sort(lsKH, new Comparator<KhachHang>() {
 			public int compare(KhachHang o1, KhachHang o2) {
 				return o2.getTenKH().compareTo(o1.getTenKH());
-			}
-		});
-
-		for (KhachHang khs : lsKH) {
-			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
-			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
-					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
-		}
-	}
-	//Sap xep theo ten khach hang tang dan
-	public void sortTenKHTangDan(KhachHang kh) {
-		clearTable();
-		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
-		Collections.sort(lsKH, new Comparator<KhachHang>() {
-			public int compare(KhachHang o1, KhachHang o2) {
-				return o1.getTenKH().compareTo(o2.getTenKH());
 			}
 		});
 
@@ -779,6 +877,10 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
+	/**
+	 * Sắp xếp sau khi chọn tăng dần dần
+	 * @param kh
+	 */
 	//sap xep loaiKH tang dan
 	public void sortLoaiKHTangDan(KhachHang kh) {
 		clearTable();
@@ -809,7 +911,24 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
+	//Sap xep theo ten khach hang tang dan
+	public void sortTenKHTangDan(KhachHang kh) {
+		clearTable();
+		chkAll.setSelected(false);
+		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
+		Collections.sort(lsKH, new Comparator<KhachHang>() {
+			public int compare(KhachHang o1, KhachHang o2) {
+				return o1.getTenKH().compareTo(o2.getTenKH());
+			}
+		});
 
+		for (KhachHang khs : lsKH) {
+			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
+			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
+					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
+					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+		}
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -894,22 +1013,37 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 		if(cboSort.getSelectedItem()=="Tăng dần") {
 			if(o.equals(rdoTheoMaKH)) {
+				chkAll.setSelected(false);
 				loadDanhSachKH();
 			}
-			if(o.equals(rdoTheoTenKH))
+			if(o.equals(rdoTheoTenKH)) {
 				sortTenKHTangDan(kh);
+
+			}
 			if(o.equals(rdoTheoLoaiKH))
+			{
+				chkAll.setSelected(false);
 				sortLoaiKHTangDan(kh);
+			}
 		}
 		if(cboSort.getSelectedItem()=="Giảm dần"){
-			clearTable();
 			if(o.equals(rdoTheoMaKH)) {
+				chkAll.setSelected(false);
 				sortMaKHGiamDan(kh);
 			}
-			if(o.equals(rdoTheoTenKH))
+			if(o.equals(rdoTheoTenKH)) {
+				chkAll.setSelected(false);
 				sortTenKHGiamDan(kh);
-			if(o.equals(rdoTheoLoaiKH))
+			}
+			if(o.equals(rdoTheoLoaiKH)) {
+				chkAll.setSelected(false);
 				sortLoaiKHGiamDan(kh);
+			}
+		}
+		if(o.equals(cboSort)) {
+			bg.clearSelection();
+			chkAll.setSelected(false);
+			clearTable();
 		}
 
 	}

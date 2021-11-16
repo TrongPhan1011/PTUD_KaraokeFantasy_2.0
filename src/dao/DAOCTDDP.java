@@ -11,7 +11,6 @@ import connection.ConnectDB;
 import entity.CTDDP;
 import entity.DonDatPhong;
 import entity.MatHang;
-import entity.Phong;
 
 public class DAOCTDDP {
 	

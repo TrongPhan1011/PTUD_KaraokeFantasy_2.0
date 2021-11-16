@@ -13,7 +13,8 @@ import entity.HoaDon;
 import entity.MatHang;
 
 public class DAOCTHD {
-public boolean themCTHD(CTHD cthd) {
+	
+	public boolean themCTHD(CTHD cthd) {
 		
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();

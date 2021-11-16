@@ -12,165 +12,7 @@ import entity.LoaiMatHang;
 import entity.MatHang;
 
 public class DAOMatHang {
-	public ArrayList<MatHang> getDSMatHang() {
-		ArrayList<MatHang> dsMH = new ArrayList<MatHang>();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang";
-		
-		try {
-			java.sql.Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
-				MatHang mh = new MatHang();
-				mh.setMaMatHang(rs.getString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getString(2)));
-				mh.setTenMatHang(rs.getString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				dsMH.add(mh);
-			}
-		} catch (Exception e) {
-			e.getStackTrace();
-		}
-		return dsMH;
-	}
-	
-	public MatHang getMHTheoMaMH(String ma) {
-		
-		MatHang mh = new MatHang();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang where maMH = '"+ ma +"'";
-		
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				
-				mh.setMaMatHang(rs.getNString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
-				mh.setTenMatHang(rs.getNString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return mh;
-	}
-	public MatHang getMHTheoTenMH(String ma) {	
-		MatHang mh = new MatHang();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang where tenMH = '"+ ma +"'";
-		
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				
-				mh.setMaMatHang(rs.getNString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
-				mh.setTenMatHang(rs.getNString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return mh;
-	}
-	public ArrayList<MatHang> getMatHangTheoMaLoai(String Maloai) {
-		ArrayList< MatHang> lsMatHang = new ArrayList<MatHang>();
-		
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang where MaLoaiMH = '"+Maloai +"'";
-		
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				MatHang mh = new MatHang();
-				
-				mh.setMaMatHang(rs.getNString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
-				mh.setTenMatHang(rs.getNString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				
-				lsMatHang.add(mh);
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return lsMatHang;
-		
-	}
-	public ArrayList<MatHang> getMatHangTheoTenMatHang(String Ten) {
-		ArrayList< MatHang> lsMatHang = new ArrayList<MatHang>();
-		
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang where tenMH like N '"+Ten +"'";
-		
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				MatHang mh = new MatHang();
-				
-				mh.setMaMatHang(rs.getNString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
-				mh.setTenMatHang(rs.getNString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				
-				lsMatHang.add(mh);
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return lsMatHang;
-		
-	}
-	public MatHang getMHTheoTenMHVaLoaiMH(String tenMH, String tenLoai) {
-		MatHang mh = new MatHang();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "SELECT MatHang.*\r\n"
-				+ "FROM  LoaiMatHang INNER JOIN\r\n"
-				+ "         MatHang ON LoaiMatHang.maLoaiMH = MatHang.maLoaiMH\r\n"
-				+ "Where tenMH = N'"+tenMH+"' and tenLoaiMH = N'"+tenLoai+"'";
-		
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				
-				mh.setMaMatHang(rs.getNString(1));
-				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
-				mh.setTenMatHang(rs.getNString(3));
-				mh.setSoLuongMatHang(rs.getInt(4));
-				mh.setGiaMatHang(rs.getDouble(5));
-				
-				
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return mh;
-		
-	}
+
 	public boolean ThemMH(MatHang mh) {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -196,6 +38,7 @@ public class DAOMatHang {
 		}
 		return n>0;
 	}
+
 	public boolean XoaMH(String maMH) {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -236,6 +79,168 @@ public class DAOMatHang {
 		}
 		return n>0;
 	}
+
+	public ArrayList<MatHang> getDSMatHang() {
+		ArrayList<MatHang> dsMH = new ArrayList<MatHang>();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from MatHang";
+
+		try {
+			java.sql.Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				MatHang mh = new MatHang();
+				mh.setMaMatHang(rs.getString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getString(2)));
+				mh.setTenMatHang(rs.getString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+				dsMH.add(mh);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return dsMH;
+	}
+
+	public MatHang getMHTheoMaMH(String ma) {
+
+		MatHang mh = new MatHang();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from MatHang where maMH = '"+ ma +"'";
+
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+
+				mh.setMaMatHang(rs.getNString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
+				mh.setTenMatHang(rs.getNString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mh;
+	}
+	public MatHang getMHTheoTenMH(String ma) {	
+		MatHang mh = new MatHang();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from MatHang where tenMH = '"+ ma +"'";
+
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+
+				mh.setMaMatHang(rs.getNString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
+				mh.setTenMatHang(rs.getNString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mh;
+	}
+	public ArrayList<MatHang> getMatHangTheoMaLoai(String Maloai) {
+		ArrayList< MatHang> lsMatHang = new ArrayList<MatHang>();
+
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from MatHang where MaLoaiMH = '"+Maloai +"'";
+
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				MatHang mh = new MatHang();
+
+				mh.setMaMatHang(rs.getNString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
+				mh.setTenMatHang(rs.getNString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+
+				lsMatHang.add(mh);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return lsMatHang;
+
+	}
+	public ArrayList<MatHang> getMatHangTheoTenMatHang(String Ten) {
+		ArrayList< MatHang> lsMatHang = new ArrayList<MatHang>();
+
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from MatHang where tenMH like N '"+Ten +"'";
+
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				MatHang mh = new MatHang();
+
+				mh.setMaMatHang(rs.getNString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
+				mh.setTenMatHang(rs.getNString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+
+				lsMatHang.add(mh);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return lsMatHang;
+
+	}
+	public MatHang getMHTheoTenMHVaLoaiMH(String tenMH, String tenLoai) {
+		MatHang mh = new MatHang();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "SELECT MatHang.*\r\n"
+				+ "FROM  LoaiMatHang INNER JOIN\r\n"
+				+ "         MatHang ON LoaiMatHang.maLoaiMH = MatHang.maLoaiMH\r\n"
+				+ "Where tenMH = N'"+tenMH+"' and tenLoaiMH = N'"+tenLoai+"'";
+
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+
+				mh.setMaMatHang(rs.getNString(1));
+				mh.setLoaiMatHang(new LoaiMatHang(rs.getNString(2)));
+				mh.setTenMatHang(rs.getNString(3));
+				mh.setSoLuongMatHang(rs.getInt(4));
+				mh.setGiaMatHang(rs.getDouble(5));
+
+
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return mh;
+
+	}
+
+
 	public ArrayList<MatHang> sortGia(String ksx) {
 		ArrayList<MatHang> lstMH = new ArrayList<>();
 		ConnectDB.getinstance();

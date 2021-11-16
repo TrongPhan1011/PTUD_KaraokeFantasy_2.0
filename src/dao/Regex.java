@@ -13,7 +13,7 @@ import com.toedter.calendar.JDateChooser;
 public class Regex {
 	public boolean regexDiaChi(JTextField txtDiaChi) {
 		String input = txtDiaChi.getText().trim();
-		String regex = "^([ A-Za-z0-9,.a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
+		String regex = "^([ A-Za-z0-9,\\/.a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
@@ -114,11 +114,9 @@ public class Regex {
 		String input = txtTim.getText();
 		String regex = "^((P|p)[0-9]{3})$";
 		if (!input.matches(regex)) {
-			/*
-			 * JOptionPane.showMessageDialog(null,
-			 * "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã Phòng. Ví dụ: P003\n"
-			 * , "Thông báo", JOptionPane.ERROR_MESSAGE);
-			 */
+			
+			  JOptionPane.showMessageDialog(null,"Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã Phòng. Ví dụ: P003\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			 
 			txtTim.requestFocus();
 			txtTim.selectAll();
 			return false;
@@ -132,7 +130,6 @@ public class Regex {
 		String regexMaNV = "^NV[0-9]{3}$";
 		if (!input.matches(regexMaNV)) {
 			JOptionPane.showMessageDialog(null, "Mã nhân viên tìm kiếm không hợp lệ\nMã nhân viên. Ví dụ: NV001\n");
-//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTim.requestFocus();
 			txtTim.selectAll();
 			return false;
@@ -143,14 +140,12 @@ public class Regex {
 	public boolean regexTimNV(JTextField txtTim) {
 		String input = txtTim.getText().trim();
 		input = input.toUpperCase();
-//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 		String regexMaNV = "((NV|nv)[0-9]{3})|";
 		String regexTenNV = "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
 		String regexSDT = "(0[0-9]{9})|";
 		String regexCa = "([1-3]{1})";
 		String regexNV = "^(" + regexMaNV + regexTenNV + regexSDT + regexCa + ")$";
-		Pattern pattern = Pattern.compile(regexNV);
-		Matcher matcher = pattern.matcher(input);
+		
 		if (!input.matches(regexNV)) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001 hoặc nv001"
@@ -222,6 +217,7 @@ public class Regex {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean regexNVTren18(JDateChooser dateChooser) {
 		LocalDate dNow = LocalDate.now();
 		int nam = dNow.getYear();
@@ -249,6 +245,7 @@ public class Regex {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean regexMatKhau(JPasswordField pwMK) {
 		String input = pwMK.getText().toString().trim();
 		String regexMaNV = "^[A-Z][a-zA-Z0-9 ]{5,}$";
@@ -318,13 +315,10 @@ public class Regex {
 	public boolean regexTimKH(JTextField txtTK) {
 		String input = txtTK.getText().trim();
 		input = input.toUpperCase();
-//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 		String regexMaKH = "((KH|kh)[0-9]{3})|";
 		String regexTenKH = "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
 		String regexSDT = "(0[0-9]{9})";
 		String regexKH = "^(" + regexMaKH + regexTenKH + regexSDT+ ")$";
-		Pattern pattern = Pattern.compile(regexKH);
-		Matcher matcher = pattern.matcher(input);
 		if (!input.matches(regexKH)) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã khách hàng. Ví dụ: KH001 hoặc kh001"
@@ -341,7 +335,6 @@ public class Regex {
 	public boolean regexTimPhong(JTextField txtTK) {
 		String input = txtTK.getText().trim();
 		input = input.toUpperCase();
-//			JOptionPane.showMessageDialog(null, "Thông tin tìm kiếm không hợp lệ\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001\n", "Thông báo", JOptionPane.ERROR_MESSAGE);
 		String regexMaP = "((P|p)[0-9]{3})|";
 		String regexTen = "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
 		String regexPhong = "^(" + regexMaP + regexTen +  ")$";

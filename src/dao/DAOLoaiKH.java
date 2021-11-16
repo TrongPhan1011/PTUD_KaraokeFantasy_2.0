@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import connection.ConnectDB;
 import entity.LoaiKH;
-import entity.LoaiMatHang;
 
 public class DAOLoaiKH {
+
 	/**
 	 * Lấy ra thông tin loại khách hàng trừ LKH004 (không còn là khách hàng)
 	 * @return các thông tin từ bảng loại khách hàng
@@ -36,6 +36,7 @@ public class DAOLoaiKH {
 		
 		return lsLoaiKH;
 	}
+	
 	/**
 	 * Lấy ra loại khách hàng 
 	 * @param mã khách hàng được nhập vào

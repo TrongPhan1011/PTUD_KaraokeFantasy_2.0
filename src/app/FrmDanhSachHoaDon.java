@@ -657,20 +657,21 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	//tìm kiếm
 	public void loadTimKiem() {
 		Regex regexDao = new Regex();
-		String thongTin = txtTim.getText().trim();
-		thongTin = thongTin.toUpperCase();
-		String regexMaNV = "^((NV|nv)[0-9]{3})$";
+		String thongTin = txtTim.getText().trim();		// lấy chuỗi tìm kiếm ra, trim() để xóa kí tự rỗng 2 đầu
+		thongTin = thongTin.toUpperCase();				// chuyển toàn bộ chuỗi thành chữ in hoa hết để tìm, tránh trường hợp người dùng nhập chữ thường chữ hoa
+		String regexMaNV = "^((NV|nv)[0-9]{3})$";		// regex ma
 		String regexTenKH = "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
-		ArrayList<HoaDon> lsHD = null;
-		if(regexDao.regexTimDSHD(txtTim)) {
-			if(thongTin.matches(regexMaNV)) {
-				lsHD = daoHD.getHDTheoMaNV(thongTin);
+		ArrayList<HoaDon> lsHD = null;					// khởi tạo danh sách hóa đơn
+		if(regexDao.regexTimDSHD(txtTim)) {				// nếu check thông tin nhập vô, thỏa điều kiện là mã hoặc tên
+														// ngang đây đã thỏa mãn điều kiện nó là mã hoặc tên 
+			if(thongTin.matches(regexMaNV)) {			//regex check lần nữa để phân biệt đc nó là mã, nếu là mã thì lấy danh sách hóa đơn theo mã
+				lsHD = daoHD.getHDTheoMaNV(thongTin);	
 				
 			}
-			else if(thongTin.matches(regexTenKH)) {
+			else if(thongTin.matches(regexTenKH)) {			// nếu check ko phải là mã thì nó check có phải tên hay ko,nếu là tên thì get dsHD theo tên
 				lsHD = daoHD.getHDTheoTenKH(thongTin);
-			}
-			if(lsHD.size() == 0)
+			}												
+			if(lsHD.size() == 0)	//vì ds hóa đơn lấy về có thể bị rỗng, nên phải kiểm tra lại, kích thước nó = 0 thì xuất thông báo ko tìm thấy
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!");
 			loadTableHoaDon(lsHD);
 			

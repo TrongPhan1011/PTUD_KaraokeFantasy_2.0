@@ -191,6 +191,75 @@ public	ArrayList<HoaDon> getHDTheoMaNV(String maNV) {
 	
 	}
 
+public	ArrayList<HoaDon> getHDtheoNgay(Date d) {
+	
+	ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
+	ConnectDB.getinstance();
+	Connection con = ConnectDB.getConnection();
+	String sql = "SELECT * FROM [KaraokeFantasy].[dbo].[HoaDon] where ngayLap = '"+d+"'";
+	
+	try {
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next()) {
+			HoaDon  hd = new HoaDon();
+			hd.setMaHoaDon(rs.getString(1));
+			hd.setPhong(new Phong(rs.getString(2)));
+			hd.setKhachHang(new KhachHang(rs.getString(3)));
+			hd.setNhanVien(new NhanVien(rs.getString(4)));
+			hd.setNgayLap(rs.getDate(5));
+			hd.setGioVao(rs.getTime(6));
+			hd.setGioRa(rs.getTime(7));
+			hd.setPhuThu(rs.getNString(8));
+			hd.setTrangThaiHD(rs.getNString(9));
+			hd.setGiamGia(rs.getDouble(10));
+			
+			lsHD.add(hd);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return lsHD;
+	
+	}
 
+public	Integer demSoKHTrongNgay(Date d){
+	ConnectDB.getinstance();
+	Connection con = ConnectDB.getConnection();
+	String sql = "select COUNT(*) from KhachHang kh inner join HoaDon hd on kh.maKhachHang = hd.maKH  where ngayLap = '"+d+"' ";
+	int dem =0;
+	try {
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next()) {
+			dem = rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return dem;
+	
+	}
+
+public	Integer demSoMHTrongNgay(Date d){
+	ConnectDB.getinstance();
+	Connection con = ConnectDB.getConnection();
+	String sql = "select COUNT(*) from MatHang mh inner join CTHD cthd on mh.maMH = cthd.maMH inner join HoaDon hd on cthd.maHD = hd.maHD   where ngayLap = '"+d+"' ";
+	int dem =0;
+	try {
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next()) {
+			dem = rs.getInt(1);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return dem;
+	
+	}
 
 }

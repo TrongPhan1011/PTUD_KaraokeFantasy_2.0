@@ -415,7 +415,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		dfVND = new DecimalFormat("###,### VND");
 	}
 	/**
-	 * Lấy dữ liệu từ SQL nạp vào bảng
+	 * Lấy dữ liệu từ SQL Server nạp vào bảng thông qua vòng lặp for, không nạp vào bảng với loại mặt hàng ngừng kinh doanh
 	 */
 	public void loadTableMH() {
 		ArrayList<MatHang> lsMH = daoMH.getDSMatHang();
@@ -428,7 +428,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Xóa bảng
+	 * Xóa toàn bộ bảng
 	 */
 	public void clearTable() {
 		while(tblMH.getRowCount() > 0) {
@@ -436,7 +436,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Làm mới chương trình
+	 * Làm mới toàn bộ chương trình, đặt tất cả về giá trị mặc định 
 	 */
 	public void LamMoi() {
 		txtTim.setText("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng");
@@ -525,17 +525,19 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 			int soluong = Integer.parseInt(txtSoLuong.getText());
 			double dongia = Double.parseDouble(txtDonGia.getText());
 			MatHang mh = new MatHang(maMH, tenMH, soluong, dongia, new LoaiMatHang(maLMH));
-			if(regex.regexTenMH(txtTenMH) && regex.regexSoLuong(txtSoLuong) && regex.regexGiaMH(txtDonGia)) {
-				try {
-					daoMH.ThemMH(mh);
-					JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
-				}catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
+			if(regex.regexTenMH(txtTenMH)) {
+				if(regex.regexSoLuong(txtSoLuong)) {
+					if (regex.regexGiaMH(txtDonGia)) {
+							daoMH.ThemMH(mh);
+							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
+							LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
+							modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
+						}else {
+							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
+						}
 				}
-				LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
-				modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
-			}
+			} 
+				
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 		}
@@ -550,7 +552,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 			int r = tblMH.getSelectedRow();
 			if(r>0) {
 				int del = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa? ", "Thông báo", JOptionPane.YES_NO_OPTION);
-				String maMH = modelMatHang.getValueAt(r, 0).toString();
 				if(del == JOptionPane.YES_OPTION) {
 					String maMH1 =  (String) tblMH.getValueAt(r, 0);
 					String tenMH = txtTenMH.getText();
@@ -560,24 +561,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 					MatHang mh = new MatHang(maMH1, tenMH, soluong, dongia, new LoaiMatHang(maLMH));  
 					daoMH.updateMH(mh);
 					loadTableMH();
-				}
-			}
-		}
-	}
-	/**
-	 * Xóa mặt hàng khỏi table và SQL
-	 */
-	public void XoaMH() {
-		if (tblMH.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(this, "Vui lòng chọn mặt hàng cần xóa");
-		}else {
-			int r = tblMH.getSelectedRow();
-			if(r > 0) {
-				int del = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa? ", "Thông báo", JOptionPane.YES_NO_OPTION);
-				String maMH = modelMatHang.getValueAt(r, 0).toString();
-				if(del == JOptionPane.YES_OPTION) {
-					if(daoMH.XoaMH(maMH))
-						modelMatHang.removeRow(r);
 				}
 			}
 		}

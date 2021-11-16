@@ -154,7 +154,7 @@ public class Regex {
 		if (!input.matches(regexNV)) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Mã nhân viên. Ví dụ: NV001 hoặc nv001"
-							+ "\n - Tên nhân viên. Ví dụ: Trần Thanh Thiện..."
+							+ "\n - Tên nhân viên. Ví dụ: Trần Thanh Thiện hoặc Thanh Thiện"
 							+ "\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0" + "\n - Tìm theo ca: 1, 2, 3",
 					"Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTim.requestFocus();
@@ -212,7 +212,7 @@ public class Regex {
 		if (!matcher.find()) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Tên mặt hàng. Ví dụ: Bia Heiniken,..."
-							+ "\n -Loại mặt hàng. Ví dụ: Nước uống, đồ ăn.",
+							+ "\n - Loại mặt hàng. Ví dụ: Nước uống, đồ ăn.",
 					"Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTen2.requestFocus();
 			txtTen2.selectAll();

@@ -2,6 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -149,7 +150,7 @@ public class DAOPhong implements Serializable{
 	 * 
 	 * @return danh sách phòng đang hoạt động và trạng thái đơn đặt hàng là đã xác nhận
 	 */
-	public ArrayList<Phong> getPhongDangHoatDong() {
+	public ArrayList<Phong> getPhongDangHoatDong(Date ngayDen) {
 		//fix
 		//and DonDatPhong.ngayDen ='date'
 		
@@ -159,7 +160,7 @@ public class DAOPhong implements Serializable{
 		String sql = "SELECT Phong.*\r\n"
 				+ "FROM  DonDatPhong INNER JOIN\r\n"
 				+ "         Phong ON DonDatPhong.maPhong = Phong.maPhong\r\n"
-				+ "WHERE tinhTrangPhong = N'Đang hoạt động' and TrangThaiDDP = N'Đã xác nhận'";
+				+ "WHERE tinhTrangPhong = N'Đang hoạt động' and TrangThaiDDP = N'Đã xác nhận' and DonDatPhong.ngayDen ='"+ngayDen+"'";
 		
 		try {
 			Statement stm = con.createStatement();

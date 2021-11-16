@@ -653,7 +653,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	public void loadPhong() {
 
 	
-		ArrayList<Phong> lsPhong = daoPhong.getPhongDangHoatDong();
+		ArrayList<Phong> lsPhong = daoPhong.getPhongDangHoatDong(dNgayHienTai);
 		for(Phong p : lsPhong) {
 			JPanel pn = new JPanel();
 			LoaiPhong lp = daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());

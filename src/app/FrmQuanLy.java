@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.BorderFactory;
@@ -30,6 +33,11 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 
 import connection.ConnectDB;
+import dao.DAOCTDDP;
+import dao.DAODonDatPhong;
+import dao.DAOHoaDon;
+import dao.DAOPhong;
+import entity.DonDatPhong;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
@@ -94,7 +102,6 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Quản lý nhân viên");
-		//setExtendedState(MAXIMIZED_BOTH);
 		setSize(1281,750);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
@@ -173,7 +180,7 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		btnHeaderInfo.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnHeaderInfo.setBounds(1023, 5, 60, 44);
 		btnHeaderInfo.setBackground(new Color(57, 210, 247));
-//		btnHeaderInfo.setBorder(new LineBorder(Color.white,10));
+
 		
 		panel.add(btnHeaderInfo);
 		
@@ -314,6 +321,9 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 			loadFrmNhanVien();
 		}
 		
+		setTrangThaiPhongTheoNgay();
+		
+		
 		btnDangXuat.addActionListener(this);
 		btnItemNhanVien.addActionListener(this);
 		btnItemDDP.addActionListener(this);
@@ -322,8 +332,33 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		btnItemPhong.addActionListener(this);
 		btnItemKH.addActionListener(this);
 		btnItemTK.addActionListener(this);
+
+		
 	}
 	
+	//laays dsddp, so sanh ngay vs ngayhienta --> 
+	//neu bang nhau--> set gio, phut (chuyen ve phut) > 180'--> set trang thai phong --> da dat;
+	@SuppressWarnings("deprecation")
+	public void setTrangThaiPhongTheoNgay() {
+		DAODonDatPhong daoDonDatPhong = new DAODonDatPhong();
+		DAOPhong daoPhong = new DAOPhong();
+		ArrayList<DonDatPhong> lsDDP = daoDonDatPhong.getDanhSachDDPKhongHuy();
+		for(DonDatPhong ddp : lsDDP) {
+			if(ddp.getNgayDen().equals(dNow)) {
+				Time thoiGianDen =  ddp.getGioDen();
+				int gioDen = thoiGianDen.getHours();
+				int phutDen = thoiGianDen.getMinutes();
+				int tongTGDDP = gioDen*60 + phutDen;
+				
+				LocalTime thoiGianHienTai = LocalTime.now();
+				int tongThoiGianHT = thoiGianHienTai.getHour()*60 + thoiGianHienTai.getMinute();
+				if(tongThoiGianHT - tongTGDDP == 180) {
+					daoPhong.capnhatTrangThaiPhong(ddp.getPhong().getMaPhong(), "Đã đặt");
+				}
+	
+			}
+		}
+	}
 
 
 

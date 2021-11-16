@@ -156,6 +156,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtHoTen.setBounds(153, 64, 170, 27);
 		pNhapThongTin.add(txtHoTen);
+		txtHoTen.setText("Võ Kim Bản");
 
 		JLabel lblHoTen = new JLabel("Họ và tên:");
 		lblHoTen.setBounds(10, 64, 90, 27);
@@ -174,6 +175,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtSDT.setBounds(153, 100, 170, 27);
 		pNhapThongTin.add(txtSDT);
+		txtSDT.setText("02822292211");
 		
 		//Nhap dia chi
 		JLabel lblAddress = new JLabel("Địa chỉ:");
@@ -187,6 +189,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtDiaChi.setBounds(153, 133, 170, 27);
 		pNhapThongTin.add(txtDiaChi);
+		txtDiaChi.setText("23 Trần Não, quận 2");
 
 		//Nhap cac cuoc cong dan
 		txtCccd = new JTextField();
@@ -195,6 +198,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtCccd.setColumns(10);
 		txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtCccd.setText("032144572012");
 
 		JLabel lblCccd = new JLabel("CCCD:");
 		lblCccd.setBounds(10, 171, 65, 23);

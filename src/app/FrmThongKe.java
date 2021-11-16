@@ -474,7 +474,6 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		int ngayTK = dateChooserThongKeTheoNgay.getDate().getDate();
 		int thangTK = dateChooserThongKeTheoNgay.getDate().getMonth();
 		int namTK = dateChooserThongKeTheoNgay.getDate().getYear();
-
 		ArrayList<HoaDon>  lstHD = daoHoaDon.getHDtheoNgay(new Date(namTK, thangTK, ngayTK));
 		if(rdoTKNg.isSelected()) {
 			double doanhThu = 0;
@@ -482,22 +481,17 @@ public class FrmThongKe extends JPanel implements ActionListener{
 				String phuThu = hd.getPhuThu();
 				Phong p = daoPhong.getPhongTheoMa(hd.getPhong().getMaPhong());
 				double giaPhong =p.getGiaPhong();
-
 				double giaPhuThu = 0;
 				if(phuThu.equalsIgnoreCase("Buổi tối")) {
 					giaPhuThu = 10000;
-
 				}
-
 				if(phuThu.equalsIgnoreCase("Ngày lễ")) {
 					giaPhuThu = 30000;
-
 				}
 				if(phuThu.equalsIgnoreCase("Cuối tuần")) {
 					giaPhuThu = 20000;
 				}
 				giaPhong = giaPhuThu + giaPhong;
-
 				double tongTienThue = tinhTienThue(giaPhong, hd);
 
 				int tongGioThue = (int) ((tongTienThue)/giaPhong);
@@ -528,6 +522,9 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		if(rdoTKNg.isSelected()) {
 			int dem = daoHoaDon.demSoKHTrongNgay(new Date(namTK, thangTK, ngayTK));
 			btnSoKH.setText(dem+"");
+		}
+		if(rdoTKT.isSelected()) {
+			
 		}
 	}
 

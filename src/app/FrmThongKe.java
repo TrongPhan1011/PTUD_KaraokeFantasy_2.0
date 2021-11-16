@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
@@ -38,6 +39,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.SwingConstants;
 
 
@@ -63,7 +67,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 	private Date dNow;
 	private SpringLayout springLayout;
 	private FixButton btnLamMoi;
-	
+	private JDateChooser dateChooserThongKeTheoNgay;
 	
 	public Panel getFrmThongKe() {
 		return this.pMain;
@@ -185,15 +189,15 @@ public class FrmThongKe extends JPanel implements ActionListener{
 			}
 			
 		});
-		datePicker.getJFormattedTextField().setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-//		datePicker.getJFormattedTextField().setBackground(Color.WHITE);
-		datePicker.getJFormattedTextField().setFont(new Font("SansSerif", Font.PLAIN, 15));
-		datePicker.getJFormattedTextField().setText("dd-mm-yyyy");
+		dateChooserThongKeTheoNgay = new JDateChooser();
+		dateChooserThongKeTheoNgay.setDateFormatString("dd/MM/yyyy");
+		dateChooserThongKeTheoNgay.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		dateChooserThongKeTheoNgay.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		dateChooserThongKeTheoNgay.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+		dateChooserThongKeTheoNgay.getCalendarButton().setBackground(new Color(102, 0, 153));
 		
-		datePicker.setBounds(130, 121, 180, 22);
-		datePicker.setTextEditable(true);
-		
-		pThongKe.add(datePicker);
+		dateChooserThongKeTheoNgay.setBounds(130, 121, 180, 22);
+		pThongKe.add(dateChooserThongKeTheoNgay);
 		
 
 //		ftfNgaySinh.setBounds(964, 62, 100, 25);

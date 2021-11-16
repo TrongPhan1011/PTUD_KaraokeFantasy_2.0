@@ -10,12 +10,19 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import connection.ConnectDB;
+import entity.HoaDon;
 import entity.KhachHang;
 import entity.LoaiKH;
+import entity.NhanVien;
 import entity.TaiKhoan;
 
 
 public class DAOKhachHang {
+	/**
+	 * 
+	 * @param mã khách hàng cần nhập (chuỗi[String] ) 
+	 * @return thông tin khách hàng theo mã khách hàng được nhập
+	 */
 	public KhachHang getKHTheoMa(String ma) { 
 		KhachHang kh = new KhachHang();
 		ConnectDB.getinstance();
@@ -46,12 +53,17 @@ public class DAOKhachHang {
 
 		return kh;
 	}
-
-	public KhachHang getKHTheoMa(JTextField tam) { 
+	
+	/**
+	 * 
+	 * @param ma khách hàng cần nhập (JTextfield)
+	 * @return thôgn tin khách hàng theo mã
+	 */
+	public KhachHang getKHTheoMa(JTextField ma) { 
 		KhachHang kh = new KhachHang();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "SELECT * from KhachHang where maKhachHang = '"+tam+"'";
+		String sql = "SELECT * from KhachHang where maKhachHang = '"+ma+"'";
 
 		try {
 			Statement stm = con.createStatement();
@@ -79,11 +91,16 @@ public class DAOKhachHang {
 	}
 
 	//get ten KH
+	/**
+	 * 
+	 * @param Nhập tên khách hàng
+	 * @return danh sách khách hàng theo tên được nhập
+	 */
 	public ArrayList<KhachHang> getTenKH(String info) { 
 		ArrayList<KhachHang> list = new ArrayList<>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "select * from KhachHang where tenKH like N'"+info+"'";
+		String sql = "select * from KhachHang where tenKH like N'%"+info+"%'";
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
@@ -106,7 +123,11 @@ public class DAOKhachHang {
 		}
 		return list;
 	}
-
+	
+	/**
+	 * Lấy tất cả danh sách thôgn tin khách hàng trừ không còn là khách hàng
+	 * @return danh sách thông tin tất cả khách hàng
+	 */
 	public ArrayList<KhachHang> getDanhSachKH() {
 
 
@@ -141,7 +162,11 @@ public class DAOKhachHang {
 
 		return lsKH;
 	}
-
+	
+	/**
+	 * 
+	 * @param kh: thông tin khách hàng được truyền vào
+	 */
 	public boolean themDanhSachKH(KhachHang kh) {
 
 		ConnectDB.getinstance();
@@ -176,7 +201,11 @@ public class DAOKhachHang {
 		}
 		return n>0;
 	}
-
+	
+	/**
+	 * 
+	 * @param kh thông tin khách hàng cần sửa
+	 */
 	public boolean suaThongTinKhachHang(KhachHang kh) {
 
 		ConnectDB.getinstance();
@@ -211,10 +240,13 @@ public class DAOKhachHang {
 		}
 		return n>0;
 	}
-
+	/**
+	 * 
+	 * @param mã khách hàng cần xóa
+	 * @return set lại mã loại khách hàng thành LKH004
+	 * @throws SQLException
+	 */
 	public boolean huyKH(String ma) throws SQLException {
-		KhachHang kh = new KhachHang();
-
 		Connection con= ConnectDB.getConnection();
 		String sql = "update KhachHang set maLoaiKH = N'LKH004' where maKhachHang = '"+ma+"'";
 		try {
@@ -228,31 +260,38 @@ public class DAOKhachHang {
 		return false;
 	}
 	
-	// này nó viết sai r, để t viết lại
-	public KhachHang getKH(String info) { 
-		KhachHang kh = new KhachHang();
+	/**
+	 * 
+	 * @param info là số điện thoại hoặc mã khách hàng
+	 * @return danh sách thông tin các khách hàng trùng với số điện thoại hoặc mã
+	 */
+	public ArrayList<KhachHang> getMaVaSDTKH(String info) { 
+		ArrayList<KhachHang> lstKH=new ArrayList<KhachHang>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		String sqlMa = "select * from KhachHang where maKhachHang = '"+info+"'";
 		String sqlSDT = "select * from KhachHang where sdt = '"+info+"'";
 		try {
 			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sqlMa);
-			while(rs.next()) {
-				kh.setMaKhangHang(rs.getString(1));
-				kh.setLoaiKH(new LoaiKH(rs.getString(2)));
-				kh.setTenKH(rs.getString(3));
-				kh.setSdt(rs.getString(4));
-				kh.setCccd(rs.getString(5));
-				kh.setDiaChi(rs.getString(6));
-				kh.setNgaySinh(rs.getDate(7));
-				kh.setGioiTinh(rs.getString(8));
-				kh.setDiemTichLuy(rs.getInt(9));
-				kh.setNgayDangKy(rs.getDate(10));
+			ResultSet rsMa = stm.executeQuery(sqlMa);
+			while(rsMa.next()) {
+				KhachHang kh = new KhachHang();
+				kh.setMaKhangHang(rsMa.getString(1));
+				kh.setLoaiKH(new LoaiKH(rsMa.getString(2)));
+				kh.setTenKH(rsMa.getString(3));
+				kh.setSdt(rsMa.getString(4));
+				kh.setCccd(rsMa.getString(5));
+				kh.setDiaChi(rsMa.getString(6));
+				kh.setNgaySinh(rsMa.getDate(7));
+				kh.setGioiTinh(rsMa.getString(8));
+				kh.setDiemTichLuy(rsMa.getInt(9));
+				kh.setNgayDangKy(rsMa.getDate(10));
+				lstKH.add(kh);
 			}
-
+			
 			ResultSet rsSDT = stm.executeQuery(sqlSDT);
 			while(rsSDT.next()) {
+				KhachHang kh = new KhachHang();
 				kh.setMaKhangHang(rsSDT.getString(1));
 				kh.setLoaiKH(new LoaiKH(rsSDT.getString(2)));
 				kh.setTenKH(rsSDT.getString(3));
@@ -263,13 +302,19 @@ public class DAOKhachHang {
 				kh.setGioiTinh(rsSDT.getString(8));
 				kh.setDiemTichLuy(rsSDT.getInt(9));
 				kh.setNgayDangKy(rsSDT.getDate(10));
+				lstKH.add(kh);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return kh;
+		return lstKH;
 	}
 	
+	/**
+	 * 
+	 * @param sdt khách hàng được nhập
+	 * @return thông tin khách hàng theo số điện thoại 
+	 */
 	public KhachHang getKHTheoSDT(String sdt) { 
 		KhachHang kh = new KhachHang();
 		ConnectDB.getinstance();
@@ -296,7 +341,10 @@ public class DAOKhachHang {
 		return kh;
 	}
 	
-
+	/**
+	 * 
+	 * @return danh sách Khách hàng đã được sắp xếp theo mã giảm dần
+	 */
 	public ArrayList<KhachHang> sortByMa() {
 
 
@@ -331,12 +379,18 @@ public class DAOKhachHang {
 
 		return lsKH;
 	}
-	public ArrayList<KhachHang> getKHTheoLoai(String loaiKH) {
+	
+	/**
+	 * 
+	 * @param mã loại loai KH
+	 * @return danh sách khách hàng theo mã loại
+	 */
+	public ArrayList<KhachHang> getKHTheoLoai(String maLoaiKH) {
 		ArrayList<KhachHang> lsKH=new ArrayList<>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		try {
-			PreparedStatement ps = con.prepareStatement("select * from KhachHang where maLoaiKH = N'"+loaiKH+"' ");
+			PreparedStatement ps = con.prepareStatement("select * from KhachHang where maLoaiKH = N'"+maLoaiKH+"' ");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				KhachHang kh = new KhachHang();
@@ -385,8 +439,8 @@ public class DAOKhachHang {
 		}
 		return false;
 	}
-
-
+	
+	
 	public boolean themKHTheoDDP(KhachHang kh) throws SQLException {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -407,6 +461,7 @@ public class DAOKhachHang {
 	}
 	
 	//lay doituong loaiKH thông tin maLoai tu tenLoai
+	
 	public LoaiKH getMaLoaiKHFromTen(String tenLoaiKH) {
 		LoaiKH lKH =new LoaiKH();
 		ConnectDB.getinstance();
@@ -422,4 +477,35 @@ public class DAOKhachHang {
 		return lKH;
 	}
 	
+	
+	/**
+	 * 
+	 * @param sdt can kiem tra
+	 * @return true nếu không có và return false nếu có thôgn tin khách hàng theo số điện thoại
+	 */
+	public boolean checkSdtKH(String sdt) {
+		KhachHang kh=new KhachHang();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement("select * from KhachHang where sdt = '"+sdt+"'");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				kh.setMaKhangHang(rs.getString(1));
+				kh.setLoaiKH(new LoaiKH(rs.getString(2)));
+				kh.setTenKH(rs.getString(3));
+				kh.setSdt(rs.getString(4));
+				kh.setCccd(rs.getString(5));
+				kh.setDiaChi(rs.getString(6));
+				kh.setNgaySinh(rs.getDate(7));
+				kh.setGioiTinh(rs.getString(8));
+				kh.setDiemTichLuy(rs.getInt(9));
+				kh.setNgayDangKy(rs.getDate(10));
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

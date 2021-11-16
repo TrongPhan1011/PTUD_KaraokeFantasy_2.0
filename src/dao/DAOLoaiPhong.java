@@ -10,6 +10,11 @@ import connection.ConnectDB;
 import entity.LoaiPhong;
 
 public class DAOLoaiPhong {
+	
+	/**
+	 * 
+	 * @return tất cả thông tin có danh sách loại phòng trừ LP004
+	 */
 	public ArrayList<LoaiPhong> getAllLoaiPhong() {
 		ArrayList<LoaiPhong> dsLoaiPhong = new ArrayList<LoaiPhong>();
 		ConnectDB.getinstance();
@@ -30,6 +35,11 @@ public class DAOLoaiPhong {
 		return dsLoaiPhong;
 	}
 	
+	/**
+	 * 
+	 * @param mã loại phòng 
+	 * @return các thông tin từ loại phòng được nhập
+	 */
 	public LoaiPhong getLoaiPhongTheoMa(String ma) {
 		LoaiPhong lp = new LoaiPhong();
 		ConnectDB.getinstance();
@@ -50,6 +60,11 @@ public class DAOLoaiPhong {
 		return lp;
 	}
 	
+	/**
+	 * 
+	 * @param ten loại phòng
+	 * @return các thông tin loại phòng từ tên loại phòng
+	 */
 	public LoaiPhong getLoaiPhongTheoTenLoai(String ten) {
 		LoaiPhong lp = new LoaiPhong();
 		ConnectDB.getinstance();
@@ -73,6 +88,11 @@ public class DAOLoaiPhong {
 		
 	}
 	
+	/**
+	 * 
+	 * @param tên loại phòng
+	 * @return mã loại phòng
+	 */
 	public String getMaLoaiPTheoTen(String tenP) {
 		String maLoai ="";
 		ConnectDB.getinstance();

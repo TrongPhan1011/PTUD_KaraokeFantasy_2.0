@@ -21,6 +21,10 @@ public class DAOPhong implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 * @return danh sách các phòng có tình trạng là đang hoạt động
+	 */
 	public ArrayList<Phong> getPhongTrongVaDaDat(){
 		ArrayList<Phong> lstP=new ArrayList<>();
 		ConnectDB.getinstance();
@@ -42,6 +46,10 @@ public class DAOPhong implements Serializable{
 		return lstP;
 	}
 	
+	/**
+	 * đếm số phòng có tình trạng phòng đã đặt
+	 * @return số phòng đã đặt
+	 */
 	public int countPhongDaDat() {
 		Phong p = new Phong();
 		ConnectDB.getinstance();
@@ -56,6 +64,10 @@ public class DAOPhong implements Serializable{
 		return 0;
 	}
 	
+	/**
+	 * Đếm số phòng còn trống
+	 * @return Số phòng còn trống
+	 */
 	public int countPhongTrong() {
 		Phong p = new Phong();
 		ConnectDB.getinstance();
@@ -70,6 +82,11 @@ public class DAOPhong implements Serializable{
 		return 0;
 	}
 	
+	/**
+	 * 
+	 * @param ma phòng
+	 * @return thông tin phòng theo mã phòng được nhập
+	 */
 	public Phong getPhongTheoMa(String ma) {
 		
 		Phong p = new Phong();
@@ -95,6 +112,12 @@ public class DAOPhong implements Serializable{
 		return p;
 	}
 
+	/**
+	 * 
+	 * @param maPhong
+	 * @param trangThaiPhong
+	 * @return cập nhập mã phòng và trạng thái phòng
+	 */
 	public boolean capnhatTrangThaiPhong(String maPhong, String trangThaiPhong) {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -122,6 +145,10 @@ public class DAOPhong implements Serializable{
 		return n>0;
 	}
 	
+	/**
+	 * 
+	 * @return danh sách phòng đang hoạt động và trạng thái đơn đặt hàng là đã xác nhận
+	 */
 	public ArrayList<Phong> getPhongDangHoatDong() {
 		//fix
 		//and DonDatPhong.ngayDen ='date'
@@ -154,6 +181,11 @@ public class DAOPhong implements Serializable{
 		
 		return lsPhong;
 	}
+	
+	/**
+	 * 
+	 * @return lấy tất cả danh sách phòng trừ phòng ko còn hoạt động
+	 */
 public ArrayList<Phong> getDanhSachPhong() {
 		
 		
@@ -183,6 +215,11 @@ public ArrayList<Phong> getDanhSachPhong() {
 		return lsPhong;
 	}
 
+	/**
+	 * 
+	 * @param ma phòng
+	 * @return thông tin phòng theo mã và đang hoạt động, đã được xác nhận đã đặt
+	 */
 	public Phong getPhongDangHoatDongTheoMaP(String ma) {
 			
 			
@@ -211,6 +248,12 @@ public ArrayList<Phong> getDanhSachPhong() {
 		
 		return p;
 		}
+	
+	/**
+	 * 
+	 * @param ma phòn
+	 * @return danh sách phòng theo mã và đang hoạt động và đã được xác nhận
+	 */
 	public ArrayList<Phong> getPhongDangHoatDongTheoMaLoai(String ma) {
 		
 		
@@ -301,6 +344,12 @@ public ArrayList<Phong> getDanhSachPhong() {
 		}
 		return n>0;
 	}
+	
+	/**
+	 * 
+	 * @param mã phòng
+	 * @return thông tin phòng theo mã
+	 */
 public Phong getGiaPhongTheoMa(String ma) {
 		
 		Phong p = new Phong();
@@ -341,6 +390,11 @@ public Phong getGiaPhongTheoMa(String ma) {
 	return false;
 }
 	
+	/**
+	 * 
+	 * @param mã loại phòng
+	 * @return lấy danh sách các phòng theo mã loại phòng
+	 */
 	public ArrayList<Phong> getPhongTheoLoai(String maLoaiP) {
 		ArrayList<Phong> lsP=new ArrayList<>();
 		ConnectDB.getinstance();
@@ -364,6 +418,12 @@ public Phong getGiaPhongTheoMa(String ma) {
 		}
 		return lsP;
 	}
+	
+	/**
+	 * 
+	 * @param kiểu sắp xếp
+	 * @return danh sách phòng đã được sắp xếp theo loại
+	 */
 	public ArrayList<Phong> sortTheoGiaPhong(String kieuSort) {
 		ArrayList<Phong> lsP=new ArrayList<>();
 		ConnectDB.getinstance();
@@ -411,6 +471,12 @@ public Phong getGiaPhongTheoMa(String ma) {
 		}
 		return lsP;
 	}
+	
+	/**
+	 * 
+	 * @param mã phòng
+	 * @return lấy thông tin phòng theo mã
+	 */
 	public Phong getThongTinPhong(String info) { 
 		Phong p = new Phong();
 		ConnectDB.getinstance();
@@ -430,6 +496,64 @@ public Phong getGiaPhongTheoMa(String ma) {
 			e.printStackTrace();
 		}
 		return p;
+	}
+	
+	/**
+	 * 
+	 * @param tình trạng phòng
+	 * @return danh sách các phòng theo tình trạng
+	 */
+	public ArrayList<Phong> getPhongTheoTinhTrang(String tinhTrang) {
+		ArrayList<Phong> lsP=new ArrayList<>();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement("select * from Phong where tinhTrangPhong = N'"+tinhTrang+"' ");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Phong p = new Phong();
+				
+				p.setMaPhong(rs.getNString(1));
+				p.setLoaiPhong(new LoaiPhong(rs.getNString(2)));
+				p.setTinhTrangPhong(rs.getNString(3));
+				p.setGiaPhong(rs.getDouble(4));
+				
+				lsP.add(p);
+					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lsP;
+	}
+	
+	/**
+	 * 
+	 * @param mã phòng
+	 * @return danh sách phòng theo mã
+	 */
+	public ArrayList<Phong> getPhongTheoMaP(String ma) {
+		ArrayList<Phong> lsP=new ArrayList<>();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement("select * from Phong where maPhong = N'"+ma+"' ");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Phong p = new Phong();
+				
+				p.setMaPhong(rs.getNString(1));
+				p.setLoaiPhong(new LoaiPhong(rs.getNString(2)));
+				p.setTinhTrangPhong(rs.getNString(3));
+				p.setGiaPhong(rs.getDouble(4));
+				
+				lsP.add(p);
+					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lsP;
 	}
 	
 }

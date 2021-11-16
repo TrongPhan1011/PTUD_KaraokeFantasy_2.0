@@ -451,6 +451,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		bgRdo.clearSelection();
 		chkTatCa.setSelected(false);
 	}
+	
 	/**
 	 * Sự kiện chính
 	 */

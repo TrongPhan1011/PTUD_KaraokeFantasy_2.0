@@ -17,7 +17,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -32,6 +31,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -64,7 +64,6 @@ import entity.NhanVien;
 import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import javax.swing.SwingConstants;
 
 public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener {
 
@@ -161,8 +160,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		
 		
-//Main UI
-		// get font
+
 		IconFontSwing.register(FontAwesome.getIconFont());
 		
 		setLayout(null);
@@ -179,6 +177,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pMain.add(lblSubTimKiem);
 		
 		txtTim = new JTextField();
+		txtTim.setToolTipText("Tìm kiếm mã phòng đang hát");
 		txtTim.setBounds(520, 11, 357, 33);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
 		
@@ -228,6 +227,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pMain.add(lblHeaderPhong);
 		
 		pPhong = new JPanel();
+		pPhong.setToolTipText("Danh sách phòng đang hát");
 		
 		pPhong.setBackground(Color.white);		//new Color(164, 44, 167,20)
 		pPhong.setLayout(new GridLayout(6, 1, 0, 0));
@@ -238,13 +238,14 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		scrollPane.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		
 		
-		scrollPane.setBounds(10, 66, 216, 552);
+		scrollPane.setBounds(10, 53, 216, 565);
 		pMain.add(scrollPane);
 		
 		JPanel pThongTinDDP = new JPanel();
-		pThongTinDDP.setBackground(new Color(238,239,243));
+		pThongTinDDP.setToolTipText("Thông tin đơn đặt phòng");
+		pThongTinDDP.setBackground(new Color(171, 192, 238));
 		pThongTinDDP.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Thông tin chung", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pThongTinDDP.setBounds(519, 56, 738, 61);
+		pThongTinDDP.setBounds(519, 53, 738, 64);
 		pMain.add(pThongTinDDP);
 		pThongTinDDP.setLayout(null);
 		
@@ -253,7 +254,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblSubPhong.setBounds(10, 9, 56, 26);
 		pThongTinDDP.add(lblSubPhong);
 		
-		lblMaPhong = new JLabel("1");
+		lblMaPhong = new JLabel("");
 		lblMaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		lblMaPhong.setBounds(62, 9, 98, 26);
 		pThongTinDDP.add(lblMaPhong);
@@ -263,12 +264,12 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblSubTenKH.setBounds(10, 33, 90, 26);
 		pThongTinDDP.add(lblSubTenKH);
 		
-		lblMaKH = new JLabel("1");
+		lblMaKH = new JLabel("");
 		lblMaKH.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		lblMaKH.setBounds(96, 33, 71, 26);
 		pThongTinDDP.add(lblMaKH);
 		
-		lblTenKH = new JLabel("1");
+		lblTenKH = new JLabel("");
 		lblTenKH.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		lblTenKH.setBounds(170, 33, 252, 26);
 		pThongTinDDP.add(lblTenKH);
@@ -279,12 +280,12 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblSubGioVao.setBounds(543, 33, 61, 26);
 		pThongTinDDP.add(lblSubGioVao);
 		
-		lblGioVao = new JLabel("1");
+		lblGioVao = new JLabel("");
 		lblGioVao.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		lblGioVao.setBounds(603, 33, 40, 26);
 		pThongTinDDP.add(lblGioVao);
 		
-		lblPhutVao = new JLabel("1");
+		lblPhutVao = new JLabel("");
 		lblPhutVao.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
 		lblPhutVao.setBounds(653, 33, 56, 26);
 		pThongTinDDP.add(lblPhutVao);
@@ -297,9 +298,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	
 		
 		JPanel pDichVu = new JPanel();
+		pDichVu.setToolTipText("Thông tin các dịch vụ và hóa đơn");
 		pDichVu.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Dịch vụ ", TitledBorder.CENTER, TitledBorder.TOP, null, Color.BLACK));
-		pDichVu.setBackground(new Color(238,239,243,90));
-		pDichVu.setBounds(228, 58, 281, 560);
+		pDichVu.setBackground(Color.WHITE);
+		pDichVu.setBounds(228, 53, 281, 565);
 		pMain.add(pDichVu);
 		pDichVu.setLayout(null);
 		
@@ -309,6 +311,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pDichVu.add(lblSubLMH);
 		
 		cbbLoaiMH = new JComboBox<String>();
+		cbbLoaiMH.setToolTipText("Chọn loại mặt hàng");
 		cbbLoaiMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbLoaiMH.setBackground(Color.WHITE);
 		cbbLoaiMH.setBounds(112, 25, 159, 30);
@@ -321,6 +324,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pDichVu.add(lblSubTenMH);
 		
 		cbbTenMH = new JComboBox<String>();
+		cbbTenMH.setToolTipText("Chọn tên mặt hàng");
 		cbbTenMH.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cbbTenMH.setBackground(Color.WHITE);
 		cbbTenMH.setBounds(112, 64, 159, 30);
@@ -341,7 +345,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		txtSoLuong.setColumns(10);
 		
 		rdbtnGiamSL = new JRadioButton("Giảm số lượng");
-		rdbtnGiamSL.setBackground(new Color(228,210,239));
+		rdbtnGiamSL.setBackground(Color.WHITE);
 		rdbtnGiamSL.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		rdbtnGiamSL.setBounds(112, 140, 159, 35);
 		pDichVu.add(rdbtnGiamSL);
@@ -406,6 +410,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		tbMatHang.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 		
 		JScrollPane spMatHang = new JScrollPane(tbMatHang);
+		spMatHang.setToolTipText("Danh sách các mặt hàng đã được đặt");
 		spMatHang.setBounds(520, 120, 736, 398);
 		spMatHang.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		spMatHang.setBackground(new Color(164, 44, 167));
@@ -437,6 +442,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		cbbPhuThu = new JComboBox<String>();
+		cbbPhuThu.setToolTipText("Chọn loại phụ thu");
 		cbbPhuThu.setBounds(112, 424, 159, 29);
 		pDichVu.add(cbbPhuThu);
 		cbbPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -449,6 +455,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblSubGioRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		 cbbGioRa = new JComboBox<String>();
+		 cbbGioRa.setToolTipText("Chọn giờ ra");
 		cbbGioRa.setBounds(112, 463, 69, 29);
 		pDichVu.add(cbbGioRa);
 		cbbGioRa.setBackground(Color.WHITE);
@@ -462,6 +469,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		blbSubAfterGioRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		
 		cbbPhutRa = new JComboBox<String>();
+		cbbPhutRa.setToolTipText("Chọn giờ ra");
 		cbbPhutRa.setBounds(202, 463, 69, 29);
 		pDichVu.add(cbbPhutRa);
 		cbbPhutRa.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -473,7 +481,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnInHoaDon.setForeground(Color.WHITE);
 		btnInHoaDon.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnInHoaDon.setBackground(new Color(114, 23, 153));
-		btnInHoaDon.setBounds(10, 516, 261, 33);
+		btnInHoaDon.setBounds(10, 521, 261, 33);
 		
 		Icon iconInHD = IconFontSwing.buildIcon(FontAwesome.PRINT, 20, new Color(255, 255 ,255));
 		btnInHoaDon.setIcon(iconInHD);
@@ -495,7 +503,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		
 		JPanel pThanhToan = new JPanel();
-		pThanhToan.setBackground(new Color(238,239,243));
+		pThanhToan.setToolTipText("Thông tin giá thanh toán");
+		pThanhToan.setBackground(new Color(236,196,236));
 		pThanhToan.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Thanh toán", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pThanhToan.setBounds(520, 519, 737, 99);
 		pMain.add(pThanhToan);
@@ -504,55 +513,55 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		JLabel lblpSubPhuThu = new JLabel("Phụ thu: ");
 		lblpSubPhuThu.setBounds(10, 11, 90, 26);
 		pThanhToan.add(lblpSubPhuThu);
-		lblpSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblpSubPhuThu.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		
-		lblPhuThu = new JLabel("1");
+		lblPhuThu = new JLabel("");
 		lblPhuThu.setBounds(77, 11, 169, 26);
 		pThanhToan.add(lblPhuThu);
 		lblPhuThu.setForeground(Color.RED);
-		lblPhuThu.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		lblPhuThu.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
 		
 		JLabel lblSubGiaPhong = new JLabel("Giá phòng: ");
 		lblSubGiaPhong.setBounds(244, 11, 77, 26);
 		pThanhToan.add(lblSubGiaPhong);
-		lblSubGiaPhong.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblSubGiaPhong.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		
-		lblGiaPhong = new JLabel("1");
+		lblGiaPhong = new JLabel("");
 		lblGiaPhong.setBounds(333, 11, 109, 26);
 		pThanhToan.add(lblGiaPhong);
 		lblGiaPhong.setForeground(Color.RED);
-		lblGiaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		lblGiaPhong.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
 		
 	
 		
-		lblThanhToanLoaiKH = new JLabel("1");
+		lblThanhToanLoaiKH = new JLabel("");
 		lblThanhToanLoaiKH.setBounds(10, 33, 90, 26);
 		pThanhToan.add(lblThanhToanLoaiKH);
-		lblThanhToanLoaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblThanhToanLoaiKH.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		
-		lblGiamGia = new JLabel("1");
+		lblGiamGia = new JLabel("");
 		lblGiamGia.setBounds(96, 33, 149, 26);
 		pThanhToan.add(lblGiamGia);
 		lblGiamGia.setForeground(Color.RED);
-		lblGiamGia.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		lblGiamGia.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
 		
 		JLabel lblSubThoiGian = new JLabel("Thời gian: ");
 		lblSubThoiGian.setBounds(244, 33, 77, 26);
 		pThanhToan.add(lblSubThoiGian);
-		lblSubThoiGian.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblSubThoiGian.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		
-		lblThoiGian = new JLabel("1");
+		lblThoiGian = new JLabel("");
 		lblThoiGian.setBounds(326, 33, 176, 26);
 		pThanhToan.add(lblThoiGian);
 		lblThoiGian.setForeground(Color.RED);
-		lblThoiGian.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 15));
+		lblThoiGian.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 14));
 		
 		JLabel lblSubThanhTien = new JLabel("Thành tiền: ");
 		lblSubThanhTien.setBounds(226, 68, 90, 26);
 		pThanhToan.add(lblSubThanhTien);
 		lblSubThanhTien.setFont(new Font("SansSerif", Font.PLAIN, 17));
 		
-		lblThanhTien = new JLabel("1");
+		lblThanhTien = new JLabel("");
 		lblThanhTien.setBounds(312, 67, 187, 26);
 		pThanhToan.add(lblThanhTien);
 		lblThanhTien.setForeground(Color.RED);
@@ -588,6 +597,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblBackground.setIcon(new ImageIcon(resizeBG));	
 		pMain.add(lblBackground);
 		
+//		Định dạng tiền: 
+		dfTable = new DecimalFormat("###,###");
+		df = new DecimalFormat("###,### VNĐ");
+		
 //		Load cbb gio phut ra 
 		for(int i=0 ; i <24;i++ ) {
 			cbbGioRa.addItem(""+i);
@@ -602,7 +615,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 			cbbPhuThu.addItem(sPhuThu[i]);
 		}
 		
-//		mouse click for table
+
 	
 		
 //		Load tên loại mặt hàng
@@ -623,9 +636,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 //		Load Phong dang hoat dong
 		loadPhong();
 
-//		Định dạng tiền: 
-		dfTable = new DecimalFormat("###,###");
-		df = new DecimalFormat("###,### VNĐ");
 		
 //		action 
 		cbbLoaiMH.addItemListener(this);
@@ -643,13 +653,19 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnXoaMH.addActionListener(this);
 		rdbtnGiamSL.addActionListener(this);
 		btnTim.addActionListener(this);
+		btnInHoaDon.addActionListener(this);
 		
 		
 		
 	}
-//	end main
+
 	
-//	Phòng
+	/**
+	 * Tải lên thông tin của phòng đã được đặt, đang có trạng thái đã đặt, có đơn đặt phòng có trạng thái
+	 * đã xác nhận.
+	 * thông tin phòng tải lên sẽ kèm theo giao diện của từng nút, có chức năng như đang chứa thông tin đơn đặt phòng.
+	 *
+	 */
 	public void loadPhong() {
 
 	
@@ -688,6 +704,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		}
 	}
 	
+	/**
+	 * Tải thông tin phòng khi có mã phòng lên giao diện ở các label, đồng thời tải các danh sách mặt hàng đơn đặt phòng lên bảng
+	 * @param Phong
+	 */
 	@SuppressWarnings("deprecation")
 	public void loadInfo(Phong p) {
 		lblMaPhong.setText(p.getMaPhong());
@@ -702,8 +722,12 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		loadTable(ddp);
 	}
 	
-//	Table   
 	
+	
+	/**
+	 * Tải thông tin mặt hàng của đơn đặt phòng lên bảng
+	 * @param DonDatPhong
+	 */
 	public void loadTable(DonDatPhong ddp) {
 		clearTable();
 		ArrayList<CTDDP> lsCTDDP = daoCTDDP.getCTDDPTheoMaDDP(ddp.getMaDDP());
@@ -728,10 +752,11 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	
 	
 	/**
-	 * Tính tiền thuê phòng, thời gian hát * giá phòng
+	 * Tính tiền thuê phòng = thời gian hát * giá phòng
 	 * Thời gian được chuyển sang phút trước khi tính tiền phòng
+	 * Trả về tiền thuê phòng
 	 * @param giaPhong
-	 * @return tổng tiền thuê phòng
+	 * @return double 
 	 */
 	public double tinhTienThue(double giaPhong) {
 		int gioVao = Integer.parseInt(lblGioVao.getText()),
@@ -756,7 +781,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	}
 	
 	/**
-	 * Tính tổng tiền chi tiết hóa đơn của một hóa đơn
+	 * Tính tổng tiền chi tiết hóa đơn của một hóa đơn.
+	 *  Trả về tổng tiền trong CTHD
 	 * @param tongTienThue
 	 * @return tổng tiền trong CTHD
 	 */
@@ -772,7 +798,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		return tong;
 	}
 
-//	Tính thành tiền 
+	/**
+	 * Tải lên giao diện thông tin thành tiền, bao gồm giá phòng, phụ thu, tính giờ, tính toàn bộ thành tiền...
+	 * 
+	 */
 	public void loadThanhTien() {
 		if(!lblMaPhong.getText().toString().equalsIgnoreCase("")) {
 			Phong p = daoPhong.getPhongTheoMa(lblMaPhong.getText());
@@ -780,23 +809,21 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 			String phuThu = cbbPhuThu.getSelectedItem().toString();
 			double giaPhuThu = 0;
 			if(phuThu.equalsIgnoreCase("Buổi tối")) {
-				giaPhuThu = 10000;
-				
+				giaPhuThu = 10000;	
 			}
 			
 			if(phuThu.equalsIgnoreCase("Ngày lễ")) {
 				giaPhuThu = 30000;
-				
 			}
 			if(phuThu.equalsIgnoreCase("Cuối tuần")) {
 				giaPhuThu = 20000;
-				
 			}
 
 			giaPhong = giaPhuThu + giaPhong;
 
 			double tongTienThue = tinhTienThue(giaPhong);
-	
+			
+			//Nếu tổng tiền thuê > 0 thì tính thành tiền theo toognr tiền thuê
 			if(tongTienThue > 0) {
 				int tongGioThue = (int) ((tongTienThue)/giaPhong);
 				int tongPhutThue = (int) (((tongTienThue*60)/giaPhong) % 60);
@@ -831,6 +858,12 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	}
 	
 // 	XỬ LÝ MẶT HÀNG : mã đơn đặt phòng, maMH, số lượng
+	/**
+	 * Tìm mặt hàng trong bảng, nếu tìm thấy thì sửa số lượng mặt hàng ở bảng theo CTHD
+	 * @param ctddp
+	 * @param matHang
+	 * @return boolean
+	 */
 	public boolean kiemTraMatHangTrongBang(CTDDP ctddp, MatHang mh) {
 		if(timRow() != -1) {
 			daoCTDDP.suaSoluongMH(ctddp.getDonDatPhong().getMaDDP(), ctddp.getMatHang().getMaMatHang(), getSoLuongMH());
@@ -845,6 +878,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 	}
 	
+	/**
+	 * Tìm số lượng của 1 mặt hàng. Nếu mặt hàng có trong bảng mặt hàng thì trả về số lượng mặt hàng trong bảng đó
+	 * @return số lượng mặt hàng
+	 */
 	public int getSoLuongMH() {
 		int soLuong = 0;
 		if(timRow() != -1) {
@@ -854,7 +891,11 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		else return Integer.parseInt(txtSoLuong.getText()); 
 	}
 	
-	public int timRow() {		// tìm row trong bảng so sánh với cbb
+	/**
+	 * Tìm 1 hàng trong bảng mặt hàng, nếu tìm thấy sẽ trả về vị trí trong bảng của mặt hàng đó.
+	 * @return vị trí hàng
+	 */
+	public int timRow() {		
 		
 		for(int i =0; i< tbMatHang.getRowCount(); i++) {
 			if(modelMatHang.getValueAt(i, 0).toString().equalsIgnoreCase(cbbTenMH.getSelectedItem().toString())&& modelMatHang.getValueAt(i, 1).toString().equalsIgnoreCase(cbbLoaiMH.getSelectedItem().toString()))
@@ -906,7 +947,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	 * Nếu không được chọn sẽ kiểm tra trong bảng có mặt hàng chưa, nếu có thì cập nhật số lượng, không thì sẽ được thêm mới
 	 */
 	
-	// nhap sl -> ktSLton -> sl <= slTon --> updateslTon --> themcthd
 	public void themMHVaoCTDDP() {
 			if(lblMaPhong.getText() != "") {
 				if(regex.regexSoLuong(txtSoLuong)) {
@@ -917,7 +957,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 					MatHang mh = daoMatHang.getMHTheoTenMHVaLoaiMH(tenMH, loaiMH);
 					int soLuongMH = Integer.parseInt(txtSoLuong.getText());
 					int soLuongTon = mh.getSoLuongMatHang();
-			//		if(soLuongMH <= mh.getSoLuongMatHang()) {
 						CTDDP ctddp = new CTDDP(ddp, soLuongMH, mh);
 						if(rdbtnGiamSL.isSelected()) {
 							kiemTraGiamSL(ctddp);
@@ -945,7 +984,9 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		}
 
 	/**
-	 * Xóa 1 chi tiết hóa đơn sau đó các mục sẽ được làm mới 
+	 * Xóa 1 mặt hàng hóa đơn sau đó các mục sẽ được làm mới. 
+	 * Phòng phải được chọn.
+	 * Trước khi xóa phải chọn một mặt hàng cần xóa
 	 */
 	public void xoaCTDDP() {
 		if(!lblMaPhong.getText().equalsIgnoreCase("")) {
@@ -992,7 +1033,11 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	}
 	
 
-	
+	/**
+	 * Thêm một măt hàng mới vào bảng mặt hàng.
+	 * Thông tin mặt hàng sẽ được lấy từ các combobox và jtextfield tương ứng
+	 * @param HoaDon
+	 */
 	public void themCTHD(HoaDon hd) {
 		int row = tbMatHang.getRowCount();
 		for(int i =0; i< row; i++) {
@@ -1128,7 +1173,16 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		}
 		if(rdbtnGiamSL.isSelected()) {
 			btnThemMH.setText("Giảm mặt hàng");
-		} else btnThemMH.setText("Thêm mặt hàng");
+			Icon minus = IconFontSwing.buildIcon(FontAwesome.MINUS_CIRCLE, 25, new Color(255, 255 ,255));
+			btnThemMH.setBackground(new Color(133, 217, 191));
+			btnThemMH.setIcon(minus);
+		} else {
+			btnThemMH.setText("Thêm mặt hàng");
+			Icon iconThanhToan = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 25, new Color(255, 255 ,255));
+			btnThemMH.setBackground(new Color(57, 210, 247));
+			btnThemMH.setIcon(iconThanhToan);
+		}
+		
 		if(o.equals(btnThemMH)) {
 			themMHVaoCTDDP();
 		}
@@ -1141,6 +1195,9 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		if(o.equals(btnTim)) {
 			timKiem();
 		
+		}
+		if(o.equals(btnInHoaDon)) {
+			JOptionPane.showMessageDialog(this, "Chức năng đang hoàn thiện.\nVui lòng sử dụng chức năng sau khi được cập nhật.");
 		}
 		
 		

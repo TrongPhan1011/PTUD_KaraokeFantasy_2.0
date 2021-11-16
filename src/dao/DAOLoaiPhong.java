@@ -10,7 +10,7 @@ import connection.ConnectDB;
 import entity.LoaiPhong;
 
 public class DAOLoaiPhong {
-	
+
 	/**
 	 * 
 	 * @return tất cả thông tin có danh sách loại phòng trừ LP004
@@ -34,7 +34,7 @@ public class DAOLoaiPhong {
 		}
 		return dsLoaiPhong;
 	}
-	
+
 	/**
 	 * 
 	 * @param mã loại phòng 
@@ -49,17 +49,17 @@ public class DAOLoaiPhong {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
 			while(rs.next()) {
-				
-				 lp.setMaLoaiPhong(rs.getNString(1));
-				 lp.setTenLoaiPhong(rs.getNString(2));
-				
+
+				lp.setMaLoaiPhong(rs.getNString(1));
+				lp.setTenLoaiPhong(rs.getNString(2));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return lp;
 	}
-	
+
 	/**
 	 * 
 	 * @param ten loại phòng
@@ -70,24 +70,24 @@ public class DAOLoaiPhong {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		String sql = "select * from LoaiPhong where tenLoaiPhong = N'"+ten +"'";
-		
+
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
 			while(rs.next()) {
-				
-				 lp.setMaLoaiPhong(rs.getNString(1));
-				 lp.setTenLoaiPhong(rs.getNString(2));
-				
+
+				lp.setMaLoaiPhong(rs.getNString(1));
+				lp.setTenLoaiPhong(rs.getNString(2));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return lp;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param tên loại phòng
@@ -98,20 +98,20 @@ public class DAOLoaiPhong {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		String sql = "select maLoaiPhong from LoaiPhong where tenLoaiPhong = N'"+tenP +"'";
-		
+
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
 			while(rs.next()) {
-				
+
 				maLoai = rs.getString(1);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return maLoai;
-		
+
 	}
 }

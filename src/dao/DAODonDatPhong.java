@@ -10,17 +10,33 @@ import java.util.ArrayList;
 import connection.ConnectDB;
 import entity.DonDatPhong;
 import entity.KhachHang;
-import entity.LoaiKH;
-import entity.LoaiMatHang;
-import entity.LoaiPhong;
-import entity.MatHang;
 import entity.NhanVien;
 import entity.Phong;
 
 public class DAODonDatPhong {
-	
-	
-	
+
+	public boolean themDDP(DonDatPhong ddp) throws SQLException {
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement("insert into DonDatPhong values (?,?,?,?,?,?,?,?)");
+			ps.setString(1, ddp.getMaDDP());
+			ps.setString(2, ddp.getPhong().getMaPhong());
+			ps.setString(3, ddp.getKhachHang().getMaKhangHang());
+			ps.setString(4, ddp.getNhanVien().getMaNhanVien());
+			ps.setDate(5, ddp.getNgayLap());
+			ps.setTime(6, ddp.getGioDen());
+			ps.setDate(7, ddp.getNgayDen());
+			ps.setString(8, ddp.getTrangThaiDDP());
+
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.close();
+		return false;
+	}
+
 	public ArrayList<DonDatPhong> getDanhSachDDPKhongHuy() {
 		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();
 		ConnectDB.getinstance();
@@ -46,7 +62,7 @@ public class DAODonDatPhong {
 		}
 		return lsDDP;
 	} 
-	
+
 	public DonDatPhong getDDPTheoMaPhong(String ma){
 		DonDatPhong ddp = new DonDatPhong();
 		ConnectDB.getinstance();
@@ -59,7 +75,7 @@ public class DAODonDatPhong {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
 			while(rs.next()) {
-				
+
 				ddp.setMaDDP(rs.getNString(1));
 				ddp.setPhong(new Phong(rs.getNString(2)));
 				ddp.setKhachHang(new KhachHang(rs.getNString(3)));
@@ -74,39 +90,18 @@ public class DAODonDatPhong {
 		}
 		return ddp;
 	}
-	
-	//them ddp
-	public boolean themDDP(DonDatPhong ddp) throws SQLException {
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		try {
-			PreparedStatement ps = con.prepareStatement("insert into DonDatPhong values (?,?,?,?,?,?,?,?)");
-			ps.setString(1, ddp.getMaDDP());
-			ps.setString(2, ddp.getPhong().getMaPhong());
-			ps.setString(3, ddp.getKhachHang().getMaKhangHang());
-			ps.setString(4, ddp.getNhanVien().getMaNhanVien());
-			ps.setDate(5, ddp.getNgayLap());
-			ps.setTime(6, ddp.getGioDen());
-			ps.setDate(7, ddp.getNgayDen());
-			ps.setString(8, ddp.getTrangThaiDDP());
-			
-			return ps.executeUpdate() > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		con.close();
-		return false;
-	}
-	
-//	public DonDatPhong getDDPTheoTenKH(String ten) {
-//		DonDatPhong ddp=new DonDatPhong();
-//		ConnectDB.getinstance();
-//		Connection con = ConnectDB.getConnection();
-//		try {
-//			PreparedStatement ps = con.prepareStatement("select * from KhachHang where tenKH like N'%"+ten+"%'");
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		};
-//	}
-	
+
+
+
+	//	public DonDatPhong getDDPTheoTenKH(String ten) {
+	//		DonDatPhong ddp=new DonDatPhong();
+	//		ConnectDB.getinstance();
+	//		Connection con = ConnectDB.getConnection();
+	//		try {
+	//			PreparedStatement ps = con.prepareStatement("select * from KhachHang where tenKH like N'%"+ten+"%'");
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//		};
+	//	}
+
 }

@@ -214,7 +214,7 @@ public class DAONhanVien implements Serializable{
 		ArrayList<NhanVien> list = new ArrayList<>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "select * from [dbo].[NhanVien] where tenNhanVien like N'"+info+"'";
+		String sql = "select * from [dbo].[NhanVien] where tenNhanVien like N'%"+info+"%'";
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);

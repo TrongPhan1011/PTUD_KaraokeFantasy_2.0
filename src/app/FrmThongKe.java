@@ -537,7 +537,6 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		int namTK = dateChooserThongKeTheoNgay.getDate().getYear();
 		if(rdoTKNg.isSelected()) {
 			int dem = daoHoaDon.demSoKHTrongNgay(new Date(namTK, thangTK, ngayTK));
-			System.out.println(daoHoaDon.demSoKHTrongNgay(new Date(namTK, thangTK, ngayTK)));
 			btnSoKH.setText(dem+"");
 		}
 	}
@@ -549,7 +548,6 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		int namTK = dateChooserThongKeTheoNgay.getDate().getYear();
 		if(rdoTKNg.isSelected()) {
 			int dem = daoHoaDon.demSoMHTrongNgay(new Date(namTK, thangTK, ngayTK));
-			System.out.println(daoHoaDon.demSoMHTrongNgay(new Date(namTK, thangTK, ngayTK)));
 			btnSoMH.setText(dem+"");
 		}
 	}
@@ -575,6 +573,12 @@ public class FrmThongKe extends JPanel implements ActionListener{
 			btnTGHD.setText(thoiGianThongKe+"");
 		}
 	}
+	
+	/*
+	 * private static JFreeChart createChart() { JFreeChart chart =
+	 * ChartFactory.createBarChart(false, "", arg2, arg3, arg4, arg5, arg6, arg7);
+	 * return chart; }
+	 */
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

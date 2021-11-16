@@ -15,7 +15,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Connection;
 import java.sql.Date;
 import java.util.*;
 import java.sql.SQLException;
@@ -36,7 +35,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -50,21 +48,12 @@ import com.toedter.calendar.JDateChooser;
 import connection.ConnectDB;
 import dao.DAOKhachHang;
 import dao.DAOLoaiKH;
-import dao.DAONhanVien;
 import dao.DAOPhatSinhMa;
 import dao.Regex;
 import entity.KhachHang;
 import entity.LoaiKH;
-import entity.MatHang;
-import entity.NhanVien;
-import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 public class FrmKhachHang extends JPanel implements ActionListener, MouseListener, ItemListener {
@@ -95,8 +84,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JComboBox<String> cboSort;
 	private JDateChooser dateChooserNgaySinh;
 	private JDateChooser dateChooserNgayDangKy;
-	private SimpleDateFormat dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
-	private SimpleDateFormat dfNgayDangKy = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat dfNgaySinh;
+	private SimpleDateFormat dfNgayDangKy;
 	private JRadioButton rdoTheoMaKH;
 	private JRadioButton rdoTheoLoaiKH;
 	private JRadioButton rdoTheoTenKH;
@@ -529,6 +518,9 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		rdoTheoTenKH.addActionListener(this);
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
+		
+		dfNgaySinh  = new SimpleDateFormat("dd/MM/yyyy");
+		dfNgayDangKy  = new SimpleDateFormat("dd/MM/yyyy");
 	}
 
 	//end giao diện

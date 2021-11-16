@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -16,32 +18,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
-
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SpringLayout;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -54,8 +46,6 @@ import entity.CTHD;
 import entity.HoaDon;
 import entity.MatHang;
 import entity.Phong;
-
-import javax.swing.SwingConstants;
 
 
 

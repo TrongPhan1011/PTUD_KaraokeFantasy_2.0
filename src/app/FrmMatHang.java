@@ -129,6 +129,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		pNhapThongTin.setBounds(10, 11, 333, 607);
 		pMain.add(pNhapThongTin);
 		pNhapThongTin.setLayout(null);
+		pNhapThongTin.setToolTipText("Thông tin mặt hàng");
 		
 		JLabel lblTenMH = new JLabel("Tên mặt hàng: ");
 		lblTenMH.setBounds(10, 83, 102, 36);
@@ -191,6 +192,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		 * Tìm kiếm
 		 */
 		txtTim = new JTextField();
+		txtTim.setToolTipText("Thông tin tìm kiếm");
 		txtTim.setText("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
@@ -222,6 +224,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		pMain.add(lblTim);
 
 		btnTim = new FixButton("Tìm");
+		btnTim.setToolTipText("Tìm kiếm mặt hàng");
 		btnTim.setForeground(Color.WHITE);
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -241,6 +244,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnThemMH.setBounds(10, 385, 313, 42);
 		Icon iconThemMH = IconFontSwing.buildIcon(FontAwesome.PLUS_CIRCLE, 20, Color.white);
 		btnThemMH.setIcon(iconThemMH);
+		btnThemMH.setToolTipText("Thêm một mặt hàng");
 		pNhapThongTin.add(btnThemMH);
 
 		btnSuaMH = new FixButton("Sửa");
@@ -248,6 +252,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnSuaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaMH.setBackground(new Color(133, 217, 191));
 		btnSuaMH.setBounds(10, 443, 313, 42);
+		btnSuaMH.setToolTipText("Sửa thông thông một mặt hàng");
 		Icon iconSuaMH = IconFontSwing.buildIcon(FontAwesome.WRENCH, 20, Color.white);
 		btnSuaMH.setIcon(iconSuaMH);
 		pNhapThongTin.add(btnSuaMH);
@@ -259,6 +264,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnXoaMH.setBounds(10, 499, 313, 42);
 		Icon iconHuyMH = IconFontSwing.buildIcon(FontAwesome.TIMES_CIRCLE, 20, Color.white);
 		btnXoaMH.setIcon(iconHuyMH);
+		btnXoaMH.setToolTipText("Xóa một mặt hàng");
 		pNhapThongTin.add(btnXoaMH);
 
 		btnReset = new FixButton("Làm mới");
@@ -268,12 +274,14 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnReset.setBounds(10, 552, 313, 44);
 		Icon iconReset = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
 		btnReset.setIcon(iconReset);
+		btnReset.setToolTipText("Làm mới toàn bộ chương trình");
 		pNhapThongTin.add(btnReset);
 		
 		/**
 		 * Panel sắp xếp
 		 */
 		JPanel pSapXep = new JPanel();
+		pSapXep.setToolTipText("Sắp xếp dữ liệu");
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Sắp xếp", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pSapXep.setBackground(new Color(171, 192, 238));
 		pSapXep.setBounds(350, 49, 909, 47);
@@ -285,6 +293,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		cboSapXep.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboSapXep.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboSapXep.setBackground(Color.WHITE);
+		cboSapXep.setToolTipText("Sắp xếp theo kiểu tăng dần/ giảm dần");
 		pSapXep.add(cboSapXep);
 
 		rdoTheoTenMH = new JRadioButton("Theo tên mặt hàng");
@@ -338,6 +347,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		tblMH.setSelectionForeground(new Color(114, 23, 153));
 		tblMH.setRowHeight(30);
 		tblMH.setSelectionBackground(new Color(164, 44, 167,30));
+		tblMH.setToolTipText("Bảng mặt hàng");
 
 		JTableHeader tbHeader = tblMH.getTableHeader();
 		tbHeader.setBackground(new Color(164, 44, 167));
@@ -415,7 +425,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		dfVND = new DecimalFormat("###,### VND");
 	}
 	/**
-	 * Lấy dữ liệu từ SQL nạp vào bảng
+	 * Lấy dữ liệu từ SQL Server nạp vào bảng thông qua vòng lặp for, không nạp vào bảng với loại mặt hàng ngừng kinh doanh
 	 */
 	public void loadTableMH() {
 		ArrayList<MatHang> lsMH = daoMH.getDSMatHang();
@@ -428,7 +438,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Xóa bảng
+	 * Xóa toàn bộ bảng
 	 */
 	public void clearTable() {
 		while(tblMH.getRowCount() > 0) {
@@ -436,7 +446,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Làm mới chương trình
+	 * Làm mới toàn bộ chương trình, đặt tất cả về giá trị mặc định 
 	 */
 	public void LamMoi() {
 		txtTim.setText("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng");
@@ -526,17 +536,19 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 			int soluong = Integer.parseInt(txtSoLuong.getText());
 			double dongia = Double.parseDouble(txtDonGia.getText());
 			MatHang mh = new MatHang(maMH, tenMH, soluong, dongia, new LoaiMatHang(maLMH));
-			if(regex.regexTenMH(txtTenMH) && regex.regexSoLuong(txtSoLuong) && regex.regexGiaMH(txtDonGia)) {
-				try {
-					daoMH.ThemMH(mh);
-					JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
-				}catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
+			if(regex.regexTenMH(txtTenMH)) {
+				if(regex.regexSoLuong(txtSoLuong)) {
+					if (regex.regexGiaMH(txtDonGia)) {
+							daoMH.ThemMH(mh);
+							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
+							LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
+							modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
+						}else {
+							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
+						}
 				}
-				LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
-				modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
-			}
+			} 
+				
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 		}
@@ -551,34 +563,16 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 			int r = tblMH.getSelectedRow();
 			if(r>0) {
 				int del = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa? ", "Thông báo", JOptionPane.YES_NO_OPTION);
-				String maMH = modelMatHang.getValueAt(r, 0).toString();
 				if(del == JOptionPane.YES_OPTION) {
-					String maMH1 =  (String) tblMH.getValueAt(r, 0);
+					String maMH1 =  tblMH.getValueAt(r, 0).toString();
 					String tenMH = txtTenMH.getText();
 					String maLMH = "LMH004";
 					int soluong = Integer.parseInt(txtSoLuong.getText());
 					double dongia = Double.parseDouble(txtDonGia.getText());
 					MatHang mh = new MatHang(maMH1, tenMH, soluong, dongia, new LoaiMatHang(maLMH));  
 					daoMH.updateMH(mh);
+					clearTable();
 					loadTableMH();
-				}
-			}
-		}
-	}
-	/**
-	 * Xóa mặt hàng khỏi table và SQL
-	 */
-	public void XoaMH() {
-		if (tblMH.getSelectedRow() == -1) {
-			JOptionPane.showMessageDialog(this, "Vui lòng chọn mặt hàng cần xóa");
-		}else {
-			int r = tblMH.getSelectedRow();
-			if(r > 0) {
-				int del = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa? ", "Thông báo", JOptionPane.YES_NO_OPTION);
-				String maMH = modelMatHang.getValueAt(r, 0).toString();
-				if(del == JOptionPane.YES_OPTION) {
-					if(daoMH.XoaMH(maMH))
-						modelMatHang.removeRow(r);
 				}
 			}
 		}

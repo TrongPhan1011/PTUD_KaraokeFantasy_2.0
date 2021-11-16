@@ -699,8 +699,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 								new Date(namSinh, thangSinh, ngaySinh), gioiTinh, diemTichLuy,
 								new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
 						daoKhachHang.suaThongTinKhachHang(kh);
-						loadDanhSachKH();
 						resetAll();
+						loadThongTin(kh);
 						JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được sửa!", "Thông báo",
 								JOptionPane.OK_OPTION);
 					} catch (Exception e) {
@@ -752,7 +752,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					modelKhachHang.removeRow(row);
 					clearTable();
 					daoKhachHang.huyKH(maKH);
-					loadDanhSachKH();
 					JOptionPane.showMessageDialog(null, "Đã xóa khách hàng!", "Thông báo", JOptionPane.OK_OPTION);
 				} catch (Exception e1) {
 					e1.printStackTrace();

@@ -284,7 +284,7 @@ public class DAOMatHang {
 		ArrayList<MatHang> lstMH = new ArrayList<>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "select * from MatHang	where tenMH like N'"+tenMH+"'";
+		String sql = "select * from MatHang	where tenMH like N'%"+tenMH+"%'";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();

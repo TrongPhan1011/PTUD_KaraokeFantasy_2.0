@@ -19,29 +19,7 @@ import entity.Phong;
 
 public class DAODonDatPhong {
 	
-	public ArrayList<DonDatPhong> getAllDonDatPhong(){
-		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		String sql = "select * from DonDatPhong";
-		try {
-			Statement stm = con.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			while(rs.next()) {
-				DonDatPhong ddp = new DonDatPhong();
-				ddp.setMaDDP(rs.getNString(1));
-				ddp.setNgayLap(rs.getDate(2));
-				ddp.setKhachHang(new KhachHang(rs.getNString(3)));
-				ddp.setNhanVien(new NhanVien(rs.getNString(4)));
-					lsDDP.add(ddp);
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return lsDDP;
-	}
+	
 	
 	public ArrayList<DonDatPhong> getDanhSachDDPKhongHuy() {
 		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();
@@ -120,11 +98,15 @@ public class DAODonDatPhong {
 		return false;
 	}
 	
-//	public DonDatPhong getDDPTheoTenKH(String ) {
+//	public DonDatPhong getDDPTheoTenKH(String ten) {
 //		DonDatPhong ddp=new DonDatPhong();
 //		ConnectDB.getinstance();
 //		Connection con = ConnectDB.getConnection();
-//		PreparedStatement ps = con.prepareStatement("")
+//		try {
+//			PreparedStatement ps = con.prepareStatement("select * from KhachHang where tenKH like N'%"+ten+"%'");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		};
 //	}
 	
 }

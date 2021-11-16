@@ -553,7 +553,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 				int del = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa? ", "Thông báo", JOptionPane.YES_NO_OPTION);
 				String maMH = modelMatHang.getValueAt(r, 0).toString();
 				if(del == JOptionPane.YES_OPTION) {
-					String maMH1 =  (String) tblMH.getValueAt(r, 0);
+					String maMH1 =  tblMH.getValueAt(r, 0).toString();
 					String tenMH = txtTenMH.getText();
 					String maLMH = "LMH004";
 					int soluong = Integer.parseInt(txtSoLuong.getText());

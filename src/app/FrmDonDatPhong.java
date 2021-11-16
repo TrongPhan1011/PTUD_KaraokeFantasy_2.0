@@ -3,6 +3,7 @@ package app;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -46,7 +47,7 @@ import jiconfont.swing.IconFontSwing;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListener, ItemListener {
+public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListener, ItemListener, FocusListener {
 
 	/**
 	 * 
@@ -316,24 +317,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
 		txtTim.setBounds(632, 12, 514, 33);
-		txtTim.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if(txtTim.getText().equals("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.")) {
-					txtTim.setFont(new Font("SansSerif", Font.PLAIN, 15));
-					txtTim.setForeground(Color.BLACK);
-					txtTim.setText("");
-				}
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(txtTim.getText().equals("")) {
-					txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
-					txtTim.setForeground(Colors.LightGray);
-					txtTim.setText("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.");
-				}
-			}
-		});
 		pMain.add(txtTim);
 
 		//btnTim
@@ -540,6 +523,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		pMain.add(lblBackGround);
 		
 		
+		txtTim.addFocusListener(this);
+		
 		cboGio.addItemListener(this);
 		
 		loadDSPhongTrongVaDaDat(p);
@@ -591,7 +576,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		for(Phong infoP : lstP) {
 			LoaiPhong lp = daoLoaiPhong.getLoaiPhongTheoMa(infoP.getLoaiPhong().getMaLoaiPhong());
 			modelPhong.addRow(new Object[] {
-					infoP.getMaPhong(), lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), dfGiaPhong.format(infoP.getGiaPhong()), infoP.getTinhTrangPhong()
+					infoP.getMaPhong(), lp.getTenLoaiPhong(), dfGiaPhong.format(infoP.getGiaPhong()), infoP.getTinhTrangPhong()
 			});
 		}
 	}
@@ -657,7 +642,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		NhanVien nv= daoNhanVien.getMaVaSdtNVChoDDP(maNV);
 
 		/*
-		 * 1. Nếu là kh cũ thì nv sẽ hỏi sđt của kh cũ, rồi tìm kiếm --> thông tin kh  load lên các txt, cbb tương ứng
+		 * 1. Nếu là kh cũ thì nv sẽ hỏi sđt của kh cũ, rồi tìm kiếm --> thông tin kh  load lên các txt, cbb tương ứng (v)
 		 * 2. Trong TH là khách hàng mới, NV sẽ phải tự nhập toàn bộ thông tin
 		 * 3. Sau khi nhập xong --> chọn phòng --> Load thông tin lên table DDP (1 PHƯƠNG THỨC RIÊNG) 
 		 * --> add KH mới (sql): getKH theo SĐT ở TXT nếu get được 1 KH.maKH.lenght != 0 => đó là KH cũ --> không thực hiện lệnh add kh sql
@@ -817,5 +802,23 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 	public void itemStateChanged(ItemEvent e) {
 		Object o = e.getItem();
 		
+	}
+	
+	
+	@Override
+	public void focusGained(FocusEvent e) {
+		if(txtTim.getText().equals("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.")) {
+			txtTim.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			txtTim.setForeground(Color.BLACK);
+			txtTim.setText("");
+		}
+	}
+	@Override
+	public void focusLost(FocusEvent e) {
+		if(txtTim.getText().equals("")) {
+			txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
+			txtTim.setForeground(Colors.LightGray);
+			txtTim.setText("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.");
+		}
 	}
 }

@@ -98,11 +98,15 @@ public class DAODonDatPhong {
 		return false;
 	}
 	
-//	public DonDatPhong getDDPTheoTenKH(String ) {
+//	public DonDatPhong getDDPTheoTenKH(String ten) {
 //		DonDatPhong ddp=new DonDatPhong();
 //		ConnectDB.getinstance();
 //		Connection con = ConnectDB.getConnection();
-//		PreparedStatement ps = con.prepareStatement("")
+//		try {
+//			PreparedStatement ps = con.prepareStatement("select * from KhachHang where tenKH like N'%"+ten+"%'");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		};
 //	}
 	
 }

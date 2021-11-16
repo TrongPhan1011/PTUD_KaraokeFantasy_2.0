@@ -17,7 +17,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -32,6 +31,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -64,7 +64,6 @@ import entity.NhanVien;
 import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import javax.swing.SwingConstants;
 
 public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener {
 
@@ -161,8 +160,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		
 		
-//Main UI
-		// get font
+
 		IconFontSwing.register(FontAwesome.getIconFont());
 		
 		setLayout(null);

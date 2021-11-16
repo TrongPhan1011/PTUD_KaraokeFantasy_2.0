@@ -95,7 +95,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		
 		
 		
-		Image imgHeader = Toolkit.getDefaultToolkit ().getImage ("data\\imgDangNhap\\bgHeader.png");
+		Image imgHeader = Toolkit.getDefaultToolkit ().getImage("data\\imgDangNhap\\bgHeader.png");
 		JLabel lbHeaderDN = new JLabel("");
 		lbHeaderDN.setBounds(0, 0, 488, 87);
 		getContentPane().add(lbHeaderDN);

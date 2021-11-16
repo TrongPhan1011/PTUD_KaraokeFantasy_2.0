@@ -177,6 +177,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		pMain.add(lblSubTimKiem);
 		
 		txtTim = new JTextField();
+		txtTim.setToolTipText("Tìm kiếm mã phòng đang hát");
 		txtTim.setBounds(520, 11, 357, 33);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
 		

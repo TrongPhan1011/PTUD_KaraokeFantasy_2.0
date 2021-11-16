@@ -327,7 +327,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 			//bật tắt danh sách phòng
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getStateChange()==1) {
 					bgRdo.clearSelection();
 					loadDanhSachPhong();

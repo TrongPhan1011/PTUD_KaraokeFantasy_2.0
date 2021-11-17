@@ -57,10 +57,11 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(new FlatLightLaf());
-					
+					IconFontSwing.register(FontAwesome.getIconFont());
 
 					FrmDangNhap frame = new FrmDangNhap();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -70,7 +71,8 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 
 	public FrmDangNhap() {
 		IconFontSwing.register(FontAwesome.getIconFont());
-		
+		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
+		setIconImage(logoApp.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Đăng nhập Karaoke Fantasy");
 		setSize(500,500);

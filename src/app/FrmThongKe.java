@@ -428,6 +428,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		rdoTKNg.addActionListener(this);
 		rdoTKNam.addActionListener(this);
 		rdoTKT.addActionListener(this);
+		btnLamMoi.addActionListener(this);
 
 		df = new DecimalFormat("###,### VNĐ");
 	}
@@ -605,6 +606,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 			loadThongKeSoMatHang();
 			loadThongKeSoGio();
 		}
+		if(o.equals(btnLamMoi))
+			resetAll();
 	}
 
 }

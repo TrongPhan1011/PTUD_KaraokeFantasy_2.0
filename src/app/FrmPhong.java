@@ -157,10 +157,11 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		cboTinhTrangP.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboTinhTrangP.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboTinhTrangP.setBackground(Color.WHITE);
-		String cbbTinhTrang[] = { "Đã đặt", "Đang hoạt động", "Trống" };
+		String cbbTinhTrang[] = { "Trống", "Đang hoạt động", "Đã đặt" };
 		for (int i = 0; i < cbbTinhTrang.length; i++) {
 			cboTinhTrangP.addItem(cbbTinhTrang[i]);
 		}
+		cboTinhTrangP.setEnabled(false);
 		
 		//nhap gia phong
 		txtGiaPhong = new JTextField();
@@ -182,7 +183,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		pNhapThongTin.add(txtTenP);
 		txtTenP.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtTenP.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtTenP.setEditable(isDisplayable());
+		txtTenP.setEnabled(false);
 		txtTenP.setColumns(30);
 		
 		JLabel lblTenPhong = new JLabel("Tên phòng: ");

@@ -77,8 +77,9 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 		daoNhanVien = new DAONhanVien();
 		daoTK = new DAOTaiKhoan();
 		regex = new Regex();
-		
-		
+		IconFontSwing.register(FontAwesome.getIconFont());
+		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
+		setIconImage(logoApp.getImage());
 		
 		Image imgHeader = Toolkit.getDefaultToolkit ().getImage ("data\\imgDangNhap\\bgHeader.png");
 		JLabel lbHeaderDN = new JLabel("");

@@ -1,8 +1,6 @@
 package app;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -15,7 +13,6 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -25,21 +22,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-import javax.swing.text.Document;
 
-import com.formdev.flatlaf.FlatLightLaf;
-
-
-import connection.ConnectDB;
-import dao.DAOCTDDP;
 import dao.DAODonDatPhong;
-import dao.DAOHoaDon;
 import dao.DAOPhong;
 import entity.DonDatPhong;
 import entity.NhanVien;
-import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
@@ -76,20 +64,6 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 	private FrmPhong frmPhong;
 
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(new FlatLightLaf());
-
-					FrmQuanLy frame = new FrmQuanLy(new NhanVien("NV002","Trần Thanh Thiện","Quản lý","Nam",new Date(2001, 1, 1),"à","ádf","adf",50,1,"dà", new TaiKhoan()));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	
 	@SuppressWarnings("deprecation")
@@ -99,7 +73,8 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		this.headerNV = nv;
 		
 		IconFontSwing.register(FontAwesome.getIconFont());
-		
+		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
+		setIconImage(logoApp.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Quản lý nhân viên");
 		setSize(1281,750);
@@ -319,6 +294,12 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		// Load frm mac dinh 
 		if(btnHeaderInfo.getText().contains("QL")){
 			loadFrmNhanVien();
+		}
+		else if(btnHeaderInfo.getText().contains("TN")) {
+			loadFrmDDP();
+		}
+		else if(btnHeaderInfo.getText().contains("PV")) {
+			loadFrmMatHang();
 		}
 		
 		setTrangThaiPhongTheoNgay();

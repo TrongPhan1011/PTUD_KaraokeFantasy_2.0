@@ -423,6 +423,13 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		 * Định dạng giá trị
 		 */
 		dfVND = new DecimalFormat("###,### VND");
+		/**
+		 * Dữ liệu mẫu
+		 */
+		txtTenMH.setText("BBQ");
+		txtSoLuong.setText("100");
+		txtDonGia.setText("50000");
+		cboLoaiMH.setSelectedIndex(1);
 	}
 	/**
 	 * Lấy dữ liệu từ SQL Server nạp vào bảng thông qua vòng lặp for, không nạp vào bảng với loại mặt hàng ngừng kinh doanh

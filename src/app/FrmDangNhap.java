@@ -193,7 +193,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		
 		
 		txtTaiKhoan.setText("NV002");
-		txtMatKhau.setText("QL003");
+		txtMatKhau.setText("NV002");
 		
 		
 		

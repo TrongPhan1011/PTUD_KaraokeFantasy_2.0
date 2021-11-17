@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -65,6 +66,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private String sHeaderMaNV;
 	private String sHeaderTenNV;
 	private Date dNgayHienTai;
+	private LocalDate now;
+	private int ngay;
+	private int thang;
+	private int nam;
+	private Date dNow;
 	private Panel pMain;
 	private JTextField txtTK;
 	private JButton btnTim;
@@ -150,6 +156,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtHoTen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtHoTen.setBounds(153, 64, 170, 27);
 		pNhapThongTin.add(txtHoTen);
+		txtHoTen.setText("Võ Kim Bản");
 
 		JLabel lblHoTen = new JLabel("Họ và tên:");
 		lblHoTen.setBounds(10, 64, 90, 27);
@@ -168,6 +175,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtSDT.setBounds(153, 100, 170, 27);
 		pNhapThongTin.add(txtSDT);
+		txtSDT.setText("02822292211");
 		
 		//Nhap dia chi
 		JLabel lblAddress = new JLabel("Địa chỉ:");
@@ -181,6 +189,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtDiaChi.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		txtDiaChi.setBounds(153, 133, 170, 27);
 		pNhapThongTin.add(txtDiaChi);
+		txtDiaChi.setText("23 Trần Não, quận 2");
 
 		//Nhap cac cuoc cong dan
 		txtCccd = new JTextField();
@@ -189,12 +198,20 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtCccd.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		txtCccd.setColumns(10);
 		txtCccd.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		txtCccd.setText("032144572012");
 
 		JLabel lblCccd = new JLabel("CCCD:");
 		lblCccd.setBounds(10, 171, 65, 23);
 		pNhapThongTin.add(lblCccd);
 		lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
 
+		
+		now = LocalDate.now();
+		ngay = now.getDayOfMonth();
+		thang = now.getMonthValue()-1;
+		nam = now.getYear()-1900;
+		
+		dNow = new Date(nam,thang,ngay);
 		//Chon ngay sinh cua khach hang
 		dateChooserNgaySinh = new JDateChooser();
 		dateChooserNgaySinh.setBounds(153, 278, 170, 28);
@@ -204,7 +221,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
-
+		dateChooserNgaySinh.setDate(dNow);
+		
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
 		lblNgaySinh.setBounds(10, 278, 102, 28);
 		pNhapThongTin.add(lblNgaySinh);
@@ -224,6 +242,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
+		dateChooserNgayDangKy.setDate(dNow);
 		
 		//Loai khach hang
 		JLabel lblLoaiKH = new JLabel("Loại khách hàng:");
@@ -232,6 +251,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cboloaiKH = new JComboBox<String>();
+		cboloaiKH.setToolTipText("Chọn loại khách hàng hàng");
 		cboloaiKH.setBounds(153, 203, 170, 27);
 		pNhapThongTin.add(cboloaiKH);
 		cboloaiKH.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -245,6 +265,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cbogioiTinh = new JComboBox<String>();
+		cbogioiTinh.setToolTipText("Chọn giới tính");
 		cbogioiTinh.setBounds(153, 241, 170, 28);
 		pNhapThongTin.add(cbogioiTinh);
 		cbogioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
@@ -274,6 +295,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 
 		// txtTK
 		txtTK = new JTextField();
+		txtTK.setToolTipText("Tìm khách hàng theo mã, tên, sđt và loại khách hàng");
 		txtTK.setText("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.");
 		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTK.setForeground(Colors.LightGray);
@@ -352,6 +374,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//dua cac txt, rdo, cbo ve mac dinh
 		btnReset = new FixButton("Làm mới");
+		btnReset.setToolTipText("Làm mới tất cả thông tin");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnReset.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -364,6 +387,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		
 		JScrollPane scrollPaneKH = new JScrollPane();
+		scrollPaneKH.setToolTipText("Chọn khách hàng cần hiển thị thông tin");
 		scrollPaneKH.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
 		scrollPaneKH.setBackground(new Color(164, 44, 167));
 		scrollPaneKH.setBounds(353, 106, 904, 512);
@@ -424,6 +448,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//cbo sắp xếp tăng dần hoặc giảm dần
 		cboSort = new JComboBox<String>();
+		cboSort.setToolTipText("Chọn kiểu sắp xếp");
 		cboSort.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboSort.setBackground(Color.WHITE);
 		cboSort.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
@@ -435,6 +460,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pSapXep.setLayout(null);
 		cboSort.setBounds(26, 14, 167, 28);
 		pSapXep.add(cboSort);
+		chkAll.setToolTipText("Hiển thị toàn bộ danh sách");
 		
 		//check box giúp hiện toàn bộ danh sách KH
 		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -720,8 +746,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtSDT.setText("");
 		txtCccd.setText("");
 		txtDiaChi.setText("");
-		dateChooserNgaySinh.setDate(new Date(0));
-		dateChooserNgayDangKy.setDate(new Date(0));
+		dateChooserNgaySinh.setDate(dNow);
+		dateChooserNgayDangKy.setDate(dNow);
 		txtPoint.setText("");
 		clearTable();
 		bg.clearSelection();

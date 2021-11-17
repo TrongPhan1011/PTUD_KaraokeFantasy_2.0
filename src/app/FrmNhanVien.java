@@ -76,6 +76,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private Date dNgayHienTai;
 	private LocalDate now;
 	private Date dNow;
+	private int nam, thang, ngay;
 	private JLabel lblNVDaNghiViec, lblSubGioTheoCa;
 	private JTextField txtTim, txtHoTen, txtSDT, txtCccd, txtDiaChi;
 	private JComboBox<Object> cboChucVu, cboGioiTinh, cboCaLamViec, cboSapXep;
@@ -84,8 +85,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private ButtonGroup bg;
 	private JTable tblNV;
 	private DefaultTableModel modelNV;
-	private SimpleDateFormat dfNgaySinh=new SimpleDateFormat("dd/MM/yyyy"), dfSQLNgaySinh=new SimpleDateFormat("yyyy/MM/dd");
-	private DecimalFormat dfLuong=new DecimalFormat("###,###"), dfPV=new DecimalFormat("PV"), dfTN=new DecimalFormat("TN"), dfQL=new DecimalFormat("QL");
+	private SimpleDateFormat dfNgaySinh;
+	private DecimalFormat dfLuong;
 	private JDateChooser chooserNgaySinh;
 
 	private DAONhanVien daoNhanVien; 
@@ -133,6 +134,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		daoPhatSinhMa=new DAOPhatSinhMa();
 		daoTaiKhoan=new DAOTaiKhoan();
 		regex=new Regex();
+		
+		/**
+		 * Định dạng ngày, lương trong bảng
+		 */
+		dfNgaySinh=new SimpleDateFormat("dd/MM/yyyy");
+		dfLuong=new DecimalFormat("###,###");
 
 		/**
 		 * Khai báo entity NhanVien
@@ -159,21 +166,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pNhapThongTin.setLayout(null);
 		pMain.add(pNhapThongTin);
 		
-		/**
-		 * Label lblNhapThongTin
-		 */
 		lblNhapThongTin = new JLabel("Nhập thông tin nhân viên");
 		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
 		lblNhapThongTin.setBounds(10, 11, 292, 29);
 		pNhapThongTin.add(lblNhapThongTin);
 
-		/**
-		 * Thông tin nhân viên
-		 * Họ tên nhân viên
-		 * Label lblHoTen
-		 * JTextField txtHoTen
-		 */
 		JLabel lblHoTen = new JLabel("Họ và tên:");
 		lblHoTen.setBounds(10, 61, 90, 29);
 		lblHoTen.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -188,11 +186,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		//test data nhanh
 		txtHoTen.setText("Đinh Quang Tuấn");
 
-		/**
-		 * Số điện thoại nhân viên
-		 * Label lblSDT
-		 * JTextField txtSDT
-		 */
 		JLabel lblSDT = new JLabel("SĐT:");
 		lblSDT.setBounds(10, 105, 46, 19);
 		lblSDT.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -205,11 +198,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pNhapThongTin.add(txtSDT);
 		txtSDT.setText("0944302210");
 
-		/**
-		 * Địa chỉ nơi ở của nhân viên
-		 * Label lblDiaChi
-		 * JTextField txtDiaChi
-		 */
 		JLabel lblDiaChi = new JLabel("Địa chỉ:");
 		lblDiaChi.setBounds(10, 139, 72, 20);
 		lblDiaChi.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -221,11 +209,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pNhapThongTin.add(txtDiaChi);
 		txtDiaChi.setText("118 Hoàng Văn Thụ, Q.Phú Nhuận, Tp.HCM");
 
-		/**
-		 * Căn cước công dân của nhân viên
-		 * Label lblCccd
-		 * JTextField txtCccd
-		 */
 		JLabel lblCccd = new JLabel("CCCD:");
 		lblCccd.setBounds(10, 175, 72, 24);
 		lblCccd.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -238,11 +221,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		txtCccd.setText("123456789012");
 		pNhapThongTin.add(txtCccd);
 
-		/**
-		 * Giới tính
-		 * Label lblGioiTinh
-		 * JcomboBox cboGioiTinh
-		 */
 		JLabel lblGioiTinh = new JLabel("Giới tính:");
 		lblGioiTinh.setBounds(11, 249, 88, 23);
 		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -255,12 +233,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboGioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		pNhapThongTin.add(cboGioiTinh);
 
-		/**
-		 * Ngày sinh
-		 * Label lblNgaySinh
-		 * JDateChooser chooserNgaySinh
-		 * Icon iconCalendar
-		 */
+		now = LocalDate.now();
+		ngay = now.getDayOfMonth(); 
+		thang = now.getMonthValue()-1;
+		nam = now.getYear()-1900;
+		dNow = new Date(nam, thang, ngay);
+		
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
 		lblNgaySinh.setBounds(10, 214, 90, 23);
 		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -277,11 +255,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		chooserNgaySinh.setIcon((ImageIcon) iconCalendar);
 		pNhapThongTin.add(chooserNgaySinh);
 
-		/**
-		 * Chức vụ nhân viên
-		 * Label lblChucVu
-		 * JComboBox cboChucVu
-		 */
 		JLabel lblChucVu = new JLabel("Chức vụ:");
 		lblChucVu.setBounds(10, 286, 98, 19);
 		lblChucVu.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -294,11 +267,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboChucVu.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		pNhapThongTin.add(cboChucVu);
 
-		/**
-		 * Ca làm việc
-		 * Label lblCaLamViec
-		 * JComboBox cboCaLamViec
-		 */
 		JLabel lblCaLamViec = new JLabel("Ca làm việc:");
 		lblCaLamViec.setBounds(10, 323, 90, 20);
 		lblCaLamViec.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -311,19 +279,11 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboCaLamViec.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		pNhapThongTin.add(cboCaLamViec);
 
-		/**
-		 * Chú thích giờ làm việc theo ca
-		 * Label lblSubGioTheoCa
-		 */
 		lblSubGioTheoCa = new JLabel("08:00 AM - 13:00 PM");
 		lblSubGioTheoCa.setBounds(167, 323, 145, 20);
 		lblSubGioTheoCa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		pNhapThongTin.add(lblSubGioTheoCa);
 		
-		/**
-		 * Thông báo nhân viên đã nghỉ việc
-		 * JLabel lblNVDaNghiViec
-		 */
 		lblNVDaNghiViec = new JLabel();
 		lblNVDaNghiViec.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNVDaNghiViec.setForeground(Color.RED);
@@ -616,6 +576,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		txtTim.setText("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
+		
 		txtHoTen.setText("");
 		txtSDT.setText("");
 		txtDiaChi.setText("");
@@ -625,7 +586,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboGioiTinh.setSelectedItem("Nam");
 		cboCaLamViec.setSelectedItem("1");
 		lblSubGioTheoCa.setText("08:00 AM - 13:00 PM");
-		//dateChooserNgaySinh.setDate(new Date(0));
+		chooserNgaySinh.setDate(dNow);
 		lblNVDaNghiViec.setText("");
 
 		chkTatCa.setSelected(false);
@@ -793,13 +754,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	 */
 	private void addNV() {
 		try {
-			//năm hien tai
-			now = LocalDate.now();
-			int nam = now.getYear();
-			int thang = now.getMonthValue();
-			int ngay = now.getDayOfMonth();
-			dNow = new Date(nam, thang, ngay);
-
 			String phatSinhMaNV = daoPhatSinhMa.getMaNV();
 			String hoTen = txtHoTen.getText();
 			String sdt = txtSDT.getText();

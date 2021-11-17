@@ -295,6 +295,12 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		if(btnHeaderInfo.getText().contains("QL")){
 			loadFrmNhanVien();
 		}
+		else if(btnHeaderInfo.getText().contains("TN")) {
+			loadFrmDDP();
+		}
+		else if(btnHeaderInfo.getText().contains("PV")) {
+			loadFrmMatHang();
+		}
 		
 		setTrangThaiPhongTheoNgay();
 		

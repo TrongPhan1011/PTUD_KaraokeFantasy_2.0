@@ -672,22 +672,10 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		ArrayList<Phong> lsPhong = daoPhong.getPhongDangHoatDong(dNgayHienTai);
 		for(Phong p : lsPhong) {
 			JPanel pn = new JPanel();
+			
 			LoaiPhong lp = daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
 			JButton btnPhong = new JButton(p.getMaPhong());
 			pn.add(btnPhong);
-			btnPhong.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					Object o = e.getSource();
-					if(o.equals(btnPhong)) {
-						resetAll();
-						loadInfo(p);
-					}
-					
-				}
-			});
 			
 			btnPhong.setBackground(new Color(57, 210, 247));
 			btnPhong.setPreferredSize(new Dimension(70,70));
@@ -696,6 +684,18 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 			JLabel lblTenPhong = new JLabel(lp.getTenLoaiPhong()+ " "+ p.getMaPhong());
 			lblTenPhong.setFont(new Font("SansSerif", Font.BOLD, 15));
 			pn.setBackground(new Color(248, 238, 248));
+			btnPhong.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Object o = e.getSource();
+					if(o.equals(btnPhong)) {
+						resetAll();
+						loadInfo(p);
+					}
+					
+				}
+			});
 		
 			pn.add(lblTenPhong);
 			

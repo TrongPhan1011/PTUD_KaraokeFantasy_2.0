@@ -312,7 +312,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 
 		//txtTim
 		txtTim = new JTextField();
-		txtTim.setText("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.");
+		txtTim.setText("Tìm đơn đặt phòng, khách hàng theo tên, sđt khách hàng.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
@@ -378,8 +378,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		//ngay thang nam lap DDP
 		now = LocalDate.now();
 		ngay = now.getDayOfMonth();
-		thang = now.getMonthValue();
-		nam = now.getYear();
+		thang = now.getMonthValue()-1;
+		nam = now.getYear()-1900;
 		dNow = new Date(nam, thang, ngay);
 		pNhapThongTin.setLayout(null);
 		
@@ -556,7 +556,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 
 	//xoa trang txt
 	private void xoaTrang() {
-		txtTim.setText("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.");
+		txtTim.setText("Tìm đơn đặt phòng, khách hàng theo tên, sđt khách hàng.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 
@@ -564,9 +564,13 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		txtSDT.setText("");
 		txtDiaChi.setText("");
 		
+		chooserNgayDen.setDate(dNow);
 		cboGio.setSelectedIndex(0);
 		cboPhut.setSelectedIndex(0);
+		
 		chkTatCa.setSelected(false);
+		rdoTheoMaPhong.setSelected(false);
+		rdoTheoLoaiPhong.setSelected(false);
 	}
 
 	//load phong trong va da dat
@@ -601,7 +605,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 	}
 
 	private void findKH() {
-		String input = txtTim.getText();
+		String input = txtTim.getText().trim();
 //		KhachHang kh = daoKhachHang.getKHTheoSDT(sdt);
 		KhachHang kh = daoKhachHang.getKHTheoSDT(input);
 		
@@ -628,7 +632,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		int chonPhong = tblPhong.getSelectedRow(); //chọn phòng lấy info từ maPhong
 		String maPhongChon = tblPhong.getValueAt(chonPhong, 0).toString();
 		Phong p = daoPhong.getPhongTheoMa(maPhongChon);
-		String tinhTrangPhong = tblPhong.getValueAt(chonPhong, 4).toString();
+		String tinhTrangPhong = tblPhong.getValueAt(chonPhong, 3).toString();
 		
 		
 		KhachHang kh = daoKhachHang.getKHTheoSDT(sdt);	//lấy maKH, tenKH từ sđt
@@ -637,37 +641,20 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 //		LoaiKH lKH = daoKhachHang.getMaLoaiKHFromTen(loaiKH);
 //		String maLoaiKH = lKH.getMaLoaiKH();
 		String maLoaiKH = daoLoaiKH.getMaLoaiKHTheoTen(loaiKH);
-
+//		String loaiKHThuong = cboLoaiKH.setSelectedIndex(1);
+		
 		String maNV = sHeaderMaNV; //lấy info NV từ maNV
 		NhanVien nv= daoNhanVien.getMaVaSdtNVChoDDP(maNV);
-
-		/*
-		 * 1. Nếu là kh cũ thì nv sẽ hỏi sđt của kh cũ, rồi tìm kiếm --> thông tin kh  load lên các txt, cbb tương ứng (v)
-		 * 2. Trong TH là khách hàng mới, NV sẽ phải tự nhập toàn bộ thông tin
-		 * 3. Sau khi nhập xong --> chọn phòng --> Load thông tin lên table DDP (1 PHƯƠNG THỨC RIÊNG) 
-		 * --> add KH mới (sql): getKH theo SĐT ở TXT nếu get được 1 KH.maKH.lenght != 0 => đó là KH cũ --> không thực hiện lệnh add kh sql
-		 * 												Nếu kh.na.lenght == 0 --> kh là mới --> thực hiện lệnh add kh sql từ các txt
-		 *  --> add đơn đặt phòng (sql)
-		 *  
-		 *  Mà nhớ, ko cần regex trong mấy đoạn này đâu, trước hết phải thêm được nó vô đã, cứ mặc định là người dùng nhập đúng, đủ thông tin, thêm được thì bắt lỗi lafmn nhanh thôi
-		 *  
-		 *  Các phương thức có thể chia: kiểm tra kh cũ --> 1pt có thể trả về true false này co trong dao lúc đó m chỉ get lên thôi,  nó ko trả về true false lúc kiểm tra sđt đâu 
-		 * 
-		 *  giờ m push fix năm đi, oke, t mà push là mỗi lần chạy chương trình sẽ có phần đăng nhập đấy nha hmmmm, còn không thì m viết thêm cái main
-		 *  và như áp dụng vô, thì tìm kiếm đó để sau, tính sau, m sẽ làm từ giai đonạ 2 trước, nhập xong kiểm tra thông tin này nọ, theo các cái quy trình t nói đso
-		 * Đó quy trình nó sẽ như v, m phải tư duy theo kiểu này trước, sau đó mới thực thi code theo từng giao đoạn thì nó đỡ nhọc hơn nhiều
-		 */
 		
 		
 		if(regex.regexTen(txtTenKH) && regex.regexSDT(txtSDT)) {
 				if(cboGio.getSelectedItem().toString()=="" || cboPhut.getSelectedItem().toString()=="")
 					JOptionPane.showMessageDialog(null, "Vui lòng chọn giờ đến!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-				if(trangThaiDDP.equals("Đã đặt"))
-					JOptionPane.showMessageDialog(null, "Phòng này đã đặt, vui lòng chọn phòng trống khác!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+//				if(tinhTrangPhong.equals("Đã đặt"))
+//					JOptionPane.showMessageDialog(null, "Phòng này đã đặt, vui lòng chọn phòng trống khác!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				else {
 					//so khớp sdt nhập trong ddp
-//					if(daoKhachHang.matchedSdtKH(sdt)==true) { //kq=true thì load từ sql
-					if(daoKhachHang.getKHTheoSDT(sdt) != null) { //kq=true thì load từ sql
+					if(!daoKhachHang.checkSdtKH(sdt)) { //kq=false thì load từ sql
 						//them vao data
 						DonDatPhong ddp=new DonDatPhong();
 						ddp.setMaDDP(phatSinhMaDDP);
@@ -680,61 +667,51 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 						ddp.setPhong(p);
 						try {
 							daoDonDatPhong.themDDP(ddp);
+							daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
 						}catch (SQLException e) {
 							e.printStackTrace();
 							JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						}
-							/// lỡ làm 1 cái này thôi, mấy chức năng hay nút khác, nhớ tách ra
+
 						xoaTrang();
+						removeDanhSachPhong(modelPhong);
+						loadDSPhongTrongVaDaDat(p);
 						modelDDP.addRow(new Object[] {
 								phatSinhMaDDP, maPhongChon, kh.getTenKH(), sdt, 
 								dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
 						});
 						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.OK_OPTION);
 					}
-//					else { //kq=false thì tạo mới KH
-//						//tao moi KH
-//						KhachHang newKH=new KhachHang(phatSinhMaKH, new LoaiKH(maLoaiKH), hoTen, sdt, diaChi);
-////						KhachHang newKH=new KhachHang(phatSinhMaKH, hoTen, diaChi, sdt, null, null, null, 0, null, new LoaiKH(maLoaiKH));
-////						KhachHang newKH=new KhachHang();
-////						newKH.setMaKhangHang(phatSinhMaKH);
-////						newKH.setLoaiKH(lKH.getMaLoaiKH());
-////						newKH.setTenKH(hoTen);
-////						newKH.setSdt(sdt);
-////						newKH.setDiaChi(diaChi);
-////						daoKhachHang.themDanhSachKH(newKH);
-//						
-//					
-//						try {
-//							daoKhachHang.themKHTheoDDP(kh);
-//						} catch (SQLException e1) {
-//							e1.printStackTrace();
-//						}
-//						
-//						DonDatPhong ddpNewKH=new DonDatPhong();
-//						ddpNewKH.setMaDDP(phatSinhMaDDP);
-//						ddpNewKH.setNgayLap(ngayLap);
-//						ddpNewKH.setGioDen(gioDen);
-//						ddpNewKH.setNgayDen(ngayDen);
-//						ddpNewKH.setTrangThaiDDP(trangThaiDDP);
-//						ddpNewKH.setKhachHang(newKH);
-//						ddpNewKH.setNhanVien(nv);
-//						ddpNewKH.setPhong(p);
-//						try {
-//							daoDonDatPhong.themDDP(ddp);
-//						}catch (SQLException e) {
-//							e.printStackTrace();
-//							JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-//						}
-//
-//						//them vao table
-//						xoaTrang();
-//						modelDDP.addRow(new Object[] {
-//								phatSinhMaDDP, maPhongChon, newKH.getTenKH(), newKH.getSdt(), 
-//								dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
-//						});
-//						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.OK_OPTION);
-//					}
+					if(daoKhachHang.checkSdtKH(sdt)) {	//ke=true thì tạo mới KH
+						KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
+						daoKhachHang.themDanhSachKH(newKH);
+						
+						DonDatPhong ddp=new DonDatPhong();
+						ddp.setMaDDP(phatSinhMaDDP);
+						ddp.setNgayLap(ngayLap);
+						ddp.setGioDen(gioDen);
+						ddp.setNgayDen(ngayDen);
+						ddp.setTrangThaiDDP(trangThaiDDP);
+						ddp.setKhachHang(newKH);
+						ddp.setNhanVien(nv);
+						ddp.setPhong(p);
+						try {
+							daoDonDatPhong.themDDP(ddp);
+							daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
+						}catch (SQLException e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+						}
+
+						xoaTrang();
+						removeDanhSachPhong(modelPhong);
+						loadDSPhongTrongVaDaDat(p);
+						modelDDP.addRow(new Object[] {
+								phatSinhMaDDP, maPhongChon, hoTen, sdt, 
+								dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
+						});
+						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.OK_OPTION);
+					}
 				}
 			}
 
@@ -807,7 +784,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 	
 	@Override
 	public void focusGained(FocusEvent e) {
-		if(txtTim.getText().equals("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.")) {
+		if(txtTim.getText().equals("Tìm đơn đặt phòng, khách hàng theo tên, sđt khách hàng.")) {
 			txtTim.setFont(new Font("SansSerif", Font.PLAIN, 15));
 			txtTim.setForeground(Color.BLACK);
 			txtTim.setText("");
@@ -818,7 +795,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, MouseListe
 		if(txtTim.getText().equals("")) {
 			txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 			txtTim.setForeground(Colors.LightGray);
-			txtTim.setText("Tìm đơn đặt phòng theo tên khách hàng, sđt khách hàng.");
+			txtTim.setText("Tìm đơn đặt phòng, khách hàng theo tên, sđt khách hàng.");
 		}
 	}
 }

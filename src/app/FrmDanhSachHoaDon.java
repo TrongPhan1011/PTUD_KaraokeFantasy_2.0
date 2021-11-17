@@ -128,6 +128,9 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		setSize(1081, 706);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		IconFontSwing.register(FontAwesome.getIconFont());
+		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
+		setIconImage(logoApp.getImage());
 		
 		try {
 			ConnectDB.getinstance().connect();

@@ -219,7 +219,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		});
 		dateChooserThongKeTheoNgay = new JDateChooser();
 		dateChooserThongKeTheoNgay.setDateFormatString("dd/MM/yyyy");
-		dateChooserThongKeTheoNgay.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		//dateChooserThongKeTheoNgay.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		dateChooserThongKeTheoNgay.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserThongKeTheoNgay.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserThongKeTheoNgay.getCalendarButton().setBackground(new Color(102, 0, 153));
@@ -326,7 +326,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		lblTDT.setBounds(10, 72, 226, 17);
 		pTongDoanhThu.add(lblTDT);
 
-		btnTongDoanhThu = new FixButton("10,000,000đ");
+		btnTongDoanhThu = new FixButton("");
 		btnTongDoanhThu.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTongDoanhThu.setForeground(Color.BLACK);
 		btnTongDoanhThu.setBackground(Color.WHITE);
@@ -352,7 +352,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		lblSoKH.setBounds(10, 72, 164, 17);
 		pSoKhachHang.add(lblSoKH);
 
-		btnSoKH = new FixButton("250");
+		btnSoKH = new FixButton("");
 		btnSoKH.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnSoKH.setForeground(Color.BLACK);
 		btnSoKH.setBackground(Color.WHITE);
@@ -374,7 +374,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		lblSoMH.setBounds(10, 72, 168, 17);
 		pSoMatHang.add(lblSoMH);
 
-		btnSoMH = new FixButton("300");
+		btnSoMH = new FixButton("");
 		btnSoMH.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnSoMH.setForeground(Color.BLACK);
 		btnSoMH.setBackground(Color.WHITE);
@@ -396,7 +396,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		lblTGSD.setBounds(10, 72, 237, 17);
 		pTgPhongSD.add(lblTGSD);
 
-		btnTGHD = new FixButton("500 Giờ");
+		btnTGHD = new FixButton("");
 		btnTGHD.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTGHD.setForeground(Color.BLACK);
 		btnTGHD.setBackground(Color.WHITE);
@@ -559,6 +559,16 @@ public class FrmThongKe extends JPanel implements ActionListener{
 			}
 			btnTGHD.setText(thoiGianThongKe+"");
 		}
+	}
+	public void resetAll() {
+		dateChooserThongKeTheoNgay.setDate(dNow);
+		cbbNam.setSelectedItem("");
+		cbbNamTh.setSelectedItem("");
+		cbbThang.setSelectedItem("");
+		btnTongDoanhThu.setText("");
+		btnSoKH.setText("");
+		btnSoMH.setText("");
+		btnTGHD.setText("");
 	}
 	
 	/*

@@ -401,4 +401,23 @@ public class Regex {
 		} else
 			return true;
 	}
+	
+	public boolean regexTimDDPTheoKH(JTextField txtTK) {
+		String input = txtTK.getText().trim();
+		input = input.toUpperCase();
+		String regexTenKH = "([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+)|";
+		String regexSDT = "(0[0-9]{9})";
+		String regexKH = "^(" + regexTenKH + regexSDT+ ")$";
+		if (!input.matches(regexKH)) {
+			JOptionPane.showMessageDialog(null,
+					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:"
+							+ "\n - Tên khách hàng. Ví dụ: Trần Thanh Thiện hoặc Thanh Thiện"
+							+ "\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0",
+					"Thông báo", JOptionPane.ERROR_MESSAGE);
+			txtTK.requestFocus();
+			txtTK.selectAll();
+			return false;
+		}
+		return true;
+	}
 }

@@ -17,6 +17,7 @@ public class DAONhanVien implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	//them NV
 	public boolean themNV(NhanVien nv) throws SQLException {
 		ConnectDB.getinstance();
@@ -63,7 +64,7 @@ public class DAONhanVien implements Serializable{
 	//capnhat-sua NV
 	public boolean capNhatNV(NhanVien nv, String ma) throws SQLException {
 		Connection con = ConnectDB.getConnection();
-		String sql = "update NhanVien set tenNhanVien = ?, chucVu = ?, gioiTinh = ?, ngaySinh = ?, diaChi = ?, sdt = ?, cccd = ?, caLamViec = ? where maNhanVien = '"+ma+"'";
+		String sql = "update NhanVien set tenNhanVien = ?, chucVu = ?, gioiTinh = ?, ngaySinh = ?, diaChi = ?, sdt = ?, cccd = ?, luong = ?, caLamViec = ? where maNhanVien = '"+ma+"'";
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, nv.getTenNhanVien());
@@ -73,7 +74,8 @@ public class DAONhanVien implements Serializable{
 			ps.setString(5, nv.getDiaChi());
 			ps.setString(6, nv.getSdt());
 			ps.setString(7, nv.getCccd());
-			ps.setInt(8, nv.getCaLamViec());
+			ps.setDouble(8, nv.getLuong());
+			ps.setInt(9, nv.getCaLamViec());
 
 			return ps.executeUpdate() > 0;
 		}catch (Exception e) {
@@ -83,8 +85,6 @@ public class DAONhanVien implements Serializable{
 		return false;
 
 	}
-
-
 
 	//Load tat ca sd NV
 	public ArrayList<NhanVien> getAllDanhSachNV() {
@@ -240,7 +240,6 @@ public class DAONhanVien implements Serializable{
 		}
 		return lstNV;
 	}
-
 
 	public NhanVien getNVTheoMa(String ma) { 
 		NhanVien nv = new NhanVien();
@@ -416,17 +415,12 @@ public class DAONhanVien implements Serializable{
 				nv.setLuong(rs.getDouble(10));
 				nv.setCaLamViec(rs.getInt(11));
 				nv.setTrangThaiLamViec(rs.getString(12));
-
-
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return nv;
 	}
-
-
 
 	//sapxep maNV cua nv dang lam viec
 	public ArrayList<NhanVien> sortMaNV(String kieuSapXep) {
@@ -487,6 +481,64 @@ public class DAONhanVien implements Serializable{
 			e.printStackTrace();
 		}
 		return lstNV;
+	}
+
+	public boolean checkSdtNV(String sdt) { 
+		NhanVien nv = new NhanVien();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from [dbo].[NhanVien] where sdt = '"+sdt+"'";
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				nv.setMaNhanVien(rs.getString(1));
+				nv.setTaiKhoan(new TaiKhoan(rs.getString(2)));
+				nv.setTenNhanVien(rs.getString(3));
+				nv.setChucVu(rs.getString(4));
+				nv.setGioiTinh(rs.getString(5));
+				nv.setNgaySinh(rs.getDate(6));
+				nv.setDiaChi(rs.getString(7));
+				nv.setSdt(rs.getString(8));
+				nv.setCccd(rs.getString(9));
+				nv.setLuong(rs.getDouble(10));
+				nv.setCaLamViec(rs.getInt(11));
+				nv.setTrangThaiLamViec(rs.getString(12));
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public boolean checkCccdNV(String cccd) { 
+		NhanVien nv = new NhanVien();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from [dbo].[NhanVien] where cccd = '"+cccd+"'";
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				nv.setMaNhanVien(rs.getString(1));
+				nv.setTaiKhoan(new TaiKhoan(rs.getString(2)));
+				nv.setTenNhanVien(rs.getString(3));
+				nv.setChucVu(rs.getString(4));
+				nv.setGioiTinh(rs.getString(5));
+				nv.setNgaySinh(rs.getDate(6));
+				nv.setDiaChi(rs.getString(7));
+				nv.setSdt(rs.getString(8));
+				nv.setCccd(rs.getString(9));
+				nv.setLuong(rs.getDouble(10));
+				nv.setCaLamViec(rs.getInt(11));
+				nv.setTrangThaiLamViec(rs.getString(12));
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 }

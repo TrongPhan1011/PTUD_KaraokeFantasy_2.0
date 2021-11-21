@@ -532,7 +532,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Thêm mặt hàng vào table và SQL
+	 * Thêm mặt hàng vào table và SQL Server
 	 */
 	public void ThemMH() {
 		try {
@@ -561,7 +561,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Xóa mặt hàng, update mặt hàng thành ngừng kinh doanh
+	 * Xóa mặt hàng khỏi table, update mặt hàng thành ngừng kinh doanh trên SQL Server
 	 */
 	public void updateMHNgungKD() {
 		if (tblMH.getSelectedRow() == -1) {
@@ -721,18 +721,20 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		}
 	}
 	/**
-	 * Tìm mặt hàng
+	 * Tìm mặt hàng theo tên mặt hàng, loại mặt hàng
 	 */
 	public void timMH() {
 		String info = txtTim.getText().toLowerCase().trim();
 		ArrayList<MatHang> mh1 = daoMH.getTenMH(info);
 		ArrayList<MatHang> mh2 = daoMH.getLMH(info);
 		if(!info.equals("") && !info.equals("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng")) {
+			if(regex.regexTimKiemLoaiMatHang(txtTim)) {
+				loadLoaiMH(mh2);	
+			}else
 			if(regex.regexTenMH(txtTim)) {
 					loadTenMH(mh1);
-			}else if(regex.regexTimKiemLoaiMatHang(txtTim)) {
-				loadLoaiMH(mh2);
-			}else
+			}
+			else
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin phù hợp.");
 		}
 		else {

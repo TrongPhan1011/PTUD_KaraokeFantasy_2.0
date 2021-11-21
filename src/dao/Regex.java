@@ -198,13 +198,24 @@ public class Regex {
 		} else
 			return true;
 	}
-
 	public boolean regexTenMH(JTextField txtTen2) {
-		String input = txtTen2.getText();
+		String input = txtTen2.getText().trim();
 		String regex = "^([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
+			JOptionPane.showMessageDialog(null, "Tên không hợp lệ!\nMẫu tên: Bia Heniken, trái cây,...", "Thông báo",
+					JOptionPane.ERROR_MESSAGE);
+			txtTen2.requestFocus();
+			txtTen2.selectAll();
+			return false;
+		} else
+			return true;
+		}
+	public boolean regexTimMH(JTextField txtTen2) {
+		String input = txtTen2.getText();
+		String regex = "^([ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*(\\s?))+$";
+		if (input.matches(regex)) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Tên mặt hàng. Ví dụ: Bia Heiniken,..."
 							+ "\n - Loại mặt hàng. Ví dụ: Nước uống, đồ ăn.",
@@ -265,10 +276,18 @@ public class Regex {
 		String regexDA = "^[đồ ăn]*+$";
 		Pattern patternDA = Pattern.compile(regexDA);
 		Matcher matcherDA = patternDA.matcher(in);
+		
+		String regexA = "^[ăn]*+$";
+		Pattern patternA = Pattern.compile(regexA);
+		Matcher matcherA = patternA.matcher(in);
 
 		String regexDU = "^[đồ uống]*+$";
 		Pattern patternDU = Pattern.compile(regexDU);
 		Matcher matcherDU = patternDU.matcher(in);
+
+		String regexU = "^[uống]*+$";
+		Pattern patternU = Pattern.compile(regexU);
+		Matcher matcherU = patternU.matcher(in);
 
 		String regexKhac = "^[khác]*+$";
 		Pattern patternKhac = Pattern.compile(regexKhac);
@@ -277,6 +296,10 @@ public class Regex {
 		String regexStop = "^[ngừng kinh doanh]*+$";
 		Pattern patternStop = Pattern.compile(regexStop);
 		Matcher matcherStop = patternStop.matcher(in);
+		
+		String regexN = "^[ngừng]*+$";
+		Pattern patternN = Pattern.compile(regexN);
+		Matcher matcherN = patternN.matcher(in);
 
 		if (!matcherDA.find() && !matcherDU.find() && !matcherKhac.find() && !matcherStop.find()) {
 			ten.requestFocus();

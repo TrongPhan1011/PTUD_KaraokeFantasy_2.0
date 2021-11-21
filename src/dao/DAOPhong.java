@@ -140,7 +140,7 @@ public class DAOPhong implements Serializable{
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		try {
-			PreparedStatement ps1 = con.prepareStatement("select * from Phong where tinhTrangPhong != N'Đang hoạt động'");
+			PreparedStatement ps1 = con.prepareStatement("select * from Phong where tinhTrangPhong != N'Đang hoạt động' and maLoaiPhong != 'LP004'");
 			ResultSet rs1 = ps1.executeQuery();
 			while(rs1.next()) {
 				Phong p=new Phong();

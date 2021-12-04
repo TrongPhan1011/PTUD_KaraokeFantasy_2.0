@@ -81,7 +81,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private JLabel lblNVDaNghiViec, lblSubGioTheoCa;
 	private JTextField txtTim, txtHoTen, txtSDT, txtCccd, txtDiaChi;
 	private JComboBox<Object> cboChucVu, cboGioiTinh, cboCaLamViec, cboSapXep;
-	private JCheckBox chkTatCa;
 	private JRadioButton rdoTheoMaNV, rdoTheoTenNV, rdoTheoChucVuNV;
 	private ButtonGroup bg;
 	private JTable tblNV;
@@ -98,6 +97,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private NhanVien nv;
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
+	private FixButton btnExcels;
 
 
 	/**
@@ -310,7 +310,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		 */
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(515, 11, 90, 35);
+		lblTim.setBounds(332, 11, 90, 35);
 		pMain.add(lblTim);
 		//
 		txtTim = new JTextField();
@@ -318,7 +318,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
-		txtTim.setBounds(597, 11, 526, 33);
+		txtTim.setBounds(414, 11, 540, 33);
 		txtTim.setToolTipText("Tìm kiếm thông tin nhân viên");
 		pMain.add(txtTim);
 		//
@@ -327,10 +327,25 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1133, 12, 127, 33);
+		btnTim.setBounds(964, 12, 127, 33);
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
 		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
+		
+		/**
+		 * Nút xuất file Excel
+		 * JButton btnExcels
+		 * Icon iconExcel
+		 */
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(1101, 12, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pMain.add(btnExcels);
 
 		/**
 		 * Thêm 1 nhân viên vào danh sách bảng NV
@@ -423,43 +438,20 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pSapXep.add(cboSapXep);
 
 		/**
-		 * Nhấn tích chọn nút tất cả để hiện toàn bộ danh sách thông tin lên bảng nhân viên
-		 * JCheckBox chkTatCa
-		 */
-		chkTatCa = new JCheckBox("Tất cả");
-		chkTatCa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkTatCa.setBackground(new Color(171, 192, 238));
-		chkTatCa.setBounds(200, 13, 113, 25);
-		chkTatCa.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==1)
-					loadDanhSachNV(nv);
-				else {
-					removeDanhSachNV(modelNV);
-					bg.clearSelection();
-				}
-			}
-		});
-		pSapXep.add(chkTatCa);
-
-
-		/**
 		 * Nhấn chọn sắp xếp kí tự từ trái sang phải theo mã, tên nhân viên tăng hoặc giảm dần
 		 * Sắp xếp chức vụ tăng dần: phục vụ, thu ngân, quản lý và giảm dần ngược lại
 		 * JRadioButton rdoTheoMaNV, rdoTheoTenNV, rboTheoChucVuNV
 		 */
 		rdoTheoMaNV = new JRadioButton("Theo mã nhân viên");
 		rdoTheoMaNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoMaNV.setBounds(310, 13, 159, 25);
+		rdoTheoMaNV.setBounds(230, 15, 159, 25);
 		rdoTheoMaNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoMaNV);
 
 		rdoTheoTenNV = new JRadioButton("Theo tên nhân viên");
 		rdoTheoTenNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoTenNV.setBounds(512, 13, 161, 25);
+		rdoTheoTenNV.setBounds(467, 15, 161, 25);
 		rdoTheoTenNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoTenNV);
@@ -467,7 +459,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		rdoTheoChucVuNV = new JRadioButton("Theo chức vụ nhân viên");
 		rdoTheoChucVuNV.setToolTipText("Chức vụ tăng dần: phục vụ, thu ngân, quản lý và ngược lại");
 		rdoTheoChucVuNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoChucVuNV.setBounds(710, 13, 195, 25);
+		rdoTheoChucVuNV.setBounds(710, 15, 195, 25);
 		rdoTheoChucVuNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoChucVuNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoChucVuNV);
@@ -556,6 +548,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		/**
 		 * Các sự kiện của giao diện quản lý nhân viên
 		 */
+		loadDanhSachNV(nv);
+		
 		txtTim.addFocusListener(this);
 
 		cboCaLamViec.addActionListener(this);
@@ -566,8 +560,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		btnHuy.addActionListener(this);
 		btnLamMoiNV.addActionListener(this);
 
-		cboSapXep.addActionListener(this);
-		chkTatCa.addActionListener(this);
+		cboSapXep.addActionListener(this);		
+
 		rdoTheoMaNV.addActionListener(this);
 		rdoTheoTenNV.addActionListener(this);
 		rdoTheoChucVuNV.addActionListener(this);
@@ -605,9 +599,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboCaLamViec.setSelectedItem("1");
 		lblSubGioTheoCa.setText("08:00 AM - 13:00 PM");
 		chooserNgaySinh.setDate(dNow);
-		lblNVDaNghiViec.setText("");
-
-		chkTatCa.setSelected(false);
+		lblNVDaNghiViec.setText("");
 		rdoTheoMaNV.setSelected(false);
 		rdoTheoTenNV.setSelected(false);
 		rdoTheoChucVuNV.setSelected(false);
@@ -1077,7 +1069,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		//tìm NV
 		if(o.equals(btnTim)) {
 			if(txtTim.getText().equals("") || txtTim.getText().equals("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.")) {
-				chkTatCa.setSelected(false);
 				removeDanhSachNV(modelNV);
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				txtTim.requestFocus();
@@ -1105,7 +1096,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		//làm mới
 		if(o.equals(btnLamMoiNV)) {
 			xoaTrang();
+			bg.clearSelection();
 			removeDanhSachNV(modelNV);
+			loadDanhSachNV(nv);
 		}
 
 		//sapxep tăng

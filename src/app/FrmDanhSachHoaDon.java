@@ -492,12 +492,12 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		dfTable = new DecimalFormat("###,###");
 		df = new DecimalFormat("###,### VNĐ");
 		
-//		addWindowListener(new WindowAdapter() {
-//			public void windowClosing(WindowEvent e)
-//			{
-//				frm.setVisible(true);
-//			}
-//		});
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e)
+			{
+				frm.setVisible(true);
+			}
+		});
 	}
 	
 	

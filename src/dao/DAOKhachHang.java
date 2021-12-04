@@ -471,4 +471,5 @@ public class DAOKhachHang {
 		}
 		return true;
 	}
+
 }

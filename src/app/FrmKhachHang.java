@@ -19,10 +19,12 @@ import java.sql.Date;
 import java.util.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -90,8 +92,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JComboBox<String> cboSort;
 	private JDateChooser dateChooserNgaySinh;
 	private JDateChooser dateChooserNgayDangKy;
-	private SimpleDateFormat dfNgaySinh;
-	private SimpleDateFormat dfNgayDangKy;
+	private Format dfNgaySinh ;
 	private JRadioButton rdoTheoMaKH;
 	private JRadioButton rdoTheoLoaiKH;
 	private JRadioButton rdoTheoTenKH;
@@ -126,6 +127,9 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		daoKhachHang = new DAOKhachHang();
 		daoMaKH = new DAOPhatSinhMa();
 		regex = new Regex();
+		
+		//dfNgaySinh  
+		//dfNgayDangKy  = new SimpleDateFormat("dd/MM/yyyy");
 
 		// Giao dien
 		setLayout(null);
@@ -533,6 +537,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			cboloaiKH.addItem(lkh.getTenLoaiKH());
 		}
 		// add actions
+		 dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
 		
 		btnThemKH.addActionListener(this);
 		btnXoaKH.addActionListener(this);
@@ -545,8 +550,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
 		
-		dfNgaySinh  = new SimpleDateFormat("dd/MM/yyyy");
-		dfNgayDangKy  = new SimpleDateFormat("dd/MM/yyyy");
+
 	}
 
 	//end giao diện
@@ -561,9 +565,12 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();
 		for (KhachHang kh : lsKH) {
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(kh.getLoaiKH().getMaLoaiKH());
+			
+			
+	
 			modelKhachHang.addRow(new Object[] { kh.getMaKhangHang(), kh.getTenKH(), loaiKH.getTenLoaiKH(),
 					kh.getGioiTinh(), dfNgaySinh.format(kh.getNgaySinh()), kh.getDiaChi(), kh.getSdt(), kh.getCccd(),
-					dfNgayDangKy.format(kh.getNgayDangKy()), kh.getDiemTichLuy() });
+					dfNgaySinh.format(kh.getNgayDangKy()), kh.getDiemTichLuy() });
 		}
 	}
 
@@ -573,7 +580,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		modelKhachHang.setRowCount(0);
 		modelKhachHang.addRow(new Object[] { kh.getMaKhangHang(), kh.getTenKH(), loaiKH.getTenLoaiKH(),
 				kh.getGioiTinh(), dfNgaySinh.format(kh.getNgaySinh()), kh.getDiaChi(), kh.getSdt(), kh.getCccd(),
-				dfNgayDangKy.format(kh.getNgayDangKy()), kh.getDiemTichLuy() });
+				dfNgaySinh.format(kh.getNgayDangKy()), kh.getDiemTichLuy() });
 	}
 
 	// load theo ten kh
@@ -584,7 +591,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
 					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
-					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+					lskh.getCccd(), dfNgaySinh.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
 		}
 	}
 	private void loadDanhSachTenKH(ArrayList<KhachHang> kh1) {
@@ -594,7 +601,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
 					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
-					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+					lskh.getCccd(), dfNgaySinh.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
 		}
 	}
 
@@ -604,7 +611,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
 					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
-					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+					lskh.getCccd(), dfNgaySinh.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
 		}
 	}
 	private void loadDanhSachTenKHTheoLoai(ArrayList<KhachHang> kh2) {
@@ -616,7 +623,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
 					lskh.getGioiTinh(), dfNgaySinh.format(lskh.getNgaySinh()), lskh.getDiaChi(), lskh.getSdt(),
-					lskh.getCccd(), dfNgayDangKy.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
+					lskh.getCccd(), dfNgaySinh.format(lskh.getNgayDangKy()), lskh.getDiemTichLuy() });
 		}
 	}
 
@@ -630,7 +637,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
-	//check trùng sđt
 	
 	// Nut them
 
@@ -659,9 +665,11 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			int thangDangKy = dateChooserNgayDangKy.getDate().getMonth();
 			int namDangKy = dateChooserNgayDangKy.getDate().getYear();
 			int diemTichLuy = 0;
+			int tuoi = nam - namSinh;
+			
 			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
 			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-					&& regex.regexDiaChi(txtDiaChi) ) {
+					&& regex.regexDiaChi(txtDiaChi) && tuoi >= 13 ) {
 				if(daoKhachHang.checkSdtKH(sdt)) {
 					@SuppressWarnings("deprecation")
 					KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
@@ -844,7 +852,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 	}
 
@@ -863,7 +871,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 	}
 	//sap xep loaiKh giam dan
@@ -874,7 +882,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 
 		ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
@@ -882,7 +890,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 
 		ArrayList<KhachHang> lsKhachHang= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường"));
@@ -890,7 +898,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 	}
 
@@ -906,7 +914,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 
 		ArrayList<KhachHang> lsThanhVien= daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen("Thành viên thường"));
@@ -914,7 +922,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 
 
@@ -924,7 +932,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 	}
 
@@ -943,7 +951,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khs.getLoaiKH().getMaLoaiKH());
 			modelKhachHang.addRow(new Object[] { khs.getMaKhangHang(), khs.getTenKH(), loaiKH.getTenLoaiKH(),
 					khs.getGioiTinh(), dfNgaySinh.format(khs.getNgaySinh()), khs.getDiaChi(), khs.getSdt(), khs.getCccd(),
-					dfNgayDangKy.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
+					dfNgaySinh.format(khs.getNgayDangKy()), khs.getDiemTichLuy() });
 		}
 	}
 

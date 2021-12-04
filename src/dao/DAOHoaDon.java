@@ -186,9 +186,11 @@ public class DAOHoaDon {
 	public	ArrayList<HoaDon> getHDtheoNgay(Date d) {
 
 		ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
+		@SuppressWarnings("deprecation")
+		String ngay = (d.getYear()+1900) +"/"+ (d.getMonth()+1) +"/"+d.getDate();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "SELECT * FROM [KaraokeFantasy].[dbo].[HoaDon] where ngayLap = '"+d+"'";
+		String sql = "SELECT * FROM [KaraokeFantasy].[dbo].[HoaDon] where ngayLap = '"+ngay+"'";
 
 		try {
 			Statement stm = con.createStatement();
@@ -234,6 +236,46 @@ public class DAOHoaDon {
 		return dem;
 
 	}
+	
+	public	Integer demSoKHTrongThang(String nam, String thang){
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(*) from KhachHang kh inner join HoaDon hd on kh.maKhachHang = hd.maKH  where YEAR(ngayLap) = '"+nam+"' and MONTH(ngayLap) = '"+thang+"' ";
+		int dem =0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dem;
+
+	}
+		
+	public	Integer demSoKHTrongNam(String nam){
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(*) from KhachHang kh inner join HoaDon hd on kh.maKhachHang = hd.maKH  where YEAR(ngayLap) = '"+nam+"' ";
+		int dem =0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dem;
+
+	}
+	
+	
 
 	public	Integer demSoMHTrongNgay(Date d){
 		ConnectDB.getinstance();
@@ -253,5 +295,109 @@ public class DAOHoaDon {
 		return dem;
 
 	}
+	
+	public	Integer demSoMHTrongThang(String nam, String thang){
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(*) from MatHang mh inner join CTHD cthd on mh.maMH = cthd.maMH inner join HoaDon hd on cthd.maHD = hd.maHD  where YEAR(ngayLap) = '"+nam+"' and MONTH(ngayLap) = '"+thang+"'";
+		int dem =0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		return dem;
+
+	}
+	
+	public	Integer demSoMHTrongNam(String nam){
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(*) from MatHang mh inner join CTHD cthd on mh.maMH = cthd.maMH inner join HoaDon hd on cthd.maHD = hd.maHD  where YEAR(ngayLap) = '"+nam+"'";
+		int dem =0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dem;
+
+	}
+	
+
+	
+	public Integer	 demSoKH(Date ngayBatDau,Date ngayKetThuc) {
+
+		//ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
+		String ngayBD = (ngayBatDau.getYear()+1900) +"/"+ (ngayBatDau.getMonth()+1) +"/"+ngayBatDau.getDate();
+		String ngayKT = (ngayKetThuc.getYear()+1900) +"/"+ (ngayKetThuc.getMonth()+1) +"/"+ngayKetThuc.getDate();
+
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT (DISTINCT maKH ) from  KhachHang kh inner join HoaDon hd on kh.maKhachHang = hd.maKH where ngayLap between '"+ngayBD+"' and '"+ngayKT+"'";
+		int dem = 0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+			dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dem;
+
+	}
+	
+	public Integer demSoMH(Date ngayBatDau,Date ngayKetThuc) {
+
+		//ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
+		String ngayBD = (ngayBatDau.getYear()+1900) +"/"+ (ngayBatDau.getMonth()+1) +"/"+ngayBatDau.getDate();
+		String ngayKT = (ngayKetThuc.getYear()+1900) +"/"+ (ngayKetThuc.getMonth()+1) +"/"+ngayKetThuc.getDate();
+
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(DISTINCT cthd.maMH ) from MatHang mh inner join CTHD cthd on mh.maMH = cthd.maMH inner join HoaDon hd on cthd.maHD = hd.maHD where ngayLap between '"+ngayBD+"' and '"+ngayKT+"'";
+		int dem = 0;
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+			dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dem;
+
+	}
+
+	public Integer demSoLanKHDen(String maKH, Date ngayD, Date ngayKT) {
+		int dem =0;
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select COUNT(*) from HoaDon where maKhachHang = '"+maKH +"' and HoaDon.ngayLap between '"+ngayD+"' and '"+ngayKT+"'";
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				dem = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dem;
+	}
 }

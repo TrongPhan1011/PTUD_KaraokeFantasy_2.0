@@ -180,7 +180,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		lblQuenMK = new JLabel("Quên mật khẩu?");
 		lblQuenMK.setForeground(Color.WHITE);
 		lblQuenMK.setFont(new Font("SansSerif", Font.ITALIC, 12));
-		lblQuenMK.setBounds(322, 288, 90, 14);
+		lblQuenMK.setBounds(322, 288, 103, 14);
 		getContentPane().add(lblQuenMK);
 		
 		JLabel lblBackground = new JLabel("");

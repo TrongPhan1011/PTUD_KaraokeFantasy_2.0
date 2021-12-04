@@ -377,33 +377,11 @@ public class DAOKhachHang {
 		return lsKH;
 	}
 
-	//so khớp sdt nhập trong ddp, kq=true thì load từ sql, kq=false thì tạo mới KH
-	public boolean matchedSdtKH(String sdt) {
-		KhachHang kh=new KhachHang();
-		ConnectDB.getinstance();
-		Connection con = ConnectDB.getConnection();
-		try {
-			PreparedStatement ps = con.prepareStatement("select * from KhachHang where sdt = '"+sdt+"'");
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				kh.setMaKhangHang(rs.getString(1));
-				kh.setLoaiKH(new LoaiKH(rs.getString(2)));
-				kh.setTenKH(rs.getString(3));
-				kh.setSdt(rs.getString(4));
-				kh.setCccd(rs.getString(5));
-				kh.setDiaChi(rs.getString(6));
-				kh.setNgaySinh(rs.getDate(7));
-				kh.setGioiTinh(rs.getString(8));
-				kh.setDiemTichLuy(rs.getInt(9));
-				kh.setNgayDangKy(rs.getDate(10));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-
+	/**
+	 * @param kh
+	 * @return danh sách ddp mới được đặt
+	 * @throws SQLException
+	 */
 	public boolean themKHTheoDDP(KhachHang kh) throws SQLException {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
@@ -423,8 +401,10 @@ public class DAOKhachHang {
 		return false;
 	}
 
-	//lay doituong loaiKH thông tin maLoai tu tenLoai
-
+	/**
+	 * @param tenLoaiKH
+	 * @return  trả về maLoaiKH từ tenLoaiKH
+	 */
 	public LoaiKH getMaLoaiKHFromTen(String tenLoaiKH) {
 		LoaiKH lKH =new LoaiKH();
 		ConnectDB.getinstance();
@@ -439,7 +419,6 @@ public class DAOKhachHang {
 		}
 		return lKH;
 	}
-
 
 	/**
 	 * 
@@ -471,5 +450,42 @@ public class DAOKhachHang {
 		}
 		return true;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	/**
+	 * @param info: tìm theo tên KH và load lên txt và cbo trong frmDDP
+	 * @return kh: khách hàng theo tên
+	 */
+	public KhachHang getKHTheoTen(String info) { 
+		KhachHang kh=new KhachHang();
+		ConnectDB.getinstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from KhachHang where tenKH like N'%"+info+"%'";
+		try {
+			Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			while(rs.next()) {
+				kh.setMaKhangHang(rs.getString(1));
+				kh.setLoaiKH(new LoaiKH(rs.getString(2)));
+				kh.setTenKH(rs.getString(3));
+				kh.setSdt(rs.getString(4));
+				kh.setCccd(rs.getString(5));
+				kh.setDiaChi(rs.getString(6));
+				kh.setNgaySinh(rs.getDate(7));
+				kh.setGioiTinh(rs.getString(8));
+				kh.setDiemTichLuy(rs.getInt(9));
+				kh.setNgayDangKy(rs.getDate(10));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kh;
+	}
+	
+//	public LoaiKH getLoaiKHTuSdt() {
+//		
+//	}
+>>>>>>> 65121011dabe14d7ae45d54aecd0e8528123627b
 }

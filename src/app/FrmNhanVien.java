@@ -62,7 +62,6 @@ import jiconfont.swing.IconFontSwing;
 
 /**
  * @author DinhQuangTuan-19468641
- *
  */
 public class FrmNhanVien extends JFrame implements ActionListener, MouseListener, FocusListener {
 
@@ -72,7 +71,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private static final long serialVersionUID = 1L;
 	private JButton btnTim, btnThemNV, btnSuaNV, btnHuy, btnLamMoiNV;
 	private Panel pMain;
+	@SuppressWarnings("unused")
 	private String sHeaderTenNV, sHeaderMaNV;
+	@SuppressWarnings("unused")
 	private Date dNgayHienTai;
 	private LocalDate now;
 	private Date dNow;
@@ -80,7 +81,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private JLabel lblNVDaNghiViec, lblSubGioTheoCa;
 	private JTextField txtTim, txtHoTen, txtSDT, txtCccd, txtDiaChi;
 	private JComboBox<Object> cboChucVu, cboGioiTinh, cboCaLamViec, cboSapXep;
-	private JCheckBox chkTatCa;
 	private JRadioButton rdoTheoMaNV, rdoTheoTenNV, rdoTheoChucVuNV;
 	private ButtonGroup bg;
 	private JTable tblNV;
@@ -97,8 +97,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	private NhanVien nv;
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
+	private FixButton btnExcels;
 
-	
+
 	/**
 	 * @return pMain
 	 */
@@ -112,6 +113,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	 * @param sHeaderMaNV
 	 * @param dNgayHienTai
 	 */
+	@SuppressWarnings("deprecation")
 	public  FrmNhanVien(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
 
 		this.sHeaderMaNV = sHeaderMaNV;
@@ -134,12 +136,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		daoPhatSinhMa=new DAOPhatSinhMa();
 		daoTaiKhoan=new DAOTaiKhoan();
 		regex=new Regex();
-		
+
 		/**
 		 * Định dạng ngày, lương trong bảng
 		 */
 		dfNgaySinh=new SimpleDateFormat("dd/MM/yyyy");
-		dfLuong=new DecimalFormat("###,###");
+		dfLuong=new DecimalFormat("##,###,###");
 
 		/**
 		 * Khai báo entity NhanVien
@@ -157,6 +159,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		getContentPane().add(pMain);
 
 		/**
+		 * Nhập thông tin nhân viên mới
 		 * Panel pNhapThongTin
 		 */
 		pNhapThongTin = new JPanel();
@@ -164,8 +167,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pNhapThongTin.setBackground(Color.WHITE);
 		pNhapThongTin.setBounds(10, 11, 312, 607);
 		pNhapThongTin.setLayout(null);
+		pNhapThongTin.setToolTipText("Các thông tin nhân viên cần nhập");
 		pMain.add(pNhapThongTin);
-		
+
 		lblNhapThongTin = new JLabel("Nhập thông tin nhân viên");
 		lblNhapThongTin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNhapThongTin.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -231,6 +235,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboGioiTinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboGioiTinh.setBackground(Color.white);
 		cboGioiTinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		cboGioiTinh.setToolTipText("Chọn giới tính");
 		pNhapThongTin.add(cboGioiTinh);
 
 		now = LocalDate.now();
@@ -238,7 +243,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		thang = now.getMonthValue()-1;
 		nam = now.getYear()-1900;
 		dNow = new Date(nam, thang, ngay);
-		
+
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
 		lblNgaySinh.setBounds(10, 214, 90, 23);
 		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -251,6 +256,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		chooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		chooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
+		chooserNgaySinh.getCalendarButton().setToolTipText("Chọn ngày sinh");
 		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
 		chooserNgaySinh.setIcon((ImageIcon) iconCalendar);
 		pNhapThongTin.add(chooserNgaySinh);
@@ -265,6 +271,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboChucVu.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboChucVu.setBackground(Color.white);
 		cboChucVu.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		cboChucVu.setToolTipText("Chọn chức vụ nhân viên");
 		pNhapThongTin.add(cboChucVu);
 
 		JLabel lblCaLamViec = new JLabel("Ca làm việc:");
@@ -277,13 +284,14 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboCaLamViec.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboCaLamViec.setBackground(Color.white);
 		cboCaLamViec.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+		cboCaLamViec.setToolTipText("Chọn ca làm việc");
 		pNhapThongTin.add(cboCaLamViec);
 
 		lblSubGioTheoCa = new JLabel("08:00 AM - 13:00 PM");
 		lblSubGioTheoCa.setBounds(167, 323, 145, 20);
 		lblSubGioTheoCa.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		pNhapThongTin.add(lblSubGioTheoCa);
-		
+
 		lblNVDaNghiViec = new JLabel();
 		lblNVDaNghiViec.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNVDaNghiViec.setForeground(Color.RED);
@@ -302,24 +310,42 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		 */
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(515, 11, 90, 35);
+		lblTim.setBounds(332, 11, 90, 35);
 		pMain.add(lblTim);
+		//
 		txtTim = new JTextField();
 		txtTim.setText("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
-		txtTim.setBounds(597, 11, 526, 33);
+		txtTim.setBounds(414, 11, 540, 33);
+		txtTim.setToolTipText("Tìm kiếm thông tin nhân viên");
 		pMain.add(txtTim);
+		//
 		btnTim = new FixButton("Tìm");
 		btnTim.setForeground(Color.WHITE);
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1133, 12, 127, 33);
+		btnTim.setBounds(964, 12, 127, 33);
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
 		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
+		
+		/**
+		 * Nút xuất file Excel
+		 * JButton btnExcels
+		 * Icon iconExcel
+		 */
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(1101, 12, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pMain.add(btnExcels);
 
 		/**
 		 * Thêm 1 nhân viên vào danh sách bảng NV
@@ -385,7 +411,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		btnLamMoiNV.setIcon(iconLamMoiNV);
 		pNhapThongTin.add(btnLamMoiNV);
 
-		
+
 		/**
 		 * Khung sắp xếp chức các mục sắp xếp theo tăng dần, giảm dần, mã NV, tên NV, chức vụ
 		 * JPanel pSapXep
@@ -394,6 +420,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "Sắp xếp", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pSapXep.setBackground(new Color(171, 192, 238));
 		pSapXep.setBounds(332, 50, 928, 46);
+		pSapXep.setToolTipText("Sắp xếp thông tin nhân viên");
 		pMain.add(pSapXep);
 		pSapXep.setLayout(null);
 
@@ -407,29 +434,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboSapXep.setBackground(Color.WHITE);
 		cboSapXep.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboSapXep.setBounds(32, 12, 121, 28);
+		cboSapXep.setToolTipText("Sắp xếp thông tin nhân viên tăng dần hoặc giảm dần theo các tiêu chí");
 		pSapXep.add(cboSapXep);
 
-		/**
-		 * Nhấn tích chọn nút tất cả để hiện toàn bộ danh sách thông tin lên bảng nhân viên
-		 * JCheckBox chkTatCa
-		 */
-		chkTatCa = new JCheckBox("Tất cả");
-		chkTatCa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkTatCa.setBackground(new Color(171, 192, 238));
-		chkTatCa.setBounds(200, 13, 113, 25);
-		chkTatCa.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==1)
-					loadDanhSachNV(nv);
-				else
-					removeDanhSachNV(modelNV);
-			}
-		});
-		pSapXep.add(chkTatCa);
-
-		
 		/**
 		 * Nhấn chọn sắp xếp kí tự từ trái sang phải theo mã, tên nhân viên tăng hoặc giảm dần
 		 * Sắp xếp chức vụ tăng dần: phục vụ, thu ngân, quản lý và giảm dần ngược lại
@@ -437,21 +444,22 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		 */
 		rdoTheoMaNV = new JRadioButton("Theo mã nhân viên");
 		rdoTheoMaNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoMaNV.setBounds(310, 13, 159, 25);
+		rdoTheoMaNV.setBounds(230, 15, 159, 25);
 		rdoTheoMaNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoMaNV);
 
 		rdoTheoTenNV = new JRadioButton("Theo tên nhân viên");
 		rdoTheoTenNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoTenNV.setBounds(512, 13, 161, 25);
+		rdoTheoTenNV.setBounds(467, 15, 161, 25);
 		rdoTheoTenNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoTenNV);
 
 		rdoTheoChucVuNV = new JRadioButton("Theo chức vụ nhân viên");
+		rdoTheoChucVuNV.setToolTipText("Chức vụ tăng dần: phục vụ, thu ngân, quản lý và ngược lại");
 		rdoTheoChucVuNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoChucVuNV.setBounds(710, 13, 195, 25);
+		rdoTheoChucVuNV.setBounds(710, 15, 195, 25);
 		rdoTheoChucVuNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoChucVuNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoChucVuNV);
@@ -476,6 +484,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		scrollPaneNV.setBackground(new Color(164, 44, 167));
 		scrollPaneNV.setBounds(332, 102, 928, 516);
 		scrollPaneNV.getHorizontalScrollBar();
+		scrollPaneNV.setToolTipText("Danh sách thông tin nhân viên");
 		pMain.add(scrollPaneNV);
 
 		String col[] = {"Mã NV", "Họ và tên nhân viên", "Chức vụ", "Giới tính", "Ngày sinh", "Địa chỉ", "SĐT", "CCCD", "Lương", "Ca làm việc", "Trạng thái làm việc", "Mật khẩu"};
@@ -492,24 +501,26 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		tblNV.setSelectionForeground(new Color(114, 23, 153));
 		tblNV.setRowHeight(30);
 		tblNV.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tblNV.setToolTipText("Chọn thông tin nhân viên để thực hiện các chức năng");
 
 		JTableHeader tbHeader = tblNV.getTableHeader();
 		tbHeader.setBackground(new Color(164, 44, 167));
 		tbHeader.setForeground(Color.white);
 		tbHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
+		tbHeader.setToolTipText("Danh sách thông tin nhân viên");
 
-		tblNV.getColumnModel().getColumn(0).setPreferredWidth(60); //maNV
-		tblNV.getColumnModel().getColumn(1).setPreferredWidth(155);//tenNV
-		tblNV.getColumnModel().getColumn(2).setPreferredWidth(80); //chucvu
-		tblNV.getColumnModel().getColumn(3).setPreferredWidth(75); //gioitinh
-		tblNV.getColumnModel().getColumn(4).setPreferredWidth(80); //ngaysinh
-		tblNV.getColumnModel().getColumn(5).setPreferredWidth(300); //diachi
-		tblNV.getColumnModel().getColumn(6).setPreferredWidth(90); //sdt
-		tblNV.getColumnModel().getColumn(7).setPreferredWidth(100); //cccd
-		tblNV.getColumnModel().getColumn(8).setPreferredWidth(70); //luong
-		tblNV.getColumnModel().getColumn(9).setPreferredWidth(90); //calamviec
-		tblNV.getColumnModel().getColumn(10).setPreferredWidth(145);//trangthai
-		tblNV.getColumnModel().getColumn(11).setPreferredWidth(120);//matkhau
+		tblNV.getColumnModel().getColumn(0).setPreferredWidth(60); 
+		tblNV.getColumnModel().getColumn(1).setPreferredWidth(155);
+		tblNV.getColumnModel().getColumn(2).setPreferredWidth(80); 
+		tblNV.getColumnModel().getColumn(3).setPreferredWidth(75); 
+		tblNV.getColumnModel().getColumn(4).setPreferredWidth(80); 
+		tblNV.getColumnModel().getColumn(5).setPreferredWidth(350); 
+		tblNV.getColumnModel().getColumn(6).setPreferredWidth(90); 
+		tblNV.getColumnModel().getColumn(7).setPreferredWidth(100); 
+		tblNV.getColumnModel().getColumn(8).setPreferredWidth(80); 
+		tblNV.getColumnModel().getColumn(9).setPreferredWidth(90); 
+		tblNV.getColumnModel().getColumn(10).setPreferredWidth(145);
+		tblNV.getColumnModel().getColumn(11).setPreferredWidth(120);
 
 		DefaultTableCellRenderer rightRenderer=new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
@@ -537,18 +548,20 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		/**
 		 * Các sự kiện của giao diện quản lý nhân viên
 		 */
+		loadDanhSachNV(nv);
+		
 		txtTim.addFocusListener(this);
-		
+
 		cboCaLamViec.addActionListener(this);
-		
+
 		btnTim.addActionListener(this); 
 		btnThemNV.addActionListener(this);
 		btnSuaNV.addActionListener(this);
 		btnHuy.addActionListener(this);
 		btnLamMoiNV.addActionListener(this);
 
-		cboSapXep.addActionListener(this);
-		chkTatCa.addActionListener(this);
+		cboSapXep.addActionListener(this);		
+
 		rdoTheoMaNV.addActionListener(this);
 		rdoTheoTenNV.addActionListener(this);
 		rdoTheoChucVuNV.addActionListener(this);
@@ -558,12 +571,11 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 
 	/**
 	 * Xóa hết dữ liệu trong bảng danh sách thông tin nhân viên
-	 * @param defaultTableModel
+	 * @param defaultTableModel trả về modelNV
 	 */
 	private void removeDanhSachNV(DefaultTableModel defaultTableModel) {
-		//		DefaultTableModel dtm = (DefaultTableModel) tableNV.getModel();
-		//		dtm.getDataVector().removeAllElements();
-
+		//DefaultTableModel dtm = (DefaultTableModel) tableNV.getModel();
+		//dtm.getDataVector().removeAllElements();
 		while(tblNV.getRowCount() > 0){
 			modelNV.removeRow(0);
 		}
@@ -576,7 +588,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		txtTim.setText("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
-		
+
 		txtHoTen.setText("");
 		txtSDT.setText("");
 		txtDiaChi.setText("");
@@ -587,9 +599,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboCaLamViec.setSelectedItem("1");
 		lblSubGioTheoCa.setText("08:00 AM - 13:00 PM");
 		chooserNgaySinh.setDate(dNow);
-		lblNVDaNghiViec.setText("");
-
-		chkTatCa.setSelected(false);
+		lblNVDaNghiViec.setText("");
 		rdoTheoMaNV.setSelected(false);
 		rdoTheoTenNV.setSelected(false);
 		rdoTheoChucVuNV.setSelected(false);
@@ -611,7 +621,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	}	
 
 	/**
-	 * Hiện danh sách thông tin nhân viên đang làm việc
+	 * Hiện danh sách thông tin nhân viên đang làm việc từ mã NV gồm: 
+	 * mã NV, tên NV, chức vụ, giới tính, ngày sinh, địa chỉ, sđt, cccd, lương, ca làm việc, trạng thái làm việc, mật khẩu
 	 * @param nv
 	 */
 	private void loadDanhSachNV(NhanVien nv)  {
@@ -628,37 +639,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		}
 	}
 
-	
-	/**
-	 * Hiện thông tin 1 nhân viên
-	 * @param nv
-	 */
-	private void loadNV(NhanVien nv) {
-		TaiKhoan tk = daoTaiKhoan.getMatKhauTheoMaNV(nv.getMaNhanVien());
-		modelNV.setRowCount(0);
-		modelNV.addRow(new Object[] {
-				nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getChucVu(), nv.getGioiTinh(), 
-				dfNgaySinh.format(nv.getNgaySinh()), nv.getDiaChi(), nv.getSdt(), nv.getCccd(), 
-				dfLuong.format(Math.round(nv.getLuong())), nv.getCaLamViec(), nv.getTrangThaiLamViec(), tk.getMatKhau()	
-		});
-	}
-
-	
-	/**
-	 * Hiện thông tin nhân viên đã nghỉ việc
-	 * @param nvNghi
-	 */
-	private void loadNVDaNghiViec(NhanVien nvNghi) {
-		TaiKhoan tk = daoTaiKhoan.getMatKhauTheoMaNV(nvNghi.getMaNhanVien());
-		modelNV.setRowCount(0);
-		modelNV.addRow(new Object[] {
-				nvNghi.getMaNhanVien(), nvNghi.getTenNhanVien(), nvNghi.getChucVu(), nvNghi.getGioiTinh(), 
-				dfNgaySinh.format(nvNghi.getNgaySinh()), nvNghi.getDiaChi(), nvNghi.getSdt(), nvNghi.getCccd(), 
-				dfLuong.format(Math.round(nvNghi.getLuong())), nvNghi.getCaLamViec(), nvNghi.getTrangThaiLamViec(), tk.getMatKhau()	
-		});
-	}
-	
-	
 	/**
 	 * Hiện danh sách thông tin NV theo mã và sđt nhân viên
 	 * @param lstNV
@@ -676,14 +656,13 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		}
 	}
 
-	
 	/**
 	 * Hiện danh sách thông tin NV theo tên nhân viên
 	 * @param lstNV
 	 */
 	private void loadDanhSachTenNV(ArrayList<NhanVien> lstNV)  {
 		removeDanhSachNV(modelNV);
-		ArrayList<NhanVien> lstName = daoNhanVien.getTenNV(txtTim.getText());
+		ArrayList<NhanVien> lstName = daoNhanVien.getTenNV(txtTim.getText().trim());
 		for(NhanVien infoNV : lstName) {
 			TaiKhoan tk = daoTaiKhoan.getMatKhauTheoMaNV(infoNV.getMaNhanVien());
 			modelNV.addRow(new Object[] {
@@ -694,14 +673,13 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		}
 	}
 
-	
 	/**
 	 * Hiện danh sách thông tin NV theo ca làm việc
 	 * @param lstNV
 	 */
 	private void loadDanhSachCaNV(ArrayList<NhanVien> lstNV)  {
 		removeDanhSachNV(modelNV);
-		ArrayList<NhanVien> lstCa = daoNhanVien.getCaNV(txtTim.getText());
+		ArrayList<NhanVien> lstCa = daoNhanVien.getCaNV(txtTim.getText().trim());
 		for(NhanVien infoNV : lstCa) {
 			TaiKhoan tk = daoTaiKhoan.getMatKhauTheoMaNV(infoNV.getMaNhanVien());
 			modelNV.addRow(new Object[] {
@@ -719,116 +697,114 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		String input = txtTim.getText().trim();
 		input = input.toUpperCase();
 		ArrayList<NhanVien> lstNV = null;
-		
+
 		String regexMaNV = "^((NV|nv)[0-9]{3})$";
 		String regexTenNV= "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
 		String regexSDT  = "^(0[0-9]{9})$";
 		String regexCa   = "^[1-3]{1}$";
-		
-			if(regex.regexTimNV(txtTim)) {
-					if(input.matches(regexMaNV)) {
-						lstNV = daoNhanVien.getMaVaSDTNV(input);
-						loadDanhSachMaVaSdtNV(lstNV);
-					}
-					else if(input.matches(regexTenNV)) {
-						lstNV = daoNhanVien.getTenNV(input);
-						loadDanhSachTenNV(lstNV);
-					}
-					else if(input.matches(regexSDT)) {
-						lstNV = daoNhanVien.getMaVaSDTNV(input);
-						loadDanhSachMaVaSdtNV(lstNV);
-					}
-					else if(input.matches(regexCa)) {
-						lstNV = daoNhanVien.getCaNV(input);
-						loadDanhSachCaNV(lstNV);
-					}
-					if(lstNV.size()==0)
-						JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-					txtTim.requestFocus();
-					txtTim.selectAll();
+
+		if(regex.regexTimNV(txtTim)) {
+			if(input.matches(regexMaNV)) {
+				lstNV = daoNhanVien.getMaVaSDTNV(input);
+				loadDanhSachMaVaSdtNV(lstNV);
+			}
+			else if(input.matches(regexTenNV)) {
+				lstNV = daoNhanVien.getTenNV(input);
+				loadDanhSachTenNV(lstNV);
+			}
+			else if(input.matches(regexSDT)) {
+				lstNV = daoNhanVien.getMaVaSDTNV(input);
+				loadDanhSachMaVaSdtNV(lstNV);
+			}
+			else if(input.matches(regexCa)) {
+				lstNV = daoNhanVien.getCaNV(input);
+				loadDanhSachCaNV(lstNV);
+			}
+			if(lstNV.size()==0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+				txtTim.requestFocus();
+				txtTim.selectAll();
+			}
 		}
 	}
 
 	/**
 	 * Tạo tài khoản nhân viên mới, thêm thông tin nhân viên vào cơ sở dữ liệu và hiện lên bảng danh sách
 	 */
+	@SuppressWarnings("deprecation")
 	private void addNV() {
 		try {
 			String phatSinhMaNV = daoPhatSinhMa.getMaNV();
-			String hoTen = txtHoTen.getText();
-			String sdt = txtSDT.getText();
-			String diaChi = txtDiaChi.getText();
+			String hoTen = txtHoTen.getText().trim();
+			String sdt = txtSDT.getText().trim();
+			String diaChi = txtDiaChi.getText().trim();
 			String chucVu = cboChucVu.getSelectedItem().toString();
-			String cccd = txtCccd.getText();
+			String cccd = txtCccd.getText().trim();
 			String gioiTinh = cboGioiTinh.getSelectedItem().toString();
 
 			java.util.Date date = chooserNgaySinh.getDate();
-
-			Date date1 = new Date(date.getYear(), date.getMonth(), date.getDate());
-			
-			int age = nam - date1.getYear();
-			//			int age = now.getYear() - date1.getYear();
-			//			int age = dNow.getYear() - date1.getYear();
-			//
+			Date ngaySinh = new Date(date.getYear(), date.getMonth(), date.getDate());
+			int age = nam - ngaySinh.getYear();
 
 			int caLamViec = Integer.parseInt((String) cboCaLamViec.getSelectedItem());
 
 			TaiKhoan tk=new TaiKhoan(phatSinhMaNV);
 			String matKhau = phatSinhMaNV.concat(sdt); //String matKhau = ""+phatSinhMaNV +sdt;
 
-			if(age>=18) {
-				if(regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexDiaChi(txtDiaChi) && regex.regexCCCD(txtCccd)) {
+			if(regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexDiaChi(txtDiaChi) && regex.regexCCCD(txtCccd)) {
+				if(daoNhanVien.checkSdtNV(sdt)) {
+					if(daoNhanVien.checkCccdNV(cccd)) {
+						if(age>=18 && ngaySinh.getDate()>0 && ngaySinh.getDate()<=31 && ngaySinh.getMonth()>0 && ngaySinh.getMonth()<=12 && ngaySinh.getYear()>0 && ngaySinh.getYear()<nam) { 
+							TaiKhoan tk1=new TaiKhoan();
+							tk1.setMaTK(phatSinhMaNV);
+							tk1.setMatKhau(matKhau);
+							try {
+								new DAOTaiKhoan().createTK(tk1);
+							} catch (SQLException e2) {
+								e2.printStackTrace();
+							}
 
-					//					if(day>0 && day<=31 && month>0 && month<=12 && year>0 && year<nam) { 
-					if(date1.getDate()>0 && date1.getDate()<=31 && date1.getMonth()>0 && date1.getMonth()<=12 && date1.getYear()>0 && date1.getYear()<nam) { 
-						TaiKhoan tk1=new TaiKhoan();
-						tk1.setMaTK(phatSinhMaNV);
-						tk1.setMatKhau(matKhau);
-						try {
-							new DAOTaiKhoan().createTK(tk1);
-						} catch (SQLException e2) {
-							e2.printStackTrace();
-						}
+							//them vao data
+							NhanVien nv=new NhanVien();
+							nv.setMaNhanVien(phatSinhMaNV);
+							nv.setTaiKhoan(tk);
+							nv.setTenNhanVien(hoTen);
+							nv.setChucVu(chucVu);
+							nv.setGioiTinh(gioiTinh);
+							nv.setNgaySinh(ngaySinh);
+							nv.setDiaChi(diaChi);
+							nv.setSdt(sdt);
+							nv.setCccd(cccd);
+							if(cboChucVu.getSelectedItem()=="Quản lý")
+								nv.setLuong(10000000);
+							if(cboChucVu.getSelectedItem()=="Thu ngân")
+								nv.setLuong(6000000);
+							if(cboChucVu.getSelectedItem()=="Phục vụ")
+								nv.setLuong(5000000);
+							nv.setCaLamViec(caLamViec);
+							nv.setTrangThaiLamViec("Đang làm việc");
+							try {
+								new DAONhanVien().themNV(nv);
+							}catch (SQLException e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+							}
 
-						//them vao data
-						NhanVien nv=new NhanVien();
-						nv.setMaNhanVien(phatSinhMaNV);
-						nv.setTaiKhoan(tk);
-						nv.setTenNhanVien(hoTen);
-						nv.setChucVu(chucVu);
-						nv.setGioiTinh(gioiTinh);
-//						nv.setNgaySinh((Date) ngaySinh);
-						nv.setNgaySinh(date1);
-						nv.setDiaChi(diaChi);
-						nv.setSdt(sdt);
-						nv.setCccd(cccd);
-						nv.setLuong(200000);
-						nv.setCaLamViec(caLamViec);
-						nv.setTrangThaiLamViec("Đang làm việc");
-						try {
-							new DAONhanVien().themNV(nv);
-						}catch (SQLException e) {
-							e.printStackTrace();
-							JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-						}
-
-						
-						//them vao table  
-						xoaTrang();
-						modelNV.addRow(new Object[] {
-								phatSinhMaNV, hoTen, chucVu, gioiTinh, 
-								dfNgaySinh.format(chooserNgaySinh.getDate()), diaChi, sdt, cccd,
-								dfLuong.format(Math.round(200000)), caLamViec, "Đang làm việc", matKhau
-						});
-						String mkTK = "\nMật khẩu: "+matKhau;
-						JOptionPane.showMessageDialog(this, "Thêm thành công!\nMã tài khoản: "+phatSinhMaNV +mkTK, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-					}
-					//				}catch(Exception e1) {
-					//					e1.printStackTrace();
-				}
-			}
-			else {
-				JOptionPane.showMessageDialog(this, "Nhân viên làm việc phải trên 18 tuổi!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+							//them vao table  
+							xoaTrang();
+							modelNV.addRow(new Object[] {
+									phatSinhMaNV, hoTen, chucVu, gioiTinh, 
+									dfNgaySinh.format(chooserNgaySinh.getDate()), diaChi, sdt, cccd,
+									dfLuong.format(Math.round(nv.getLuong())), caLamViec, "Đang làm việc", matKhau
+							});
+							String mkTK = "\nMật khẩu: "+matKhau;
+							JOptionPane.showMessageDialog(this, "Thêm thành công!\nMã tài khoản: "+phatSinhMaNV +mkTK, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+						} else
+							JOptionPane.showMessageDialog(this, "Nhân viên làm việc phải trên 18 tuổi!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+					} else
+						JOptionPane.showMessageDialog(this, "Căn cước công dân đã đăng ký", "Thông báo", JOptionPane.ERROR_MESSAGE);
+				} else 
+					JOptionPane.showMessageDialog(this, "Số điện thoại đã đăng ký", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			}
 		}catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -845,17 +821,20 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 			int cancel = JOptionPane.showConfirmDialog(null, "Bạn muốn hủy tài khoản nhân viên này?", "Thông báo", JOptionPane.YES_NO_OPTION);
 			if(cancel == JOptionPane.YES_OPTION) {
 				NhanVien nv=new NhanVien();
-				String maNV = (String) tblNV.getValueAt(row, 0);
-				try {
-					modelNV.removeRow(row);
-					removeDanhSachNV(modelNV);
-					new DAONhanVien().huyNV(maNV);
-					loadDanhSachNV(nv);
-					JOptionPane.showMessageDialog(null, "Đã hủy tài khoản!", "Thông báo", JOptionPane.OK_OPTION);
-				}catch (SQLException e1) {
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Hủy tài khoản thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-				}
+				String maNV = tblNV.getValueAt(row, 0).toString();
+				if(!maNV.equals(sHeaderMaNV)) {
+					try {
+						modelNV.removeRow(row);
+						removeDanhSachNV(modelNV);
+						new DAONhanVien().huyNV(maNV);
+						loadDanhSachNV(nv);
+						JOptionPane.showMessageDialog(null, "Đã hủy tài khoản!");
+					}catch (SQLException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Hủy tài khoản thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+					}
+				}else
+					JOptionPane.showMessageDialog(this, "Tài khoản nhân viên này không được hủy vì đang đăng nhập hệ thống!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			}
 		}else {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin tài khoản nhân viên cần hủy!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -866,6 +845,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	/**
 	 * Sửa, cập nhật thông tin nhân viên
 	 */
+	@SuppressWarnings("deprecation")
 	private void updateNV() {
 		int row = tblNV.getSelectedRow();
 		if(row>=0) {
@@ -874,29 +854,34 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 				NhanVien nv=new NhanVien();
 				String maNV = (String) tblNV.getValueAt(row, 0);
 				java.util.Date date = chooserNgaySinh.getDate();
-				Date date1=new Date(date.getYear(), date.getMonth(), date.getDate());
+				Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
 				int caLamViec = Integer.parseInt((String) cboCaLamViec.getSelectedItem());
 				try {
 					if(regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexDiaChi(txtDiaChi) && regex.regexCCCD(txtCccd)) {
 						nv.setTenNhanVien(txtHoTen.getText());
 						nv.setChucVu((String) cboChucVu.getSelectedItem());
 						nv.setGioiTinh((String) cboGioiTinh.getSelectedItem());
-						nv.setNgaySinh(date1);
+						nv.setNgaySinh(ngaySinh);
 						nv.setDiaChi(txtDiaChi.getText());
 						nv.setSdt(txtSDT.getText());
 						nv.setCccd(txtCccd.getText());
+						if(cboChucVu.getSelectedItem()=="Quản lý")
+							nv.setLuong(10000000);
+						if(cboChucVu.getSelectedItem()=="Thu ngân")
+							nv.setLuong(6000000);
+						if(cboChucVu.getSelectedItem()=="Phục vụ")
+							nv.setLuong(5000000);
 						nv.setCaLamViec(caLamViec);
 
 						new DAONhanVien().capNhatNV(nv, maNV);
-//						loadDanhSachNV(nv);
-//						loadNV(nv);
 						TaiKhoan tk = daoTaiKhoan.getMatKhauTheoMaNV(maNV);
+
 						removeDanhSachNV(modelNV);
 						modelNV.setRowCount(0);
 						modelNV.addRow(new Object[] {
 								maNV, nv.getTenNhanVien(), nv.getChucVu(), nv.getGioiTinh(), 
 								dfNgaySinh.format(nv.getNgaySinh()), nv.getDiaChi(), nv.getSdt(), nv.getCccd(), 
-								dfLuong.format(Math.round(200000)), nv.getCaLamViec(), "Đang làm việc", tk.getMatKhau()	
+								dfLuong.format(Math.round(nv.getLuong())), nv.getCaLamViec(), "Đang làm việc", tk.getMatKhau()	
 						});
 						JOptionPane.showMessageDialog(this, "Thông tin nhân viên đã được sửa!", "Thông báo", JOptionPane.OK_OPTION);
 					}
@@ -905,9 +890,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 					JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}else {
+		}else
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin nhân viên cần sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-		}
 	}
 
 	/**
@@ -1085,13 +1069,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		//tìm NV
 		if(o.equals(btnTim)) {
 			if(txtTim.getText().equals("") || txtTim.getText().equals("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.")) {
-				chkTatCa.setSelected(false);
 				removeDanhSachNV(modelNV);
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				txtTim.requestFocus();
 			}else {
 				findNV();
-				xoaTrang();
+				txtTim.selectAll();
 			}
 		}
 
@@ -1105,7 +1088,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 			updateNV();
 		}
 
-		//hủy
+		//hủy tài khoản NV
 		if(o.equals(btnHuy)) {
 			cancelNV();
 		}
@@ -1113,10 +1096,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		//làm mới
 		if(o.equals(btnLamMoiNV)) {
 			xoaTrang();
+			bg.clearSelection();
 			removeDanhSachNV(modelNV);
+			loadDanhSachNV(nv);
 		}
 
-		//sapxep tang
+		//sapxep tăng
 		if((cboSapXep.getSelectedItem()=="Tăng dần")) {
 			if(o.equals(rdoTheoMaNV))	
 				sortMaNVTangDan(nv);
@@ -1129,7 +1114,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 			}
 		}
 
-		//sapxep giam
+		//sapxep giảm
 		if((cboSapXep.getSelectedItem()=="Giảm dần")) {
 			if(o.equals(rdoTheoMaNV))
 				sortMaNVGiamDan(nv);
@@ -1144,6 +1129,13 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 
 	}
 
+	/**
+	 *Sự kiện của click chuột
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		choose1NV();
+	}
 	/**
 	 * Chọn 1 dòng thông tin nhân viên trong bảng danh sách thông tin NV
 	 */
@@ -1165,22 +1157,12 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 					cboCaLamViec.setSelectedItem(nv.getCaLamViec()+"");
 					break;
 				}
-				if(trangThai.equals("Đã nghỉ việc")) {
+				if(trangThai.equals("Đã nghỉ việc")) 
 					lblNVDaNghiViec.setText("ĐÃ NGHỈ VIỆC.");
-				}
-				if(trangThai.equals("Đang làm việc")) {
+				if(trangThai.equals("Đang làm việc")) 
 					lblNVDaNghiViec.setText("");
-				}
 			}
 		}
-	}
-
-	/**
-	 *Sự kiện của click chuột
-	 */
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		choose1NV();
 	}
 
 	@Override

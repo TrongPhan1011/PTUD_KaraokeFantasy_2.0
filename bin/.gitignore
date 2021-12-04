@@ -1,2 +1,8 @@
 /app/
+<<<<<<< HEAD
 /dao/
+=======
+/connection/
+/dao/
+/entity/
+>>>>>>> 65121011dabe14d7ae45d54aecd0e8528123627b

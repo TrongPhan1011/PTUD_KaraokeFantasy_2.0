@@ -15,7 +15,7 @@ public class DAOMatHang {
 	/**
 	 * Thêm một mặt hàng vào bảng mặt hàng trong SQL server
 	 * @param mh
-	 * @return
+	 * @return MatHang mh
 	 */
 	public boolean ThemMH(MatHang mh) {
 		ConnectDB.getinstance();
@@ -73,7 +73,7 @@ public class DAOMatHang {
 		return n>0;
 	}
 	/**
-	 * Lấy danh sách các mặt hàng từ bảng mặt hàng
+	 * Lấy danh sách các mặt hàng từ bảng mặt hàng trong SQL Server
 	 * @return ArrayList<MatHang> dsMH 
 	 */
 	public ArrayList<MatHang> getDSMatHang() {
@@ -129,7 +129,7 @@ public class DAOMatHang {
 		return mh;
 	}
 	/**
-	 * Lấy mặt hàng theo tên mặt hàng trong bảng mặt hàng từ SQL Server
+	 * Lấy mặt hàng theo tên mặt hàng theo mã được truyền vào từ bảng mặt hàng từ SQL Server
 	 * @param ma
 	 * @return
 	 */
@@ -157,7 +157,7 @@ public class DAOMatHang {
 		return mh;
 	}
 	/**
-	 * Lấy mặt hàng theo mã loại mặt hàng trong bảng mặt hàng từ SQL Server
+	 * Lấy mặt hàng theo mã loại mặt hàng với mã loại mặt hàng được truyền vào từ bảng mặt hàng từ SQL Server
 	 * @param Maloai
 	 * @return ArrayList<MatHang> lstMatHang
 	 */

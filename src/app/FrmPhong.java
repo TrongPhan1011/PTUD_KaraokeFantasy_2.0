@@ -84,7 +84,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 	private JRadioButton rdoTheoMaP;
 	private JRadioButton rdoTheoLoaiP;
 	private JRadioButton rdoTheoGiaP;
-	private JCheckBox chkAll = new JCheckBox("Tất cả");
 	private JTable tblPhong;
 	private DefaultTableModel modelPhong;
 	private DAOPhong daoPhong;
@@ -92,7 +91,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 	private DAOPhatSinhMa daoMa;
 	private DecimalFormat dfGiaP=new DecimalFormat("###,###");
 	private Regex regex;
-
 	private ArrayList<LoaiPhong> loaiP;
 	private Phong p;
 	private JPanel pNhapThongTin;
@@ -318,26 +316,8 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		rdoTheoGiaP.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoGiaP);
 
-		//check box giúp hiển thị danh sách phòng
-		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkAll.setBackground(new Color(171, 192, 238));
-		chkAll.setBounds(201, 15, 135, 27);
-		pSapXep.add(chkAll);
-		chkAll.addItemListener(new ItemListener() {
 
-			//bật tắt danh sách phòng
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==1) {
-					bgRdo.clearSelection();
-					loadDanhSachPhong();
-				}
-				else {
-					bgRdo.clearSelection();
-					clearTable();
-				}
-			}
-		});
+
 
 
 
@@ -561,7 +541,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		if (row >= 0) {
 			int cancel = JOptionPane.showConfirmDialog(null, "Bạn muốn xóa phòng này?", "Thông báo",
 					JOptionPane.YES_NO_OPTION);
-			if (cancel == JOptionPane.YES_OPTION) {
+			if (cancel == JOptionPane.YES_OPTION && cboTinhTrangP.getSelectedIndex()==0) {
 				String maP = tblPhong.getValueAt(row, 0).toString();
 				try {
 					modelPhong.removeRow(row);
@@ -573,6 +553,8 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 					JOptionPane.showMessageDialog(null, "xóa phòng thất bại!", "Thông báo",
 							JOptionPane.ERROR_MESSAGE);
 				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Vui lòng chọn lại và kiểm tra tinh trạng phòng");
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Bạn chưa chọn thông tin phòng cần hủy!", "Thông báo",
@@ -605,7 +587,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 			}
 			}
 		}else {
-			chkAll.setSelected(false);
 			clearTable();
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo",
 					JOptionPane.WARNING_MESSAGE);
@@ -760,29 +741,23 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		}
 		if(cboSapXep.getSelectedItem()=="Tăng dần") {
 			if(o.equals(rdoTheoMaP)) {
-				chkAll.setSelected(false);
 				loadDanhSachPhong();
 			}
 			if(o.equals(rdoTheoLoaiP)) {
-				chkAll.setSelected(false);
 				sortLoaiPhongTangDan(p);
 			}
 			if(o.equals(rdoTheoGiaP)) {
-				chkAll.setSelected(false);
 				sortGiaPhongTangDan(p);
 			}
 		}
 		if(cboSapXep.getSelectedItem()=="Giảm dần") {
 			if(o.equals(rdoTheoMaP)) {
-				chkAll.setSelected(false);
 				sortMaPhongGiamDan(p);
 			}
 			if(o.equals(rdoTheoLoaiP)) {
-				chkAll.setSelected(false);
 				sortLoaiPhongGiamDan(p);
 			}
 			if(o.equals(rdoTheoGiaP)) {
-				chkAll.setSelected(false);
 				sortGiaPhongGiamDan(p);
 			}
 		}
@@ -791,7 +766,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		}
 		if(o.equals(cboSapXep)) {
 			bgRdo.clearSelection();
-			chkAll.setSelected(false);
 			clearTable();
 		}
 	}

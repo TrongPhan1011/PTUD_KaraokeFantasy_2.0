@@ -32,6 +32,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -63,6 +65,8 @@ import entity.HoaDon;
 import entity.KhachHang;
 import entity.MatHang;
 import entity.Phong;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 
 
@@ -164,6 +168,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		pBieuDo.setBackground(Color.WHITE);
 		pMain.add(pBieuDo);
 		pBieuDo.setLayout(null);
+		
+
 		ButtonGroup bg = new ButtonGroup();
 		bg.clearSelection();
 
@@ -677,10 +683,6 @@ public class FrmThongKe extends JPanel implements ActionListener{
 								
 								tenKH = ten.getTenKH();
 							}
-								
-								
-								
-
 						}		
 				}	
 						dataset.addValue(count, "Tên khách hàng", tenKH);
@@ -691,6 +693,43 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		        return dataset;
 		}
 	 
+	public void addTable() {
+		if(!btnSoMH.getText().equalsIgnoreCase("")) {
+			pBieuDo.removeAll();
+			pBieuDo.revalidate();
+			pBieuDo.repaint();
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBorder(new LineBorder(new Color(164, 44, 167), 1, true));
+			scrollPane.setBackground(new Color(164, 44, 167));
+			scrollPane.setBounds(0, 0, 1243, 374);
+			pBieuDo.add(scrollPane);
+			
+			String col[] = { "Mã MH", "Tên mặt hàng", "Số lượng sử dụng", "Số lượng còn lại" };
+			DefaultTableModel modelTK = new DefaultTableModel(col, 0);
+			JTable tableTK = new JTable(modelTK);
+			
+			//header table
+			JTableHeader tbHeader = tableTK.getTableHeader();
+			tbHeader.setBackground(new Color(164, 44, 167));
+			tbHeader.setForeground(Color.white);
+			tbHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
+			
+			tableTK.setShowGrid(true);
+			tableTK.setShowHorizontalLines(true);
+			tableTK.setBackground(Color.WHITE);
+			tableTK.setSelectionBackground(new Color(164, 44, 167, 30));
+			tableTK.setSelectionForeground(new Color(114, 23, 153));
+			tableTK.setFont(new Font("SansSerif", Font.PLAIN, 13));
+			tableTK.setRowHeight(30);
+			tableTK.setGridColor(getBackground());
+			// tableTK.setOpaque(false);
+			tableTK.setSelectionBackground(new Color(164, 44, 167, 30));
+			scrollPane.setViewportView(tableTK);
+		}
+	}
+	public void loadTableThongKe() {
+		
+	}
 	 public void addChartGio() throws RemoteException {
 			if(!btnTGHD.getText().equalsIgnoreCase("")) {
 				pBieuDo.removeAll();

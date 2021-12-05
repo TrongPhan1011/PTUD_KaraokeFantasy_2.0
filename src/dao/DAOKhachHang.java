@@ -450,9 +450,7 @@ public class DAOKhachHang {
 		}
 		return true;
 	}
-<<<<<<< HEAD
 
-=======
 	
 	/**
 	 * @param info: tìm theo tên KH và load lên txt và cbo trong frmDDP
@@ -487,5 +485,5 @@ public class DAOKhachHang {
 //	public LoaiKH getLoaiKHTuSdt() {
 //		
 //	}
->>>>>>> 65121011dabe14d7ae45d54aecd0e8528123627b
+
 }

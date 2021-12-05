@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Properties;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -48,6 +49,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
+import com.mindfusion.drawing.Colors;
 import com.toedter.calendar.DateUtil;
 import com.toedter.calendar.JDateChooser;
 
@@ -63,6 +65,8 @@ import entity.HoaDon;
 import entity.KhachHang;
 import entity.MatHang;
 import entity.Phong;
+import jiconfont.icons.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 
 
 
@@ -235,9 +239,11 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		//		btnTK.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTK.setBackground(new Color(114, 23, 153));
 		btnTK.setBounds(10, 112, 300, 36);
-		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconThongKe.png");
-		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
-		btnTK.setIcon(new ImageIcon(resizeImgLamMoiKH));
+//		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconThongKe.png");
+//		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
+//		btnTK.setIcon(new ImageIcon(resizeImgLamMoiKH));
+		Icon iconChart = IconFontSwing.buildIcon(FontAwesome.BAR_CHART, 20, Color.white);
+		btnTK.setIcon(iconChart);
 		pThongKe.add(btnTK);
 
 		btnLamMoi = new FixButton("Làm mới");
@@ -247,7 +253,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		//		btnTK.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnLamMoi.setBackground(new Color(114, 23, 153));
 		btnLamMoi.setBounds(10, 153, 300, 36);
-
+		Icon iconLamMoi = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
+		btnLamMoi.setIcon(iconLamMoi);
 		pThongKe.add(btnLamMoi);
 		
 		dateChooserThongKeNgayKetThuc = new JDateChooser();
@@ -282,7 +289,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		btnTongDoanhThu = new FixButton("");
 		btnTongDoanhThu.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTongDoanhThu.setForeground(Color.BLACK);
-		btnTongDoanhThu.setBackground(Color.WHITE);
+		btnTongDoanhThu.setBackground(new Color(114, 23, 153));
 		btnTongDoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -290,9 +297,12 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		btnTongDoanhThu.setBounds(10, 109, 226, 52);
 		pTongDoanhThu.add(btnTongDoanhThu);
 		
-		JLabel lblNewLabel = new JLabel("kiếm cái ảnh icon gì đó bỏ vô đây nha");
-		lblNewLabel.setBounds(10, 11, 226, 87);
-		pTongDoanhThu.add(lblNewLabel);
+		JLabel lblDollar = new JLabel("$");
+		lblDollar.setFont(new Font("SansSerif", Font.BOLD, 60));
+		lblDollar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDollar.setForeground(Color.ORANGE);
+		lblDollar.setBounds(10, 11, 226, 87);
+		pTongDoanhThu.add(lblDollar);
 
 		JPanel pSoKhachHang = new JPanel();
 		pSoKhachHang.setBackground(new Color(238,239,243,90));
@@ -312,9 +322,19 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		btnSoKH = new FixButton("");
 		btnSoKH.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnSoKH.setForeground(Color.BLACK);
-		btnSoKH.setBackground(Color.WHITE);
+		btnSoKH.setBackground(new Color(114, 23, 153));
 		btnSoKH.setBounds(10, 110, 164, 51);
 		pSoKhachHang.add(btnSoKH);
+		
+		JLabel lblIconSoKH = new JLabel();
+		lblIconSoKH.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconSoKH.setBounds(10, 11, 164, 87);
+		Icon iconSoKH = IconFontSwing.buildIcon(FontAwesome.USERS, 60, new Color(0, 172, 234));
+		lblIconSoKH.setIcon(iconSoKH);
+//		Image iconSoKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconSoKH.png");
+//		Image resizeImgiconSoKH = iconSoKH.getScaledInstance(100, 100, 0);
+//		lblIconSoKH.setIcon(new ImageIcon(resizeImgiconSoKH));
+		pSoKhachHang.add(lblIconSoKH);
 
 		JPanel pSoMatHang = new JPanel();
 		pSoMatHang.setBackground(new Color(238,239,243,90));
@@ -334,9 +354,16 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		btnSoMH = new FixButton("");
 		btnSoMH.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnSoMH.setForeground(Color.BLACK);
-		btnSoMH.setBackground(Color.WHITE);
+		btnSoMH.setBackground(new Color(114, 23, 153));
 		btnSoMH.setBounds(10, 110, 168, 51);
 		pSoMatHang.add(btnSoMH);
+		
+		JLabel lblIconSoMH = new JLabel();
+		lblIconSoMH.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconSoMH.setBounds(10, 11, 168, 87);
+		Icon iconSoMH = IconFontSwing.buildIcon(FontAwesome.GLASS, 60, Colors.LightGray);
+		lblIconSoMH.setIcon(iconSoMH);
+		pSoMatHang.add(lblIconSoMH);
 
 		JPanel pTgPhongSD = new JPanel();
 		pTgPhongSD.setBackground(new Color(238,239,243,90));
@@ -356,9 +383,16 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		btnTGHD = new FixButton("");
 		btnTGHD.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTGHD.setForeground(Color.BLACK);
-		btnTGHD.setBackground(Color.WHITE);
+		btnTGHD.setBackground(new Color(114, 23, 153));
 		btnTGHD.setBounds(10, 110, 237, 51);
 		pTgPhongSD.add(btnTGHD);
+		
+		JLabel lblIconTGHoatDong = new JLabel();
+		lblIconTGHoatDong.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconTGHoatDong.setBounds(10, 11, 237, 87);
+		Icon iconTGHoatDong = IconFontSwing.buildIcon(FontAwesome.MUSIC, 60, Color.red);
+		lblIconTGHoatDong.setIcon(iconTGHoatDong);
+		pTgPhongSD.add(lblIconTGHoatDong);
 
 
 		JLabel lblBackGround=new JLabel("");

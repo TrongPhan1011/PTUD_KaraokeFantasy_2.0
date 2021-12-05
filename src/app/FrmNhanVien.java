@@ -555,13 +555,13 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		/**
 		 * Hình nền của giao diện
 		 */
-//		JLabel lblBackGround=new JLabel("");
-//		lblBackGround.setIcon(new ImageIcon("data\\img\\background.png"));
-//		lblBackGround.setBounds(0, 0, 1281, 629);
-//		Image imgBackGround = Toolkit.getDefaultToolkit().getImage("data\\img\\background.png");
-//		Image resizeBG = imgBackGround.getScaledInstance(lblBackGround.getWidth(), lblBackGround.getHeight(), 0);
-//		lblBackGround.setIcon(new ImageIcon(resizeBG));
-//		pMain.add(lblBackGround);
+		JLabel lblBackGround=new JLabel("");
+		lblBackGround.setIcon(new ImageIcon("data\\img\\background.png"));
+		lblBackGround.setBounds(0, 0, 1281, 629);
+		Image imgBackGround = Toolkit.getDefaultToolkit().getImage("data\\img\\background.png");
+		Image resizeBG = imgBackGround.getScaledInstance(lblBackGround.getWidth(), lblBackGround.getHeight(), 0);
+		lblBackGround.setIcon(new ImageIcon(resizeBG));
+		pMain.add(lblBackGround);
 
 
 		/**

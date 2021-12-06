@@ -2,6 +2,7 @@ package app;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
@@ -12,6 +13,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -40,21 +42,22 @@ import entity.LoaiMatHang;
 import entity.MatHang;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+//import app.XuatExcels;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 
-public class FrmMatHang extends JPanel implements ActionListener, MouseListener {
+public class FrmMatHang extends JFrame implements ActionListener, MouseListener {
 	/**
 	 * 
 	 */
@@ -416,7 +419,8 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		btnTim.addActionListener(this);
 		btnSuaMH.addActionListener(this);
 		btnReset.addActionListener(this);
-
+		btnExcels.addActionListener(this);
+		
 		tblMH.addMouseListener(this);
 
 		rdoTheoGiaMH.addActionListener(this);
@@ -524,6 +528,13 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		if(o.equals(cboSapXep)) {
 			bgRdo.clearSelection();
 			clearTable();
+		}
+		if(o.equals(btnExcels)) {
+			try {
+				xuatExcel();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 	/**
@@ -760,7 +771,25 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 			modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
 		}
 	}
+	/**
+	 * Xuất Excels
+	 */
+	private void xuatExcel() throws IOException {
+		XuatExcels xuat = new XuatExcels();
+		FileDialog fileDialog  = new FileDialog(this ,"Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin mặt hàng");
+		fileDialog .setVisible(true);
+		String name = fileDialog.getFile();
+		String fileName = fileDialog.getDirectory() + name;
 
+		if (name == null) 
+			return;
+		
+		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
+			fileName += ".xlsx";
+		
+		xuat.xuatTable(tblMH, "DANH SÁCH THÔNG TIN MẶT HÀNG", fileName);
+	}
 	/**
 	 * Sự kiện click chuột
 	 */

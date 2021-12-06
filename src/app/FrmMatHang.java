@@ -77,7 +77,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 	private DAOPhatSinhMa daoPhatSinhMa;
 	private JComboBox<Object> cboSapXep;
 	private ArrayList<LoaiMatHang> loaiMH;
-	private JCheckBox chkTatCa;
 	private JRadioButton rdoTheoGiaMH;
 	private JRadioButton rdoTheoLoaiMH;
 	private JRadioButton rdoTheoTenMH;
@@ -87,6 +86,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
 	private ButtonGroup bgRdo;
+	private FixButton btnExcels;
 
 	public Panel getFrmMatHang() {
 		return this.pMain;
@@ -191,13 +191,18 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		/**
 		 * Tìm kiếm
 		 */
+		JLabel lblTim = new JLabel("Tìm kiếm:");
+		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
+		lblTim.setBounds(350, 11, 90, 35);
+		pMain.add(lblTim);
+		
 		txtTim = new JTextField();
 		txtTim.setToolTipText("Thông tin tìm kiếm");
 		txtTim.setText("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
-		txtTim.setBounds(589, 11, 539, 33);
+		txtTim.setBounds(425, 11, 529, 33);
 		txtTim.addFocusListener(new FocusAdapter() {	
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -218,21 +223,32 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		});
 		pMain.add(txtTim);
 
-		JLabel lblTim = new JLabel("Tìm kiếm:");
-		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(511, 11, 90, 35);
-		pMain.add(lblTim);
-
 		btnTim = new FixButton("Tìm");
 		btnTim.setToolTipText("Tìm kiếm mặt hàng");
 		btnTim.setForeground(Color.WHITE);
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1138, 11, 121, 33);
+		btnTim.setBounds(964, 12, 127, 33);
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
 		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
+		
+		/**
+		 * Nút xuất file Excel
+		 * JButton btnExcels
+		 * Icon iconExcel
+		 */
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(1101, 12, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pMain.add(btnExcels);
+
 
 		/**
 		 * Các buttons
@@ -289,7 +305,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		pSapXep.setLayout(null);
 
 		cboSapXep = new JComboBox<Object>(new Object[]{"Tăng dần", "Giảm dần"});
-		cboSapXep.setBounds(51, 12, 135, 28);
+		cboSapXep.setBounds(76, 12, 135, 28);
 		cboSapXep.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		cboSapXep.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		cboSapXep.setBackground(Color.WHITE);
@@ -297,29 +313,24 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		pSapXep.add(cboSapXep);
 
 		rdoTheoTenMH = new JRadioButton("Theo tên mặt hàng");
-		rdoTheoTenMH.setBounds(357, 13, 170, 27);
+		rdoTheoTenMH.setBounds(288, 13, 170, 27);
 		rdoTheoTenMH.setSelected(true);
 		rdoTheoTenMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenMH.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoTenMH);
 
 		rdoTheoLoaiMH = new JRadioButton("Theo loại mặt hàng");
-		rdoTheoLoaiMH.setBounds(560, 13, 170, 27);
+		rdoTheoLoaiMH.setBounds(521, 13, 170, 27);
 		rdoTheoLoaiMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiMH.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoLoaiMH);
 
 		rdoTheoGiaMH = new JRadioButton("Theo giá ");
-		rdoTheoGiaMH.setBounds(768, 13, 135, 27);
+		rdoTheoGiaMH.setBounds(735, 13, 135, 27);
 		rdoTheoGiaMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoGiaMH.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoGiaMH);
 
-		chkTatCa = new JCheckBox("Tất cả ");
-		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkTatCa.setBackground(new Color(171, 192, 238));
-		chkTatCa.setBounds(233, 13, 106, 27);
-		pSapXep.add(chkTatCa);
 		
 		/**
 		 * Buttons Group
@@ -391,7 +402,7 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 
 
 		/**
-		 * Load loại mặt hàng
+		 * Load loại mặt hàng vào ComboBox loại mặt hàng
 		 */
 		loaiMH = daoLMH.getAllLoaiMatHang();
 		for(LoaiMatHang lmh : loaiMH) {
@@ -411,8 +422,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		rdoTheoGiaMH.addActionListener(this);
 		rdoTheoLoaiMH.addActionListener(this);
 		rdoTheoTenMH.addActionListener(this);
-
-		chkTatCa.addActionListener(this);
 		
 		rdoTheoGiaMH.addActionListener(this);
 		rdoTheoLoaiMH.addActionListener(this);
@@ -430,6 +439,11 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		txtSoLuong.setText("100");
 		txtDonGia.setText("50000");
 		cboLoaiMH.setSelectedIndex(1);
+		
+		/**
+		 * Load dữ liệu lên bảng 
+		 */
+		loadTableMH();
 	}
 	/**
 	 * Lấy dữ liệu từ SQL Server nạp vào bảng thông qua vòng lặp for, không nạp vào bảng với loại mặt hàng ngừng kinh doanh
@@ -466,7 +480,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		txtTenMH.requestFocus();
 		cboSapXep.setSelectedIndex(0);
 		bgRdo.clearSelection();
-		chkTatCa.setSelected(false);
 	}
 	
 	/**
@@ -487,46 +500,28 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 		if (o.equals(btnSuaMH)) {
 			SuaMH();
 		}
-		if(o.equals(chkTatCa)) {
-			if(chkTatCa.isSelected()) {
-				bgRdo.clearSelection();
-				clearTable();
-				loadTableMH();
-			}else if(!chkTatCa.isSelected())
-			{
-				bgRdo.clearSelection();
-				clearTable();
-			}
-		}
 		if(o.equals(btnTim)) {
 			timMH();
 		}
 		if (cboSapXep.getSelectedItem() == "Tăng dần") {
 			if(o.equals(rdoTheoGiaMH)) {
-				chkTatCa.setSelected(false);
 				sortGiaTangDan(mh);
 			}else if (o.equals(rdoTheoLoaiMH)) {
-				chkTatCa.setSelected(false);
 				sortLMHTangDan(mh);
 			}else if (o.equals(rdoTheoTenMH)) {
-				chkTatCa.setSelected(false);
 				sortTenMHTangDan(mh); 
 			} 
 		}
 		if (cboSapXep.getSelectedItem() == "Giảm dần") {
 			if(o.equals(rdoTheoGiaMH)) {
-				chkTatCa.setSelected(false);
 				sortGiaGiamDan(mh);
 			}else if (o.equals(rdoTheoLoaiMH) ) {
-				chkTatCa.setSelected(false);
 				sortLMHGiamDan(mh);
 			}else if (o.equals(rdoTheoTenMH)) {
-				chkTatCa.setSelected(false);
 				sortTenMHGiamDan(mh);
 			} 
 		}
 		if(o.equals(cboSapXep)) {
-			chkTatCa.setSelected(false);
 			bgRdo.clearSelection();
 			clearTable();
 		}
@@ -738,7 +733,6 @@ public class FrmMatHang extends JPanel implements ActionListener, MouseListener 
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin phù hợp.");
 		}
 		else {
-			chkTatCa.setSelected(false);
 			clearTable();
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 		}

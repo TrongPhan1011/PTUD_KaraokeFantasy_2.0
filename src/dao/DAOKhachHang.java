@@ -482,8 +482,6 @@ public class DAOKhachHang {
 		return kh;
 	}
 	
-//	public LoaiKH getLoaiKHTuSdt() {
-//		
-//	}
+
 
 }

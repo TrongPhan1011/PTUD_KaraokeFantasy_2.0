@@ -16,5 +16,23 @@
 	<classpathentry kind="lib" path="Library/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="Library/jcommon-1.0.0.jar"/>
 	<classpathentry kind="lib" path="Library/flatlaf-1.4.jar"/>
+	<classpathentry kind="lib" path="Library/poi-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-ooxml-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-ooxml-full-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-scratchpad-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-javadoc-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-excelant-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/poi-examples-5.1.0.jar"/>
+	<classpathentry kind="lib" path="Library/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="Library/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="Library/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="Library/xmlbeans-5.0.2.jar"/>
+	<classpathentry kind="lib" path="Library/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="Library/slf4j-api-1.7.32.jar"/>
+	<classpathentry kind="lib" path="Library/commons-compress-1.21.jar"/>
+	<classpathentry kind="lib" path="Library/log4j-api-2.14.1.jar"/>
+	<classpathentry kind="lib" path="Library/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="Library/SparseBitSet-1.2.jar"/>
+	<classpathentry kind="lib" path="Library/curvesapi-1.06.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -87,7 +87,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private JTable tblPhong, tblDDP;
 	private DefaultTableModel modelPhong, modelDDP;
 	private JButton btnTim, btnThemDDP, btnSuaDDP, btnLamMoiDDP;
-	private JCheckBox chkTatCa;
 	private JRadioButton rdoTheoMaPhong, rdoTheoLoaiPhong;
 	private ButtonGroup bg;
 	private SimpleDateFormat dfNgay, dfHienGio;
@@ -110,7 +109,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private DonDatPhong ddp;
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
-
+	private FixButton btnExcels;
 
 
 	/**
@@ -488,36 +487,13 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		pSapXep.add(cboSapXep);
 
 		/**
-		 * Nhấn tích chọn nút tất cả để hiện toàn bộ danh sách thông tin lên bảng đơn đặt phòng
-		 * JCheckBox chkTatCa
-		 */
-		chkTatCa = new JCheckBox("Tất cả");
-		chkTatCa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chkTatCa.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkTatCa.setBackground(new Color(178, 192, 237));
-		chkTatCa.setBounds(193, 16, 95, 27);
-		chkTatCa.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange()==1)
-					loadDanhSachDDP(ddp);
-				else {
-					removeDanhSachDDP(modelDDP);
-					bg.clearSelection();
-				}
-			}
-		});
-		pSapXep.add(chkTatCa);
-
-
-		/**
 		 * Nhấn chọn sắp xếp kí tự từ trái sang phải theo mã và loại phòng tăng hoặc giảm dần
 		 * Sắp xếp loại phòng tăng dần: phòng thường, trung, VIP và giảm dần ngược lại
 		 * JRadioButton rdoTheoMaPhong, rdoTheoLoaiPhong
 		 */
 		rdoTheoMaPhong = new JRadioButton("Theo mã phòng");
 		rdoTheoMaPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoMaPhong.setBounds(305, 16, 133, 27);
+		rdoTheoMaPhong.setBounds(257, 16, 133, 27);
 		rdoTheoMaPhong.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaPhong.setBackground(new Color(178, 192, 237));
 		pSapXep.add(rdoTheoMaPhong);
@@ -618,6 +594,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		/**
 		 * Các sự kiện của giao diện quản lý đơn đặt phòng
 		 */
+		loadDanhSachDDP(ddp);
+		
 		txtTim.addFocusListener(this);
 
 		loadDSPhongTrongVaDaDat(p);
@@ -628,7 +606,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		btnLamMoiDDP.addActionListener(this);
 
 		cboSapXep.addActionListener(this);
-		chkTatCa.addActionListener(this);
 		rdoTheoMaPhong.addActionListener(this);
 		rdoTheoLoaiPhong.addActionListener(this);
 
@@ -668,7 +645,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		cboGio.setSelectedIndex(0);
 		cboPhut.setSelectedIndex(0);
 
-		chkTatCa.setSelected(false);
 		rdoTheoMaPhong.setSelected(false);
 		rdoTheoLoaiPhong.setSelected(false);
 
@@ -1127,7 +1103,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 		if(o.equals(btnTim)) {
 			if(txtTim.getText().equals("") || txtTim.getText().equals("Tìm đơn đặt phòng theo họ tên và sđt khách hàng, tìm khách hàng theo sđt.")) {
-				chkTatCa.setSelected(false);
 				removeDanhSachDDP(modelDDP);
 				JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 				txtTim.requestFocus();
@@ -1152,7 +1127,9 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		//làm mới
 		if(o.equals(btnLamMoiDDP)) {
 			xoaTrang();
+			bg.clearSelection();
 			removeDanhSachDDP(modelDDP);
+			loadDanhSachDDP(ddp);
 		}
 
 		//sapxep tăng

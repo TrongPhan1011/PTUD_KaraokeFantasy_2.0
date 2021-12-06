@@ -349,7 +349,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		
 		//tạo bảng
 		//tên các cột trong bảng
-		String phong [] = {"Mã phòng","Tên phòng", "Giá phòng", "Tình trạng phòng"};
+		String phong [] = {"Mã phòng","Loại phòng", "Giá phòng", "Tình trạng phòng"};
 		modelPhong = new DefaultTableModel(phong,0);
 
 		tblPhong = new JTable(modelPhong);

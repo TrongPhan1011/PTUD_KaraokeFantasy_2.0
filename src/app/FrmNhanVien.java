@@ -446,14 +446,14 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		 */
 		rdoTheoMaNV = new JRadioButton("Theo mã nhân viên");
 		rdoTheoMaNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoMaNV.setBounds(230, 15, 159, 25);
+		rdoTheoMaNV.setBounds(235, 15, 159, 25);
 		rdoTheoMaNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoMaNV);
 
 		rdoTheoTenNV = new JRadioButton("Theo tên nhân viên");
 		rdoTheoTenNV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		rdoTheoTenNV.setBounds(467, 15, 161, 25);
+		rdoTheoTenNV.setBounds(472, 15, 161, 25);
 		rdoTheoTenNV.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenNV.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoTenNV);
@@ -1134,33 +1134,38 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 				e1.printStackTrace();
 			}
 		}
+		
+		//xóa chọn radbutton khi chọn combobox
+		if(o.equals(cboSapXep)) {
+			if(cboSapXep.getSelectedItem()=="Tăng dần")
+				bg.clearSelection();
+			if(cboSapXep.getSelectedItem()=="Giảm dần") 
+				bg.clearSelection();
+		}
 
 		//sapxep tăng
-		if((cboSapXep.getSelectedItem()=="Tăng dần")) {
+		if(cboSapXep.getSelectedItem()=="Tăng dần") {
 			if(o.equals(rdoTheoMaNV))	
 				sortMaNVTangDan(nv);
 
 			if(o.equals(rdoTheoTenNV)) 
 				sortTenNVTangDan(nv);		//sort ten dau cua nv theo a-z
 
-			if(o.equals(rdoTheoChucVuNV)) {
+			if(o.equals(rdoTheoChucVuNV)) 
 				sortChucVuTangDan(nv);		//sx chucvu tang dan: PV, TN, QL
-			}
 		}
 
 		//sapxep giảm
-		if((cboSapXep.getSelectedItem()=="Giảm dần")) {
+		if(cboSapXep.getSelectedItem()=="Giảm dần") {
 			if(o.equals(rdoTheoMaNV))
 				sortMaNVGiamDan(nv);
 
 			if(o.equals(rdoTheoTenNV)) 
 				sortTenNVGiamDan(nv);		//sort ten dau cua nv theo z-a
 
-			if(o.equals(rdoTheoChucVuNV)) {
+			if(o.equals(rdoTheoChucVuNV)) 
 				sortChucVuGiamDan(nv);		//sx chucvu giam dan: QL, TN, PV
-			}
 		}
-
 	}
 
 	/**
@@ -1170,6 +1175,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	public void mouseClicked(MouseEvent e) {
 		choose1NV();
 	}
+	
 	/**
 	 * Chọn 1 dòng thông tin nhân viên trong bảng danh sách thông tin NV
 	 */

@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+//import java.awt.event.ItemEvent;
+//import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
@@ -27,7 +27,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -111,7 +110,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private DonDatPhong ddp;
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
-	private FixButton btnExcels;
 
 
 	/**
@@ -305,7 +303,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		lblHaiCham.setBounds(218, 309, 21, 39);
 		lblHaiCham.setFont(new Font("SansSerif", Font.PLAIN, 25));
 		pNhapThongTin.add(lblHaiCham);
-		
+
 		lblTinhTrangDDP = new JLabel("Trạng thái ĐĐP:");
 		lblTinhTrangDDP.setBounds(10, 364, 133, 19);
 		lblTinhTrangDDP.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -596,18 +594,18 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		 * Load ngày, giờ, phút hiện tại
 		 */
 		chooserNgayDen.setDate(dNgayHienTai);
-		
+
 		timeNow1 = new java.util.Date();
 		nowHours = timeNow1.getHours();
 		nowMinutes = timeNow1.getMinutes();
 		cboGio.setSelectedItem(dftxtGio.format(nowHours));
 		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
-		
+
 		/**
 		 * Các sự kiện của giao diện quản lý đơn đặt phòng
 		 */
 		loadDanhSachDDP(ddp);
-		
+
 		txtTim.addFocusListener(this);
 
 		loadDSPhongTrongVaDaDat(p);
@@ -655,7 +653,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		txtDiaChi.setText("");
 
 		chooserNgayDen.setDate(dNgayHienTai);
-		
+
 		timeNow2 = new java.util.Date();
 		nowHours = timeNow2.getHours();
 		nowMinutes = timeNow2.getMinutes();
@@ -666,7 +664,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 		removeDanhSachPhong(modelPhong);
 		loadDSPhongTrongVaDaDat(new Phong());
-		
+
 		removeDanhSachDDP(modelDDP);
 		loadDanhSachDDP(ddp);
 	}
@@ -706,7 +704,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	 */
 	private void loadDanhSachDDP(DonDatPhong ddp) {
 		removeDanhSachDDP(modelDDP);
-		ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDanhSachDDPKhongHuy();
+		ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDanhSachDDPChoXacNhanVaDaXacNhan();
 		for(DonDatPhong infoDDP : lstDDP) {
 			KhachHang kh = daoKhachHang.getKHTheoMa(infoDDP.getKhachHang().getMaKhangHang());
 			NhanVien nv = daoNhanVien.getMaVaSdtNVChoDDP(infoDDP.getNhanVien().getMaNhanVien());
@@ -833,7 +831,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 			if(input.matches(regexTenKH)) {
 				for(KhachHang khachHang : lstKH2) {
 					ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDDPTheoMaKH(khachHang.getMaKhangHang());
-					if(input.equalsIgnoreCase(khachHang.getTenKH())) {
+					if(daoKhachHang.getTenKH(input) != null) {
 						KhachHang kh = daoKhachHang.getKHTheoTen(input);
 						LoaiKH lkh = daoLoaiKH.getLoaiKHTheoMaLoai(kh.getLoaiKH().getMaLoaiKH());
 
@@ -844,19 +842,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						//chooserNgayDen.setDate(dNow);
 
 						loadDDPTheoTenKH(lstDDP);
-					}else {
+					}
+					if(lstKH2.size()==0) {
 						JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						txtTim.requestFocus();
 						txtTim.selectAll();
 					}
 				}
 			}
-			//			if(lstDDP.size()==0) {
-			//				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-			//				txtTim.requestFocus();
-			//				txtTim.selectAll();
-			//			}
-
 		}
 	}
 
@@ -924,11 +917,11 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
 							});
 						}
-						
+
 						if(!daoKhachHang.checkSdtKH(sdt)) {	//kq=false thì thêm KH mới
 							KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
 							daoKhachHang.themDanhSachKH(newKH);
-							
+
 							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, newKH, nv, p);
 							try {
 								daoDonDatPhong.themDDP(ddp);
@@ -941,10 +934,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 							xoaTrang();
 							removeDanhSachPhong(modelPhong);
 							loadDSPhongTrongVaDaDat(p);
-//							modelDDP.addRow(new Object[] {
-//									phatSinhMaDDP, maPhongChon, hoTen, sdt, 
-//									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
-//							});
 						}
 					}
 				}
@@ -981,7 +970,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				checkInfoKH();
 			if(!ngayDen.equals(dNgayHienTai) && ngayDen.before(dNgayHienTai)) 
 				JOptionPane.showMessageDialog(this, "Ngày đến phải lớn hơn hoặc bằng ngày hôm nay! \nNgày hôm nay là: " +dfNgay.format(dNgayHienTai), "Thông báo", JOptionPane.WARNING_MESSAGE);
-		
+
 			removeDanhSachDDP(modelDDP);
 			loadDanhSachDDP(ddp);
 			JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -1149,6 +1138,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		//làm mới
 		if(o.equals(btnLamMoiDDP)) {
 			xoaTrang();
+		}
+
+		//xóa chọn radbutton khi chọn combobox
+		if(o.equals(cboSapXep)) {
+			if(cboSapXep.getSelectedItem()=="Tăng dần")
+				bg.clearSelection();
+			if(cboSapXep.getSelectedItem()=="Giảm dần")
+				bg.clearSelection();
 		}
 
 		//sapxep tăng

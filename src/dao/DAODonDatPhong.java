@@ -79,11 +79,11 @@ public class DAODonDatPhong {
 		return lsDDP;
 	}
 	
-	public ArrayList<DonDatPhong> getDanhSachDDPKhongHuy() {
+	public ArrayList<DonDatPhong> getDanhSachDDPChoXacNhanVaDaXacNhan() {
 		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
-		String sql = "select * from DonDatPhong where TrangThaiDDP != N'Hủy'";
+		String sql = "select * from DonDatPhong where TrangThaiDDP != N'Hủy' and TrangThaiDDP != N'Đã trả phòng'";
 		try {
 			Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery(sql);

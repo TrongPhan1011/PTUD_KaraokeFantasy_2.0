@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -227,7 +228,10 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		dateChooserThongKeNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserThongKeNgayBatDau.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserThongKeNgayBatDau.getCalendarButton().setBackground(new Color(102, 0, 153));
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserThongKeNgayBatDau.setIcon((ImageIcon) iconCalendar);
 
+		dateChooserThongKeNgayBatDau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserThongKeNgayBatDau.setBounds(130, 15, 180, 38);
 		pThongKe.add(dateChooserThongKeNgayBatDau);
 
@@ -239,6 +243,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 
 
 		btnTK = new FixButton("Thống kê");
+
+		btnTK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		//		btnTK.setFont(new Font("SansSerif", Font.ITALIC, 25));
 		btnTK.setForeground(Color.WHITE);
 		btnTK.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -253,6 +259,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		pThongKe.add(btnTK);
 
 		btnLamMoi = new FixButton("Làm mới");
+
+		btnLamMoi.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		//		btnTK.setFont(new Font("SansSerif", Font.ITALIC, 25));
 		btnLamMoi.setForeground(Color.WHITE);
 		btnLamMoi.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -265,8 +273,12 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		
 		dateChooserThongKeNgayKetThuc = new JDateChooser();
 		dateChooserThongKeNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
+
+		dateChooserThongKeNgayKetThuc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserThongKeNgayKetThuc.getCalendarButton().setBackground(new Color(102, 0, 153));
 		dateChooserThongKeNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		Icon iconCalendar1 = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserThongKeNgayKetThuc.setIcon((ImageIcon) iconCalendar1);
 		dateChooserThongKeNgayKetThuc.setDateFormatString("dd/MM/yyyy");
 		dateChooserThongKeNgayKetThuc.setBounds(130, 60, 180, 38);
 		pThongKe.add(dateChooserThongKeNgayKetThuc);
@@ -293,6 +305,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		pTongDoanhThu.add(lblTDT);
 
 		btnTongDoanhThu = new FixButton("");
+
+		btnTongDoanhThu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTongDoanhThu.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTongDoanhThu.setForeground(Color.BLACK);
 		btnTongDoanhThu.setBackground(Color.WHITE);
@@ -328,6 +342,8 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		pTgPhongSD.add(lblTGSD);
 
 		btnTGHD = new FixButton("");
+
+		btnTGHD.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTGHD.setFont(new Font("SansSerif", Font.BOLD, 20));
 		btnTGHD.setForeground(Color.BLACK);
 		btnTGHD.setBackground(Color.WHITE);

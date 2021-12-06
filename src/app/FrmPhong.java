@@ -227,6 +227,8 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		// btnTim
 		btnTim = new FixButton("Tìm");
 		btnTim.setForeground(Color.WHITE);
+
+		btnTim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
@@ -240,6 +242,8 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		// nút thêm
 		btnThemP = new FixButton("Thêm");
 		btnThemP.setForeground(Color.WHITE);
+
+		btnThemP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThemP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemP.setBackground(new Color(57, 210, 247));
 		btnThemP.setBounds(10, 391, 313, 43);
@@ -249,6 +253,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		
 		//nút sửa
 		btnSuaP = new FixButton("Sửa");
+		btnSuaP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSuaP.setForeground(Color.WHITE);
 		btnSuaP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaP.setBackground(new Color(133, 217, 191));
@@ -260,6 +265,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		//nút xóa set loại phòng về ngưng hoạt động
 		btnXoaP = new FixButton("Xóa");
 		btnXoaP.setForeground(Color.WHITE);
+		btnXoaP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoaP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaP.setBackground(new Color(0xE91940));
 		btnXoaP.setBounds(10, 499, 313, 43);
@@ -270,6 +276,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		//nút làm mới
 		btnReset = new FixButton("Làm mới");
 		btnReset.setForeground(Color.WHITE);
+		btnReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnReset.setBackground(new Color(114, 23, 153));
 		btnReset.setBounds(10, 553, 313, 43);
@@ -298,6 +305,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 
 		//Group rdo giúp sắp xếp phòng
 		rdoTheoMaP = new JRadioButton("Theo mã phòng");
+		rdoTheoMaP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoMaP.setBounds(312, 15, 170, 27);
 		rdoTheoMaP.setSelected(true);
 		rdoTheoMaP.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -305,12 +313,14 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		pSapXep.add(rdoTheoMaP);
 
 		rdoTheoLoaiP = new JRadioButton("Theo loại phòng");
+		rdoTheoLoaiP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoLoaiP.setBounds(518, 15, 170, 27);
 		rdoTheoLoaiP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiP.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoLoaiP);
 
 		rdoTheoGiaP = new JRadioButton("Theo giá phòng ");
+		rdoTheoGiaP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoGiaP.setBounds(718, 15, 135, 27);
 		rdoTheoGiaP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoGiaP.setBackground(new Color(171, 192, 238));

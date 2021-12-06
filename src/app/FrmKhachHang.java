@@ -219,11 +219,15 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgaySinh = new JDateChooser();
 		dateChooserNgaySinh.setBounds(153, 278, 170, 28);
 		pNhapThongTin.add(dateChooserNgaySinh);
+
+		dateChooserNgaySinh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
 		dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserNgaySinh.setIcon((ImageIcon) iconCalendar);
 		dateChooserNgaySinh.setDate(dNow);
 		
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
@@ -240,11 +244,15 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgayDangKy = new JDateChooser();
 		dateChooserNgayDangKy.setBounds(153, 319, 170, 28);
 		pNhapThongTin.add(dateChooserNgayDangKy);
+
+		dateChooserNgayDangKy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
 		dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
+		Icon iconCalendar1 = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserNgayDangKy.setIcon((ImageIcon) iconCalendar1);
 		dateChooserNgayDangKy.setDate(dNow);
 		
 		//Loai khach hang
@@ -268,6 +276,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cbogioiTinh = new JComboBox<String>();
+
 		cbogioiTinh.setToolTipText("Chọn giới tính");
 		cbogioiTinh.setBounds(153, 241, 170, 28);
 		pNhapThongTin.add(cbogioiTinh);
@@ -328,6 +337,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// btnTim
 		btnTim = new FixButton("Tìm");
 		btnTim.setForeground(Color.WHITE);
+
+		btnTim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
@@ -344,6 +355,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//btnThem
 		btnThemKH = new FixButton("Thêm");
+
+		btnThemKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -356,6 +369,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		//btn sua thong tin
 		btnSuaKH = new FixButton("Sửa");
 		btnSuaKH.setForeground(Color.WHITE);
+		btnSuaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSuaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnSuaKH.setBackground(new Color(133, 217, 191));
@@ -366,6 +380,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//btn set loaiKH khong con la khach hang
 		btnXoaKH = new FixButton("Xóa");
+		btnXoaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoaKH.setForeground(Color.WHITE);
 		btnXoaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -377,6 +392,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//dua cac txt, rdo, cbo ve mac dinh
 		btnReset = new FixButton("Làm mới");
+		btnReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReset.setToolTipText("Làm mới tất cả thông tin");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -468,7 +484,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		//Group rdo giúp sắp xếp
 		
 		rdoTheoMaKH = new JRadioButton("Theo mã khách hàng");
-
+		
 		rdoTheoMaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoMaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaKH.setBackground(new Color(171, 192, 238));
@@ -483,7 +499,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pSapXep.add(rdoTheoTenKH);
 
 		rdoTheoLoaiKH = new JRadioButton("Theo loại khách hàng");
-		rdoTheoTenKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdoTheoLoaiKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiKH.setBackground(new Color(171, 192, 238));
 		rdoTheoLoaiKH.setBounds(626, 15, 171, 27);

@@ -1064,8 +1064,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	 */
 	private void xuatExcel() throws IOException {
 		XuatExcels xuat = new XuatExcels();
-		FileDialog fileDialog  = new FileDialog(this,"Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
-		fileDialog.setFile("Danh sách thông tin nhân viên.xlsx");
+		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin nhân viên");
 		fileDialog .setVisible(true);
 		String name = fileDialog.getFile();
 		String fileName = fileDialog.getDirectory() + name;

@@ -450,6 +450,7 @@ public class DAOKhachHang {
 		}
 		return true;
 	}
+
 	
 	/**
 	 * @param info: tìm theo tên KH và load lên txt và cbo trong frmDDP
@@ -481,4 +482,6 @@ public class DAOKhachHang {
 		return kh;
 	}
 	
+
+
 }

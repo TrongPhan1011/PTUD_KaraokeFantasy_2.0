@@ -96,7 +96,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JRadioButton rdoTheoMaKH;
 	private JRadioButton rdoTheoLoaiKH;
 	private JRadioButton rdoTheoTenKH;
-	private JCheckBox chkAll = new JCheckBox("Tất cả");
 	private Regex regex;
 	private KhachHang kh;
 	private ButtonGroup bg;
@@ -220,11 +219,15 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgaySinh = new JDateChooser();
 		dateChooserNgaySinh.setBounds(153, 278, 170, 28);
 		pNhapThongTin.add(dateChooserNgaySinh);
+
+		dateChooserNgaySinh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserNgaySinh.setDateFormatString("dd/MM/yyyy");
 		dateChooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		dateChooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserNgaySinh.setIcon((ImageIcon) iconCalendar);
 		dateChooserNgaySinh.setDate(dNow);
 		
 		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
@@ -241,11 +244,15 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		dateChooserNgayDangKy = new JDateChooser();
 		dateChooserNgayDangKy.setBounds(153, 319, 170, 28);
 		pNhapThongTin.add(dateChooserNgayDangKy);
+
+		dateChooserNgayDangKy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserNgayDangKy.setDateFormatString("dd/MM/yyyy");
 		dateChooserNgayDangKy.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		dateChooserNgayDangKy.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserNgayDangKy.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserNgayDangKy.getCalendarButton().setBackground(new Color(102, 0, 153));
+		Icon iconCalendar1 = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		dateChooserNgayDangKy.setIcon((ImageIcon) iconCalendar1);
 		dateChooserNgayDangKy.setDate(dNow);
 		
 		//Loai khach hang
@@ -269,6 +276,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		lblGioiTinh.setFont(new Font("SansSerif", Font.BOLD, 15));
 
 		cbogioiTinh = new JComboBox<String>();
+
 		cbogioiTinh.setToolTipText("Chọn giới tính");
 		cbogioiTinh.setBounds(153, 241, 170, 28);
 		pNhapThongTin.add(cbogioiTinh);
@@ -329,6 +337,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// btnTim
 		btnTim = new FixButton("Tìm");
 		btnTim.setForeground(Color.WHITE);
+
+		btnTim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
@@ -345,6 +355,8 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//btnThem
 		btnThemKH = new FixButton("Thêm");
+
+		btnThemKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThemKH.setForeground(Color.WHITE);
 		btnThemKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnThemKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -357,6 +369,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		//btn sua thong tin
 		btnSuaKH = new FixButton("Sửa");
 		btnSuaKH.setForeground(Color.WHITE);
+		btnSuaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSuaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnSuaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnSuaKH.setBackground(new Color(133, 217, 191));
@@ -367,6 +380,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//btn set loaiKH khong con la khach hang
 		btnXoaKH = new FixButton("Xóa");
+		btnXoaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoaKH.setForeground(Color.WHITE);
 		btnXoaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnXoaKH.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -378,6 +392,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		
 		//dua cac txt, rdo, cbo ve mac dinh
 		btnReset = new FixButton("Làm mới");
+		btnReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnReset.setToolTipText("Làm mới tất cả thông tin");
 		btnReset.setForeground(Color.WHITE);
 		btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -464,53 +479,30 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pSapXep.setLayout(null);
 		cboSort.setBounds(26, 14, 167, 28);
 		pSapXep.add(cboSort);
-		chkAll.setToolTipText("Hiển thị toàn bộ danh sách");
-		
-		//check box giúp hiện toàn bộ danh sách KH
-		chkAll.setFont(new Font("SansSerif", Font.BOLD, 14));
-		chkAll.setBackground(new Color(171, 192, 238));
-		chkAll.setBounds(205, 15, 109, 27);
-		pSapXep.add(chkAll);
-		chkAll.addItemListener(new ItemListener() {
-
-			//Bật và tắt danh sách
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getStateChange()==1) {
-					bg.clearSelection();
-					loadDanhSachKH();
-				}
-				else {
-					bg.clearSelection();
-					clearTable();
-				}
-			}
-		});
 
 
 		//Group rdo giúp sắp xếp
 		
 		rdoTheoMaKH = new JRadioButton("Theo mã khách hàng");
-
+		
 		rdoTheoMaKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoMaKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoMaKH.setBackground(new Color(171, 192, 238));
-		rdoTheoMaKH.setBounds(329, 15, 167, 27);
+		rdoTheoMaKH.setBounds(245, 15, 167, 27);
 		pSapXep.add(rdoTheoMaKH);
 
 		rdoTheoTenKH = new JRadioButton("Theo tên khách hàng");
 		rdoTheoTenKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoTenKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoTenKH.setBackground(new Color(171, 192, 238));
-		rdoTheoTenKH.setBounds(511, 15, 171, 27);
+		rdoTheoTenKH.setBounds(434, 15, 171, 27);
 		pSapXep.add(rdoTheoTenKH);
 
 		rdoTheoLoaiKH = new JRadioButton("Theo loại khách hàng");
-		rdoTheoTenKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		rdoTheoLoaiKH.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		rdoTheoLoaiKH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoLoaiKH.setBackground(new Color(171, 192, 238));
-		rdoTheoLoaiKH.setBounds(702, 15, 171, 27);
+		rdoTheoLoaiKH.setBounds(626, 15, 171, 27);
 		pSapXep.add(rdoTheoLoaiKH);
 
 		bg = new ButtonGroup();
@@ -530,7 +522,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		pMain.add(lblBackground);
 
 		// end giao dien
-
 		// Load tên loại KH
 		ArrayList<LoaiKH> lsLoaiKH = daoLoaiKH.getAllLoaiKH();
 		for (LoaiKH lkh : lsLoaiKH) {
@@ -538,7 +529,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 		// add actions
 		 dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
-		
+		loadDanhSachKH();
 		btnThemKH.addActionListener(this);
 		btnXoaKH.addActionListener(this);
 		btnSuaKH.addActionListener(this);
@@ -713,17 +704,16 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					String cccd = txtCccd.getText().toString();
 					String gioiTinh = cbogioiTinh.getSelectedItem().toString();
 					LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
-					int ngaySinh = dateChooserNgaySinh.getDate().getDate();
-					int thangSinh = dateChooserNgaySinh.getDate().getMonth();
-					int namSinh = dateChooserNgaySinh.getDate().getYear();
-					int ngayDangKy = dateChooserNgayDangKy.getDate().getDate();
-					int thangDangKy = dateChooserNgayDangKy.getDate().getMonth();
-					int namDangKy = dateChooserNgayDangKy.getDate().getYear();
+					java.util.Date date = dateChooserNgaySinh.getDate();
+					Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
+					java.util.Date date1 = dateChooserNgayDangKy.getDate();
+					Date ngayDangKy=new Date(date1.getYear(), date1.getMonth(), date1.getDate());
+					
 					int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
 					try {
 						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd,
-								new Date(namSinh, thangSinh, ngaySinh), gioiTinh, diemTichLuy,
-								new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
+								ngaySinh, gioiTinh, diemTichLuy,
+								ngayDangKy, loaiKH);
 						daoKhachHang.suaThongTinKhachHang(kh);
 						resetAll();
 						loadThongTin(kh);
@@ -809,17 +799,14 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 				if(input.matches(regexMaKH)) {
 					lstKH = daoKhachHang.getMaVaSDTKH(input);
 					loadDanhSachMaVaSoKH(lstKH);
-					chkAll.setSelected(false);
 				}
 				if(input.matches(regexSDT)) {
 					lstKH = daoKhachHang.getMaVaSDTKH(input);
 					loadDanhSachMaVaSoKH(lstKH);
-					chkAll.setSelected(false);
 				}
 				if(input.matches(regexTenKH)) {
 					lstKH = daoKhachHang.getTenKH(input);
 					loadDanhSachTenKH(lstKH);
-					chkAll.setSelected(false);
 				}
 				if(regex.regexTimKiemLoaiKH(txtTK)) {
 					lstKH = daoKhachHang.getKHTheoLoai(daoLoaiKH.getMaLoaiKHTheoTen(input));
@@ -827,11 +814,9 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 				}
 				if(lstKH.size() == 0) {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!");
-					loadDanhSachKH(lstKH);
 				}
 			}
 		}else {
-			chkAll.setSelected(false);
 			clearTable();
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin tìm kiếm!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 		}
@@ -939,7 +924,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	//Sap xep theo ten khach hang tang dan
 	public void sortTenKHTangDan(KhachHang kh) {
 		clearTable();
-		chkAll.setSelected(false);
 		ArrayList<KhachHang> lsKH = daoKhachHang.getDanhSachKH();		
 		Collections.sort(lsKH, new Comparator<KhachHang>() {
 			public int compare(KhachHang o1, KhachHang o2) {
@@ -1038,7 +1022,6 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		}
 		if(cboSort.getSelectedItem()=="Tăng dần") {
 			if(o.equals(rdoTheoMaKH)) {
-				chkAll.setSelected(false);
 				loadDanhSachKH();
 			}
 			if(o.equals(rdoTheoTenKH)) {
@@ -1047,27 +1030,22 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			}
 			if(o.equals(rdoTheoLoaiKH))
 			{
-				chkAll.setSelected(false);
 				sortLoaiKHTangDan(kh);
 			}
 		}
 		if(cboSort.getSelectedItem()=="Giảm dần"){
 			if(o.equals(rdoTheoMaKH)) {
-				chkAll.setSelected(false);
 				sortMaKHGiamDan(kh);
 			}
 			if(o.equals(rdoTheoTenKH)) {
-				chkAll.setSelected(false);
 				sortTenKHGiamDan(kh);
 			}
 			if(o.equals(rdoTheoLoaiKH)) {
-				chkAll.setSelected(false);
 				sortLoaiKHGiamDan(kh);
 			}
 		}
 		if(o.equals(cboSort)) {
 			bg.clearSelection();
-			chkAll.setSelected(false);
 			clearTable();
 		}
 

@@ -4,6 +4,7 @@ package app;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
@@ -12,10 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+//import java.awt.event.ItemEvent;
+//import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -29,7 +31,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -258,7 +259,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		chooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		chooserNgaySinh.getCalendarButton().setBackground(new Color(102, 0, 153));
 		chooserNgaySinh.getCalendarButton().setToolTipText("Chọn ngày sinh");
-		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 17, Color.white);
 		chooserNgaySinh.setIcon((ImageIcon) iconCalendar);
 		pNhapThongTin.add(chooserNgaySinh);
 
@@ -560,6 +561,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		btnSuaNV.addActionListener(this);
 		btnHuy.addActionListener(this);
 		btnLamMoiNV.addActionListener(this);
+		btnExcels.addActionListener(this);
 
 		cboSapXep.addActionListener(this);		
 
@@ -600,7 +602,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		cboCaLamViec.setSelectedItem("1");
 		lblSubGioTheoCa.setText("08:00 AM - 13:00 PM");
 		chooserNgaySinh.setDate(dNow);
-		lblNVDaNghiViec.setText("");
+		lblNVDaNghiViec.setText("");
+
 		rdoTheoMaNV.setSelected(false);
 		rdoTheoTenNV.setSelected(false);
 		rdoTheoChucVuNV.setSelected(false);
@@ -884,7 +887,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 								dfNgaySinh.format(nv.getNgaySinh()), nv.getDiaChi(), nv.getSdt(), nv.getCccd(), 
 								dfLuong.format(Math.round(nv.getLuong())), nv.getCaLamViec(), "Đang làm việc", tk.getMatKhau()	
 						});
-						JOptionPane.showMessageDialog(this, "Thông tin nhân viên đã được sửa!", "Thông báo", JOptionPane.OK_OPTION);
+						JOptionPane.showMessageDialog(this, "Thông tin nhân viên đã được sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}catch (SQLException e) {
 					e.printStackTrace();
@@ -1056,6 +1059,27 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	}
 
 	/**
+	 * Xuất file excel danh sách thông tin nhân viên
+	 * @throws IOException
+	 */
+	private void xuatExcel() throws IOException {
+		XuatExcels xuat = new XuatExcels();
+		FileDialog fileDialog  = new FileDialog(this,"Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin nhân viên.xlsx");
+		fileDialog .setVisible(true);
+		String name = fileDialog.getFile();
+		String fileName = fileDialog.getDirectory() + name;
+
+		if (name == null) 
+			return;
+		
+		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
+			fileName += ".xlsx";
+		
+		xuat.xuatTable(tblNV, "DANH SÁCH THÔNG TIN NHÂN VIÊN", fileName);
+	}
+	
+	/**
 	 *Code sự kiện
 	 */
 	@Override
@@ -1100,6 +1124,15 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 			bg.clearSelection();
 			removeDanhSachNV(modelNV);
 			loadDanhSachNV(nv);
+		}
+		
+		//xuất excel
+		if(o.equals(btnExcels)) {
+			try {
+				xuatExcel();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		//sapxep tăng

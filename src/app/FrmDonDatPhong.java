@@ -91,6 +91,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private ButtonGroup bg;
 	private SimpleDateFormat dfNgay, dfHienGio;
 	private DecimalFormat dfGiaPhong, dftxtGio, dftxtPhut;
+	private java.util.Date timeNow1, timeNow2;
+	private long nowHours, nowMinutes;
 	@SuppressWarnings("unused")
 	private Date dNow;
 	private LocalDate now;
@@ -156,7 +158,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		 * Khai báo các entity
 		 */
 		Phong p=new Phong();
-		DonDatPhong ddp=new DonDatPhong();
+		ddp=new DonDatPhong();
 
 		/**
 		 * Định dạng giá, ngày, giờ, phút trong bảng
@@ -247,7 +249,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		chooserNgayDen.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgayDen.setDateFormatString("dd/MM/yyyy");
 		chooserNgayDen.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 20, Color.white);
+		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 18, Color.white);
 		chooserNgayDen.setIcon((ImageIcon) iconCalendar);
 		pNhapThongTin.add(chooserNgayDen);
 
@@ -303,7 +305,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		lblHaiCham.setBounds(218, 309, 21, 39);
 		lblHaiCham.setFont(new Font("SansSerif", Font.PLAIN, 25));
 		pNhapThongTin.add(lblHaiCham);
-
+		
 		lblTinhTrangDDP = new JLabel("Trạng thái ĐĐP:");
 		lblTinhTrangDDP.setBounds(10, 364, 133, 19);
 		lblTinhTrangDDP.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -576,7 +578,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		tblDDP.getColumnModel().getColumn(5).setCellRenderer(rightRenderer2);
 		tblDDP.getColumnModel().getColumn(7).setCellRenderer(rightRenderer2);
 
-		//	tableDDP.setOpaque(false);
 		scrollPaneDDP.setViewportView(tblDDP);
 
 		/**
@@ -591,6 +592,17 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		pMain.add(lblBackGround);
 
 
+		/**
+		 * Load ngày, giờ, phút hiện tại
+		 */
+		chooserNgayDen.setDate(dNgayHienTai);
+		
+		timeNow1 = new java.util.Date();
+		nowHours = timeNow1.getHours();
+		nowMinutes = timeNow1.getMinutes();
+		cboGio.setSelectedItem(dftxtGio.format(nowHours));
+		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
+		
 		/**
 		 * Các sự kiện của giao diện quản lý đơn đặt phòng
 		 */
@@ -632,6 +644,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	/**
 	 * Xóa trắng textfield và textarea, đặt lại mặc định các combobox và các button
 	 */
+	@SuppressWarnings("deprecation")
 	private void xoaTrang() {
 		txtTim.setText("Tìm đơn đặt phòng theo họ tên và sđt khách hàng, tìm khách hàng theo sđt.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
@@ -642,14 +655,20 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		txtDiaChi.setText("");
 
 		chooserNgayDen.setDate(dNgayHienTai);
-		cboGio.setSelectedIndex(0);
-		cboPhut.setSelectedIndex(0);
+		
+		timeNow2 = new java.util.Date();
+		nowHours = timeNow2.getHours();
+		nowMinutes = timeNow2.getMinutes();
+		cboGio.setSelectedItem(dftxtGio.format(nowHours));
+		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
 
-		rdoTheoMaPhong.setSelected(false);
-		rdoTheoLoaiPhong.setSelected(false);
+		bg.clearSelection();
 
 		removeDanhSachPhong(modelPhong);
 		loadDSPhongTrongVaDaDat(new Phong());
+		
+		removeDanhSachDDP(modelDDP);
+		loadDanhSachDDP(ddp);
 	}
 
 
@@ -744,7 +763,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	@SuppressWarnings("deprecation")
 	private void choose1DDP() {
 		int selectedRow = tblDDP.getSelectedRow();
-		if(selectedRow>=0 && tblPhong.getSelectedRow()!=-1) {
+		if(selectedRow>=0 && tblPhong.getSelectedRow()==-1) {
 			String maDDP = tblDDP.getValueAt(selectedRow, 0).toString();
 			String sdt = tblDDP.getValueAt(selectedRow, 3).toString();
 
@@ -803,7 +822,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						//chooserNgayDen.setDate(dNow);
 
 						loadDDPTheoSdtKH(lstDDP);
-					}else {
+					}
+					if(lstKH1.size()==0) {
 						JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 						txtTim.requestFocus();
 						txtTim.selectAll();
@@ -885,7 +905,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 					if(tinhTrangPhong.equals("Đang hoạt động"))
 						JOptionPane.showMessageDialog(null, "Phòng này đang hoạt động, vui lòng chọn phòng khác!", "Thông báo", JOptionPane.OK_OPTION);
 					if(!tinhTrangPhong.equals("Đã đặt") && !tinhTrangPhong.equals("Đang hoạt động")) {
-						if(!daoKhachHang.checkSdtKH(sdt)) { //kq=false thì lấy thông tin KH cũ
+						if(daoKhachHang.checkSdtKH(sdt)) { //kq=true thì lấy thông tin KH cũ
 							//them vao data
 							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, kh, nv, p);
 							try {
@@ -903,14 +923,13 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 									phatSinhMaDDP, maPhongChon, kh.getTenKH(), sdt, 
 									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
 							});
-							JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!");
 						}
-						///
-						if(daoKhachHang.checkSdtKH(sdt)) {	//kq=true thì thêm KH mới
+						
+						if(!daoKhachHang.checkSdtKH(sdt)) {	//kq=false thì thêm KH mới
 							KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
 							daoKhachHang.themDanhSachKH(newKH);
-
-							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, kh, nv, p);
+							
+							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, newKH, nv, p);
 							try {
 								daoDonDatPhong.themDDP(ddp);
 								daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
@@ -922,11 +941,10 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 							xoaTrang();
 							removeDanhSachPhong(modelPhong);
 							loadDSPhongTrongVaDaDat(p);
-							modelDDP.addRow(new Object[] {
-									phatSinhMaDDP, maPhongChon, hoTen, sdt, 
-									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
-							});
-							JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!");
+//							modelDDP.addRow(new Object[] {
+//									phatSinhMaDDP, maPhongChon, hoTen, sdt, 
+//									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
+//							});
 						}
 					}
 				}
@@ -963,6 +981,10 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				checkInfoKH();
 			if(!ngayDen.equals(dNgayHienTai) && ngayDen.before(dNgayHienTai)) 
 				JOptionPane.showMessageDialog(this, "Ngày đến phải lớn hơn hoặc bằng ngày hôm nay! \nNgày hôm nay là: " +dfNgay.format(dNgayHienTai), "Thông báo", JOptionPane.WARNING_MESSAGE);
+		
+			removeDanhSachDDP(modelDDP);
+			loadDanhSachDDP(ddp);
+			JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		}else 
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	}
@@ -1127,9 +1149,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		//làm mới
 		if(o.equals(btnLamMoiDDP)) {
 			xoaTrang();
-			bg.clearSelection();
-			removeDanhSachDDP(modelDDP);
-			loadDanhSachDDP(ddp);
 		}
 
 		//sapxep tăng

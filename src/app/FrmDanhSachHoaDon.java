@@ -3,6 +3,7 @@ package app;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,6 +13,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -23,6 +27,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,6 +38,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -116,6 +122,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	private JLabel lblThoiGian;
 	private JLabel lblGiamGia;
 	private JLabel lblThanhToanLoaiKH;
+	private FixButton btnExcels;
 
 
 
@@ -205,7 +212,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		JPanel pSapXep = new JPanel();
 		pSapXep.setBackground(new Color(220,210,239));
 		pSapXep.setBorder(new TitledBorder(new LineBorder(new Color(114, 23, 153), 1, true), "Chọn thời gian", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pSapXep.setBounds(237, 53, 747, 56);
+		pSapXep.setBounds(158, 53, 899, 56);
 		pMain.add(pSapXep);
 		
 		pSapXep.setLayout(null);
@@ -223,7 +230,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		chooserNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgayBatDau.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		chooserNgayBatDau.getCalendarButton().setBackground(new Color(102, 0, 153));
-		chooserNgayBatDau.setBounds(93, 15, 191, 28);
+		chooserNgayBatDau.setBounds(93, 18, 191, 28);
 		
 		Icon iconCalendar = IconFontSwing.buildIcon(FontAwesome.CALENDAR, 18, new Color(255, 255 ,255));
 		
@@ -233,14 +240,24 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		
 		ButtonGroup bg = new ButtonGroup();
 		
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(731, 15, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pSapXep.add(btnExcels);
+		
 		JLabel lblNgayBatDau = new JLabel("Từ ngày:");
 		lblNgayBatDau.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblNgayBatDau.setBounds(23, 10, 70, 35);
+		lblNgayBatDau.setBounds(23, 13, 70, 35);
 		pSapXep.add(lblNgayBatDau);
 		
 		JLabel lblNgayKetThuc = new JLabel("Đến ngày:");
 		lblNgayKetThuc.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblNgayKetThuc.setBounds(319, 15, 108, 28);
+		lblNgayKetThuc.setBounds(319, 18, 108, 28);
 		pSapXep.add(lblNgayKetThuc);
 		
 		chooserNgayKetThuc = new JDateChooser();
@@ -249,7 +266,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		chooserNgayKetThuc.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		chooserNgayKetThuc.getCalendarButton().setBackground(new Color(102, 0, 153));
-		chooserNgayKetThuc.setBounds(398, 15, 191, 28);
+		chooserNgayKetThuc.setBounds(398, 18, 191, 28);
 		chooserNgayKetThuc.setDate(dNow);
 		
 		chooserNgayKetThuc.setIcon((ImageIcon) iconCalendar);
@@ -259,7 +276,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		
 		btnXem = new FixButton("Xem");
 		btnXem.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnXem.setBounds(623, 13, 98, 30);
+		btnXem.setBounds(624, 15, 98, 32);
 		btnXem.setBackground(new Color(114, 23 ,153));
 		btnXem.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnXem.setForeground(Color.WHITE);
@@ -482,6 +499,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		btnLamMoi.addActionListener(this);
 		btnXem.addActionListener(this);
 		btnTim.addActionListener(this);
+		btnExcels.addActionListener(this);
 		
 		tblHoaDon.addMouseListener(this);
 		txtTim.addMouseListener(this);
@@ -682,6 +700,38 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	
 	}
 	
+	public  void xuatExcels() throws IOException {
+		
+		
+		java.util.Date utilngayBD = chooserNgayBatDau.getDate();
+		java.util.Date utilngayKT = chooserNgayKetThuc.getDate();
+		
+		@SuppressWarnings("deprecation")
+		Date ngayBatDau = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
+		@SuppressWarnings("deprecation")
+		Date ngayKetThuc = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+		ArrayList<HoaDon> lsHD = daoHD.getHDTheoNgay(ngayBatDau, ngayKetThuc);
+		XuatExcels xuat = new XuatExcels();
+		FileDialog fileDialog  = new FileDialog(this,"Xuất hóa đơn ra Excels",FileDialog.SAVE);
+		fileDialog.setFile("*.xlsx");
+		fileDialog .setVisible(true);
+		String name = fileDialog.getFile();
+		String fileName = fileDialog.getDirectory() + name;
+
+		if (name == null) {
+			return;
+		}
+		
+		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
+			fileName += ".xlsx";
+		}
+		
+		xuat.xuatHoaDon(lsHD, fileName);
+		
+			
+			
+	}
+	
 	
 	
 
@@ -700,6 +750,13 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		}
 		if(o.equals(btnTim)) {
 			loadTimKiem();
+		}
+		if (o.equals(btnExcels)) {
+			try {
+				xuatExcels();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}

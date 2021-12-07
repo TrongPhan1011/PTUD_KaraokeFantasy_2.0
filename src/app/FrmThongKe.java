@@ -3,12 +3,17 @@ package app;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -26,6 +31,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,6 +43,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
@@ -67,6 +80,7 @@ import entity.CTHD;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.MatHang;
+import entity.NhanVien;
 import entity.Phong;
 
 import javax.swing.JScrollPane;
@@ -77,7 +91,7 @@ import jiconfont.swing.IconFontSwing;
 
 
 
-public class FrmThongKe extends JPanel implements ActionListener{
+public class FrmThongKe extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -104,6 +118,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 	private DAOHoaDon daoHoaDon;
 	private DAOPhong daoPhong;
 	private DAOKhachHang daoKH;
+	private JButton btnExcels;
 	private DecimalFormat df;
 	private SimpleDateFormat sf;
 	private JPanel pBieuDo;
@@ -270,6 +285,7 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		Icon iconLamMoi = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
 		btnLamMoi.setIcon(iconLamMoi);
 		pThongKe.add(btnLamMoi);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
 		
 		dateChooserThongKeNgayKetThuc = new JDateChooser();
 		dateChooserThongKeNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
@@ -365,6 +381,15 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		Image resizeBG = imgBackGround.getScaledInstance(lblBackGround.getWidth(), lblBackGround.getHeight(), 0);
 		lblBackGround.setIcon(new ImageIcon(resizeBG));
 		pMain.add(lblBackGround);
+		
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setBounds(1128, 10, 125, 23);
+		pMain.add(btnExcels);
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setIcon(iconExcel);
 		///Jchart
 		
 	
@@ -470,6 +495,173 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		else JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!");
 	}
 
+	public void xuatDoanhThu(ArrayList<HoaDon> lsHD,String path) throws IOException {
+		Workbook workbook = null;
+		 
+        if (path.endsWith(".xlsx")) {
+            workbook = new XSSFWorkbook();
+        } else if (path.endsWith(".xls")) {
+            workbook = new HSSFWorkbook();
+        }
+
+        Sheet sheet = workbook.createSheet("DSDT"); 
+ 
+        int rowIndex = 1;
+         
+        Row title = sheet.createRow(rowIndex);
+        
+        Cell cellTitle = title.createCell(0,CellType.STRING);
+        cellTitle.setCellValue("DANH SÁCH DOANH THU");
+        rowIndex++;
+        Row headerRow = sheet.createRow(rowIndex);
+        Cell cMaNgay = headerRow.createCell(0,CellType.STRING);
+        cMaNgay.setCellValue("Ngày");
+        
+        Cell cMaDT = headerRow.createCell(1,CellType.STRING);
+        cMaDT.setCellValue("Tổng tiền");
+
+        
+        rowIndex++; 
+   
+		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
+		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
+		@SuppressWarnings("deprecation")
+		Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
+		@SuppressWarnings("deprecation")
+		Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+		long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
+		
+		for(int i = 0;i<=noDay;i++) {
+			ArrayList<HoaDon> ls = daoHoaDon.getHDtheoNgay(ngayden);
+			double tongtien =0;
+			for(HoaDon hd : ls) {
+				if(hd != null) {
+					String phuThu = hd.getPhuThu();
+					Phong p = daoPhong.getPhongTheoMa(hd.getPhong().getMaPhong());
+					double giaPhong =p.getGiaPhong();
+					double giaPhuThu = 0;
+					if(phuThu.equalsIgnoreCase("Buổi tối")) {
+						giaPhuThu = 10000;
+					}
+					if(phuThu.equalsIgnoreCase("Ngày lễ")) {
+						giaPhuThu = 30000;
+					}
+					if(phuThu.equalsIgnoreCase("Cuối tuần")) {
+						giaPhuThu = 20000;
+					}
+					giaPhong = giaPhuThu + giaPhong;
+					double tongTienThue = tinhTienThue(giaPhong, hd);
+
+					int tongGioThue = (int) ((tongTienThue)/giaPhong);
+					int tongPhutThue = (int) (((tongTienThue*60)/giaPhong) % 60);
+
+					
+
+					double thanhTien = tongTienCTHD(tongTienThue, hd);
+
+
+					thanhTien = thanhTien - hd.getGiamGia();
+					tongtien+= thanhTien;
+				}	
+			}
+			Row row = sheet.createRow(rowIndex);
+	        Cell cRowNgayLap = row.createCell(0,CellType.STRING);
+	        cRowNgayLap.setCellValue(sf.format(ngayden));
+	        Cell cRowDT = row.createCell(1, CellType.STRING);
+	        cRowDT.setCellValue(df.format(tongtien));
+			rowIndex++;
+	        
+	        Date ngayMoi = new Date(ngayden.getYear(), ngayden.getMonth(), ngayden.getDate()+1);
+			ngayden= ngayMoi;
+
+		}	
+        
+        File f = new File(path);
+         try {
+        	
+        		 FileOutputStream out = new FileOutputStream(f);
+        		 workbook.write(out);
+				
+        		 out.close();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Lưu không thành công!\n Tên file đã tồn tại");
+		}
+	}
+	
+	public void xuatSoGio(ArrayList<HoaDon> lsHD,String path) throws IOException {
+		Workbook workbook = null;
+		 
+        if (path.endsWith(".xlsx")) {
+            workbook = new XSSFWorkbook();
+        } else if (path.endsWith(".xls")) {
+            workbook = new HSSFWorkbook();
+        }
+
+        Sheet sheet = workbook.createSheet("DSGio"); 
+ 
+        int rowIndex = 1;
+         
+        Row title = sheet.createRow(rowIndex);
+        
+        Cell cellTitle = title.createCell(0,CellType.STRING);
+        cellTitle.setCellValue("DANH SÁCH SỐ GIỜ HOẠT ĐỘNG");
+        rowIndex++;
+        Row headerRow = sheet.createRow(rowIndex);
+        Cell cMaPhong = headerRow.createCell(0,CellType.STRING);
+        cMaPhong.setCellValue("Tên Phòng");
+        
+        Cell cMaGio = headerRow.createCell(1,CellType.STRING);
+        cMaGio.setCellValue("Số giờ");
+
+        
+        rowIndex++; 
+   
+		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
+		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
+		@SuppressWarnings("deprecation")
+		Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
+		@SuppressWarnings("deprecation")
+		Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+		long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
+		for(int i = 0;i<=noDay;i++) {
+			ArrayList<HoaDon> ls = daoHoaDon.getHDtheoNgay(ngayden);
+			int count =0;
+			String tenP = "";
+			for(HoaDon hd :ls) {
+				if(hd!=null) {
+					 tenP = hd.getPhong().getMaPhong().toString();
+					//Phong p = daoPhong.getPhongTheoMa(hd.getPhong().getMaPhong());
+					int gioVao = hd.getGioVao().getHours(),
+							phutVao = hd.getGioVao().getMinutes();
+					int gioRa = hd.getGioRa().getHours(),
+							phutRa = hd.getGioRa().getMinutes();
+
+					int tongThoiGian = (gioRa*60 + phutRa) - (gioVao*60 + phutVao);
+					count += tongThoiGian;
+				}
+				}	
+			Row row = sheet.createRow(rowIndex);
+	        Cell cRowMaP = row.createCell(0,CellType.STRING);
+	        cRowMaP.setCellValue(tenP);
+	        Cell cRowSoGio = row.createCell(1, CellType.STRING);
+	        cRowSoGio.setCellValue(count);
+			rowIndex++;
+			
+			Date ngayMoi = new Date(ngayden.getYear(), ngayden.getMonth(), ngayden.getDate()+1);
+			ngayden= ngayMoi;
+		}	
+        
+        File f = new File(path);
+         try {
+        	
+        		 FileOutputStream out = new FileOutputStream(f);
+        		 workbook.write(out);
+				
+        		 out.close();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Lưu không thành công!\n Tên file đã tồn tại");
+		}
+	}
 
 
 	//load thống kê số giờ đã sử dụng cho các phòng
@@ -640,6 +832,65 @@ public class FrmThongKe extends JPanel implements ActionListener{
 
 		        return dataset;
 		}
+		 
+			public  void xuatExcels() throws IOException {
+				
+				
+				java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
+				java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
+				
+				@SuppressWarnings("deprecation")
+				Date ngayBatDau = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
+				@SuppressWarnings("deprecation")
+				Date ngayKetThuc = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+				ArrayList<HoaDon> lsHD = daoHoaDon.getHDTheoNgay(ngayBatDau, ngayKetThuc);
+				FileDialog fileDialog  = new FileDialog(this,"Xuất hóa đơn ra Excels",FileDialog.SAVE);
+				fileDialog.setFile("*.xlsx");
+				fileDialog .setVisible(true);
+				String name = fileDialog.getFile();
+				String fileName = fileDialog.getDirectory() + name;
+
+				if (name == null) {
+					return;
+				}
+				
+				if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
+					fileName += ".xlsx";
+				}
+				xuatDoanhThu(lsHD, fileName);
+				
+					
+					
+			}
+public  void xuatExcelsSoGio() throws IOException {
+				
+				
+				java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
+				java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
+				
+				@SuppressWarnings("deprecation")
+				Date ngayBatDau = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
+				@SuppressWarnings("deprecation")
+				Date ngayKetThuc = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+				ArrayList<HoaDon> lsHD = daoHoaDon.getHDTheoNgay(ngayBatDau, ngayKetThuc);
+				FileDialog fileDialog  = new FileDialog(this,"Xuất hóa đơn ra Excels",FileDialog.SAVE);
+				fileDialog.setFile("*.xlsx");
+				fileDialog .setVisible(true);
+				String name = fileDialog.getFile();
+				String fileName = fileDialog.getDirectory() + name;
+
+				if (name == null) {
+					return;
+				}
+				
+				if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
+					fileName += ".xlsx";
+				}
+				xuatSoGio(lsHD, fileName);
+					
+					
+			}
+		 
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -664,19 +915,36 @@ public class FrmThongKe extends JPanel implements ActionListener{
 		if(o.equals(btnLamMoi))
 			resetAll();
 		if(o.equals(btnTongDoanhThu))
+		{
 			try {
 				addChart();
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		if(o.equals(btnTGHD))
+			try {
+				xuatExcels();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		if(o.equals(btnTGHD)) {
 			try {
 				addChartGio();
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			try {
+				xuatExcelsSoGio();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}
+
 
 	}
 }

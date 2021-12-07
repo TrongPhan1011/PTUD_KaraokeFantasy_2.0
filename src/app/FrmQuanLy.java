@@ -323,7 +323,7 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 	public void setTrangThaiPhongTheoNgay() {
 		DAODonDatPhong daoDonDatPhong = new DAODonDatPhong();
 		DAOPhong daoPhong = new DAOPhong();
-		ArrayList<DonDatPhong> lsDDP = daoDonDatPhong.getDanhSachDDPKhongHuy();
+		ArrayList<DonDatPhong> lsDDP = daoDonDatPhong.getDanhSachDDPChoXacNhanVaDaXacNhan();
 		for(DonDatPhong ddp : lsDDP) {
 			if(ddp.getNgayDen().equals(dNow)) {
 				Time thoiGianDen =  ddp.getGioDen();

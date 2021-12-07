@@ -3,6 +3,7 @@ package app;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
@@ -15,6 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 import java.sql.SQLException;
@@ -32,6 +34,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -59,7 +62,7 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 import javax.swing.SwingConstants;
 
-public class FrmKhachHang extends JPanel implements ActionListener, MouseListener, ItemListener {
+public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener {
 
 	/**
 	 * 
@@ -78,6 +81,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 	private JButton btnTim;
 	private JButton btnThemKH;
 	private JButton btnSuaKH;
+	private JButton btnExcels;
 	private JButton btnXoaKH;
 	private JButton btnReset;
 	private JTextField txtCccd;
@@ -302,7 +306,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		// lblTim
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(487, 12, 90, 35);
+		lblTim.setBounds(353, 11, 90, 35);
 		pMain.add(lblTim);
 
 		// txtTK
@@ -312,7 +316,7 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTK.setForeground(Colors.LightGray);
 		txtTK.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtTK.setBounds(577, 11, 526, 33);
+		txtTK.setBounds(421, 11, 526, 33);
 		txtTK.addFocusListener(new FocusAdapter() { // place holder
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -342,11 +346,22 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1125, 11, 132, 33);
+		btnTim.setBounds(957, 12, 132, 33);
 
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
 		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
+		
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(1101, 12, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pMain.add(btnExcels);
+		
 		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
 		String cbbGioiTinh[] = { "Nam", "Nữ" };
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
@@ -535,12 +550,13 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 		btnSuaKH.addActionListener(this);
 		tableKH.addMouseListener(this);
 		btnReset.addActionListener(this);
+		btnExcels.addActionListener(this);
 		btnTim.addActionListener(this);
 		rdoTheoMaKH.addActionListener(this);
 		rdoTheoTenKH.addActionListener(this);
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
-		
+
 
 	}
 
@@ -1046,6 +1062,23 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 					ngayDK, khs.getDiemTichLuy() });
 		}
 	}
+	
+	private void xuatExcel() throws IOException {
+		XuatExcels xuat = new XuatExcels();
+		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin nhân viên");
+		fileDialog .setVisible(true);
+		String name = fileDialog.getFile();
+		String fileName = fileDialog.getDirectory() + name;
+
+		if (name == null) 
+			return;
+		
+		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
+			fileName += ".xlsx";
+		
+		xuat.xuatTable(tableKH, "DANH SÁCH THÔNG TIN NHÂN VIÊN", fileName);
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -1156,6 +1189,13 @@ public class FrmKhachHang extends JPanel implements ActionListener, MouseListene
 			bg.clearSelection();
 			clearTable();
 		}
+		if(o.equals(btnExcels))
+			try {
+				xuatExcel();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 	}
 }

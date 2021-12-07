@@ -37,6 +37,7 @@ import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+import java.awt.Cursor;
 
 public class FrmDangNhap extends JFrame implements ActionListener,MouseListener {
 
@@ -138,6 +139,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		getContentPane().add(lblNewLabel);
 		
 		btnDangNhap = new JButton("Đăng nhập");
+		btnDangNhap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDangNhap.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnDangNhap.setBackground(new Color(164, 44,167));
 		btnDangNhap.setBorder(new LineBorder(Color.WHITE, 2, true));
@@ -150,6 +152,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		getContentPane().add(btnDangNhap);
 		
 		btnThoat = new JButton("Thoát");
+		btnThoat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnThoat.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));

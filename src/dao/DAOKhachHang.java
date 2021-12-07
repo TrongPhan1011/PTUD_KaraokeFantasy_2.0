@@ -443,12 +443,12 @@ public class DAOKhachHang {
 				kh.setGioiTinh(rs.getString(8));
 				kh.setDiemTichLuy(rs.getInt(9));
 				kh.setNgayDangKy(rs.getDate(10));
-				return false;
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 
 	

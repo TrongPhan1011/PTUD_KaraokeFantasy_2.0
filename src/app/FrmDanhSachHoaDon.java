@@ -725,7 +725,6 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
 			fileName += ".xlsx";
 		}
-		
 		xuat.xuatHoaDon(lsHD, fileName);
 		
 			

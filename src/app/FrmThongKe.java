@@ -120,6 +120,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private DAOKhachHang daoKH;
 	private JButton btnExcels;
 	private DecimalFormat df;
+	private DecimalFormat dfs;
 	private SimpleDateFormat sf;
 	private JPanel pBieuDo;
 
@@ -235,8 +236,15 @@ public class FrmThongKe extends JFrame implements ActionListener{
 				}
 				return "";
 			}
-
+			
 		});
+		now = LocalDate.now();
+		ngay = now.getDayOfMonth();
+		thang = now.getMonthValue()-1;
+		nam = now.getYear()-1900;
+		
+		dNow = new Date(nam,thang,ngay);
+		
 		dateChooserThongKeNgayBatDau = new JDateChooser();
 		dateChooserThongKeNgayBatDau.setDateFormatString("dd/MM/yyyy");
 		//dateChooserThongKeTheoNgay.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
@@ -248,6 +256,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 
 		dateChooserThongKeNgayBatDau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dateChooserThongKeNgayBatDau.setBounds(130, 15, 180, 38);
+		dateChooserThongKeNgayBatDau.setDate(dNow);
 		pThongKe.add(dateChooserThongKeNgayBatDau);
 
 
@@ -255,8 +264,9 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		//		ftfNgaySinh.setEditable(false);
 		//		pMain.add(ftfNgaySinh);
 		//		
+		
 
-
+		
 		btnTK = new FixButton("Thống kê");
 
 		btnTK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -285,7 +295,17 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		Icon iconLamMoi = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
 		btnLamMoi.setIcon(iconLamMoi);
 		pThongKe.add(btnLamMoi);
+		
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setBounds(1128, 10, 125, 23);
+		pMain.add(btnExcels);
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
 		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		
 		
 		dateChooserThongKeNgayKetThuc = new JDateChooser();
 		dateChooserThongKeNgayKetThuc.getCalendarButton().setPreferredSize(new Dimension(30, 24));
@@ -297,9 +317,10 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		dateChooserThongKeNgayKetThuc.setIcon((ImageIcon) iconCalendar1);
 		dateChooserThongKeNgayKetThuc.setDateFormatString("dd/MM/yyyy");
 		dateChooserThongKeNgayKetThuc.setBounds(130, 60, 180, 38);
+		dateChooserThongKeNgayKetThuc.setDate(dNow);
 		pThongKe.add(dateChooserThongKeNgayKetThuc);
 		
-		JLabel lblNgyKtThc = new JLabel("Ngày kết thúc:");
+		JLabel lblNgyKtThc = new JLabel("Đến ngày:");
 		lblNgyKtThc.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		lblNgyKtThc.setBounds(25, 62, 100, 36);
 		pThongKe.add(lblNgyKtThc);
@@ -382,14 +403,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblBackGround.setIcon(new ImageIcon(resizeBG));
 		pMain.add(lblBackGround);
 		
-		btnExcels = new FixButton("Xuất Excels");
-		btnExcels.setBounds(1128, 10, 125, 23);
-		pMain.add(btnExcels);
-		btnExcels.setForeground(Color.WHITE);
-		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
-		btnExcels.setBackground(new Color(16, 124, 65));
-		btnExcels.setIcon(iconExcel);
+
 		///Jchart
 		
 	
@@ -397,12 +411,14 @@ public class FrmThongKe extends JFrame implements ActionListener{
 
 
 		///ActionListener
+		btnExcels.addActionListener(this);
 		btnTK.addActionListener(this);
 		btnLamMoi.addActionListener(this);
 		btnTongDoanhThu.addActionListener(this);
 		btnTGHD.addActionListener(this);
 
 		df = new DecimalFormat("###,### VNĐ");
+		dfs = new DecimalFormat("### h");
 		sf = new SimpleDateFormat("dd/MM/yyy");
 	}
 	//số tiền thuê
@@ -644,7 +660,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	        Cell cRowMaP = row.createCell(0,CellType.STRING);
 	        cRowMaP.setCellValue(tenP);
 	        Cell cRowSoGio = row.createCell(1, CellType.STRING);
-	        cRowSoGio.setCellValue(count);
+	        cRowSoGio.setCellValue(dfs.format(count));
 			rowIndex++;
 			
 			Date ngayMoi = new Date(ngayden.getYear(), ngayden.getMonth(), ngayden.getDate()+1);
@@ -685,7 +701,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 				int tongThoiGian = (gioRa*60 + phutRa) - (gioVao*60 + phutVao);
 				thoiGianThongKe += tongThoiGian;
 			}
-			btnTGHD.setText(thoiGianThongKe+"");
+			btnTGHD.setText(dfs.format(thoiGianThongKe)+"");
 		}
 	}
 	public void resetAll() {
@@ -693,6 +709,9 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		dateChooserThongKeNgayKetThuc.setDate(dNow);
 		btnTongDoanhThu.setText("");
 		btnTGHD.setText("");
+		pBieuDo.removeAll();
+		pBieuDo.revalidate();
+		pBieuDo.repaint();
 	}
 
 	public void addChart() throws RemoteException {
@@ -784,8 +803,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
 				pBieuDo.revalidate();
 				pBieuDo.repaint();
 				ChartPanel chartPanel = new ChartPanel(createChartGio());
-				chartPanel.setLocation(10, 20);
-				chartPanel.setSize(1200, 250);
+				chartPanel.setLocation(10, 11);
+				chartPanel.setSize(1223, 352);
 		        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
 		        pBieuDo.add(chartPanel);
 		 	}else JOptionPane.showMessageDialog(this, "Vui lòng thống kê trước khi xem biểu đồ");
@@ -873,7 +892,7 @@ public  void xuatExcelsSoGio() throws IOException {
 				@SuppressWarnings("deprecation")
 				Date ngayKetThuc = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 				ArrayList<HoaDon> lsHD = daoHoaDon.getHDTheoNgay(ngayBatDau, ngayKetThuc);
-				FileDialog fileDialog  = new FileDialog(this,"Xuất hóa đơn ra Excels",FileDialog.SAVE);
+				FileDialog fileDialog  = new FileDialog(this,"Xuất số giờ ra Excels",FileDialog.SAVE);
 				fileDialog.setFile("*.xlsx");
 				fileDialog .setVisible(true);
 				String name = fileDialog.getFile();
@@ -895,7 +914,20 @@ public  void xuatExcelsSoGio() throws IOException {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
-
+		if(o.equals(btnExcels)) {
+				try {
+					xuatExcels();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					xuatExcelsSoGio();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}
 		if(o.equals(btnTK))
 		{
 			java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
@@ -905,10 +937,11 @@ public  void xuatExcelsSoGio() throws IOException {
 			@SuppressWarnings("deprecation")
 			Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 			long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
-			if(noDay < 32 ) {
-				loadThongKeDoanhThu();
-				loadThongKeSoGio();
-			}
+				if(noDay < 32) {
+					loadThongKeDoanhThu();
+					loadThongKeSoGio();
+				}
+				else
 			JOptionPane.showMessageDialog(null, "Chỉ được chọn trong khoảng thời gian 1 tháng");
 
 		}
@@ -922,12 +955,7 @@ public  void xuatExcelsSoGio() throws IOException {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			try {
-				xuatExcels();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
 		}
 		if(o.equals(btnTGHD)) {
 			try {
@@ -936,12 +964,7 @@ public  void xuatExcelsSoGio() throws IOException {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			try {
-				xuatExcelsSoGio();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
 
 		}
 

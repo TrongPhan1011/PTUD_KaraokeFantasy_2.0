@@ -2,6 +2,7 @@ package app;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
@@ -14,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -60,7 +63,7 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
 
-public class FrmPhong extends JPanel implements ActionListener, MouseListener, ItemListener  {
+public class FrmPhong extends JFrame implements ActionListener, MouseListener, ItemListener  {
 
 	/**
 	 * 
@@ -78,6 +81,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 	private JButton btnXoaP;
 	private JButton btnSuaP;
 	private JButton btnReset;
+	private JButton btnExcels;
 	private JComboBox<String> cboLoaiP;
 	private JComboBox<String> cboTinhTrangP;
 	private JComboBox<String> cboSapXep;
@@ -96,7 +100,6 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 	private JPanel pNhapThongTin;
 	private JLabel lblNhapThongTin;
 	private ButtonGroup bgRdo;
-
 
 	public Panel getFrmPhong() {
 		return this.pMain;
@@ -193,7 +196,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		// lblTim
 		JLabel lblTim = new JLabel("Tìm kiếm:");
 		lblTim.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblTim.setBounds(517, 11, 90, 35);
+		lblTim.setBounds(350, 11, 90, 35);
 		pMain.add(lblTim);
 
 		// txtTK
@@ -202,7 +205,7 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTK.setForeground(Colors.LightGray);
 		txtTK.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
-		txtTK.setBounds(594, 12, 526, 33);
+		txtTK.setBounds(425, 11, 529, 33);
 		txtTK.addFocusListener(new FocusAdapter() { // place holder
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -232,12 +235,22 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		btnTim.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnTim.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTim.setBackground(new Color(114, 23, 153));
-		btnTim.setBounds(1130, 11, 127, 33);
+		btnTim.setBounds(964, 12, 127, 33);
 		
 		Icon iconTim = IconFontSwing.buildIcon(FontAwesome.SEARCH, 20, Color.white);
 		btnTim.setIcon(iconTim);
 		pMain.add(btnTim);
 
+		btnExcels = new FixButton("Xuất Excels");
+		btnExcels.setForeground(Color.WHITE);
+		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
+		btnExcels.setBackground(new Color(16, 124, 65));
+		btnExcels.setBounds(1101, 12, 159, 33);
+		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
+		btnExcels.setIcon(iconExcel);
+		pMain.add(btnExcels);
+		
 
 		// nút thêm
 		btnThemP = new FixButton("Thêm");
@@ -396,16 +409,18 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 			cboLoaiP.addItem(lp.getTenLoaiPhong());
 		}
 
+		loadDanhSachPhong();
 		//add actions
 		tblPhong.addMouseListener(this);
 		btnReset.addActionListener(this);
 		btnThemP.addActionListener(this);
 		btnSuaP.addActionListener(this);
 		btnXoaP.addActionListener(this);
+		btnTim.addActionListener(this);
+		btnExcels.addActionListener(this);
 		rdoTheoGiaP.addActionListener(this);
 		rdoTheoLoaiP.addActionListener(this);
 		rdoTheoMaP.addActionListener(this);
-		btnTim.addActionListener(this);
 		cboSapXep.addActionListener(this);
 	}
 	// end giao dien
@@ -692,6 +707,22 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 			modelPhong.addRow(new Object[] {lsp.getMaPhong(), loaiP.getTenLoaiPhong(), dfGiaP.format(lsp.getGiaPhong()), lsp.getTinhTrangPhong() });
 		}
 	}
+	private void xuatExcel() throws IOException {
+		XuatExcels xuat = new XuatExcels();
+		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin phòngng ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin phòng");
+		fileDialog .setVisible(true);
+		String name = fileDialog.getFile();
+		String fileName = fileDialog.getDirectory() + name;
+
+		if (name == null) 
+			return;
+		
+		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
+			fileName += ".xlsx";
+		
+		xuat.xuatTable(tblPhong, "DANH SÁCH THÔNG TIN PHÒNG", fileName);
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
@@ -777,6 +808,14 @@ public class FrmPhong extends JPanel implements ActionListener, MouseListener, I
 		if(o.equals(cboSapXep)) {
 			bgRdo.clearSelection();
 			clearTable();
+		}
+		if(o.equals(btnExcels)) {
+			try {
+				xuatExcel();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }

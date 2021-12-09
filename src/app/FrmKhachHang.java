@@ -640,23 +640,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		}
 	}
 
-	private void loadDanhSachKH(ArrayList<KhachHang> lstKH) {
-		clearTable();
-		for (KhachHang lskh : lstKH) {
-			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
-			String ngaySinh = "";
-			String ngayDK = "";
-			if(lskh.getNgaySinh() != null)
-				ngaySinh = dfNgaySinh.format(lskh.getNgaySinh());
-			if(lskh.getNgayDangKy() != null)
-				ngayDK = dfNgaySinh.format(lskh.getNgayDangKy());
-			
-	
-			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
-					lskh.getGioiTinh(), ngaySinh, lskh.getDiaChi(), lskh.getSdt(), lskh.getCccd(),
-					ngayDK, lskh.getDiemTichLuy() });
-		}
-	}
 	private void loadDanhSachTenKHTheoLoai(ArrayList<KhachHang> kh2) {
 		clearTable();
 		String maLoai = daoLoaiKH.getMaLoaiKHTheoTen(txtTK.getText());
@@ -1065,8 +1048,8 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	
 	private void xuatExcel() throws IOException {
 		XuatExcels xuat = new XuatExcels();
-		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
-		fileDialog.setFile("Danh sách thông tin nhân viên");
+		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin khách hàng ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin khách hàng");
 		fileDialog .setVisible(true);
 		String name = fileDialog.getFile();
 		String fileName = fileDialog.getDirectory() + name;
@@ -1077,7 +1060,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
 			fileName += ".xlsx";
 		
-		xuat.xuatTable(tableKH, "DANH SÁCH THÔNG TIN NHÂN VIÊN", fileName);
+		xuat.xuatTable(tableKH, "DANH SÁCH THÔNG TIN KHÁCH HÀNG", fileName);
 	}
 
 	@Override

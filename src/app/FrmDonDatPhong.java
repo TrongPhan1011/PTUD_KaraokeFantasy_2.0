@@ -935,6 +935,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 							removeDanhSachPhong(modelPhong);
 							loadDSPhongTrongVaDaDat(p);
 						}
+						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}else
@@ -973,7 +974,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 			removeDanhSachDDP(modelDDP);
 			loadDanhSachDDP(ddp);
-			JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		}else 
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	}

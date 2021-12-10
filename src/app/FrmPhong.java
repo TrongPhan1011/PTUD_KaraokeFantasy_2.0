@@ -13,6 +13,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -63,7 +65,7 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
 
-public class FrmPhong extends JFrame implements ActionListener, MouseListener, ItemListener  {
+public class FrmPhong extends JFrame implements ActionListener, MouseListener, ItemListener,KeyListener  {
 
 	/**
 	 * 
@@ -422,6 +424,11 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		rdoTheoLoaiP.addActionListener(this);
 		rdoTheoMaP.addActionListener(this);
 		cboSapXep.addActionListener(this);
+		
+		txtGiaPhong.addKeyListener(this);
+		txtTK.addKeyListener(this);
+		
+		
 	}
 	// end giao dien
 
@@ -818,5 +825,27 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 				e1.printStackTrace();
 			}
 		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtGiaPhong)&& key == KeyEvent.VK_ENTER ) {
+			btnThemP.doClick();
+		}
+		else if(o.equals(txtTK)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

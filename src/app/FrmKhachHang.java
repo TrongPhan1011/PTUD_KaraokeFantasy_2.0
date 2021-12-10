@@ -14,11 +14,12 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.Format;
@@ -26,13 +27,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -60,9 +62,8 @@ import entity.KhachHang;
 import entity.LoaiKH;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import javax.swing.SwingConstants;
 
-public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener {
+public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener,KeyListener {
 
 	/**
 	 * 
@@ -113,6 +114,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		return this.pMain;
 	}
 
+	@SuppressWarnings("deprecation")
 	public FrmKhachHang(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
 
 		this.sHeaderMaNV = sHeaderMaNV;
@@ -362,7 +364,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		btnExcels.setIcon(iconExcel);
 		pMain.add(btnExcels);
 		
-		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
+		
 		String cbbGioiTinh[] = { "Nam", "Nữ" };
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
 			cbogioiTinh.addItem(cbbGioiTinh[i]);
@@ -449,7 +451,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		tableKH.getColumnModel().getColumn(7).setPreferredWidth(100);
 		tableKH.getColumnModel().getColumn(8).setPreferredWidth(100);
 		tableKH.getColumnModel().getColumn(9).setPreferredWidth(100);
-		tableKH.setAutoResizeMode(tableKH.AUTO_RESIZE_OFF);
+		tableKH.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//Chữ canh trái, số canh phải
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -556,6 +558,14 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		rdoTheoTenKH.addActionListener(this);
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
+		
+		txtTK.addKeyListener(this);
+		txtHoTen.addKeyListener(this);
+		txtSDT.addKeyListener(this);
+		txtDiaChi.addKeyListener(this);
+		txtCccd.addKeyListener(this);
+		
+
 
 
 	}
@@ -678,6 +688,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	 * Thêm khách hàng vào danh sách 
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	public void themKHVaoDanhSach() {
 		// int optThem = JOptionPane.showConfirmDialog(this, "Bạn có chắn chắn muốn thêm
 		// khách hàng không?", "Thông báo", JOptionPane.YES_NO_OPTION );
@@ -702,8 +713,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			int tuoi = nam - namSinh;
 			
 			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
-			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-					&& regex.regexDiaChi(txtDiaChi) ) {
+			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)&& regex.regexDiaChi(txtDiaChi) ) {
 				if(tuoi >= 13) {
 					if(daoKhachHang.checkSdtKH(sdt)== false) {
 						@SuppressWarnings("deprecation")
@@ -719,11 +729,8 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 				}else
 				{
 					JOptionPane.showMessageDialog(this,"Khách hàng chưa đủ 13 tuổi","Thông báo" , JOptionPane.ERROR_MESSAGE);
-				}
-
-
 			}
-			
+			}
 
 
 		} catch (Exception e) {
@@ -738,6 +745,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	 * Sửa thông tin khách hàng đã được chọn trong danh sách hoặc tìm kiểm
 	 */
 
+	@SuppressWarnings("deprecation")
 	public void suaThongTin() {
 		int row = tableKH.getSelectedRow();
 		if (row >= 0) {
@@ -1086,7 +1094,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	// Hiển thị thông tin khi chọn vào bảng
 	public void mouseClicked(MouseEvent e) {
@@ -1197,5 +1204,38 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtHoTen)&& key == KeyEvent.VK_ENTER ) {
+			txtSDT.requestFocus();
+		}
+		else if(o.equals(txtSDT)&& key == KeyEvent.VK_ENTER ) {
+			txtDiaChi.requestFocus();
+		}
+		else if(o.equals(txtDiaChi)&& key == KeyEvent.VK_ENTER ) {
+			txtCccd.requestFocus();
+		}
+		else if(o.equals(txtCccd)&& key == KeyEvent.VK_ENTER ) {
+			btnThemKH.requestFocus();
+		}
+		else if(o.equals(txtTK)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

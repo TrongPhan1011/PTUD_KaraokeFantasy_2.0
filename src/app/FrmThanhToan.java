@@ -11,12 +11,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -65,7 +68,7 @@ import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener {
+public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener,KeyListener {
 
 	/**
 	 * 
@@ -125,6 +128,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	private double giamGia = 0;
 	private JPanel pLine2;
 	private JLabel lblThongTinHD;
+	private double tongTienThue;
 	
 	public Panel getFrmQLBH() {
 		return this.pMain;
@@ -574,6 +578,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnLamMoiHD.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnLamMoiHD.setBackground(new Color(114, 23, 153));
 		btnLamMoiHD.setIcon(iconLamMoiTT);
+	
 		
 		
 		
@@ -654,6 +659,15 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		rdbtnGiamSL.addActionListener(this);
 		btnTim.addActionListener(this);
 		btnInHoaDon.addActionListener(this);
+		
+		
+		txtSoLuong.addKeyListener(this);
+		btnThemMH.addKeyListener(this);
+		btnXoaMH.addKeyListener(this);
+		btnLamMoiHD.addKeyListener(this);
+		btnLamMoiMH.addKeyListener(this);
+		txtTim.addKeyListener(this);
+		
 		
 		
 		
@@ -821,7 +835,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 
 			giaPhong = giaPhuThu + giaPhong;
 
-			double tongTienThue = tinhTienThue(giaPhong);
+			tongTienThue = tinhTienThue(giaPhong);
 			
 			//Nếu tổng tiền thuê > 0 thì tính thành tiền theo toognr tiền thuê
 			if(tongTienThue > 0) {
@@ -1153,6 +1167,45 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 	}
 	
+	public void xuatHoaDon() {
+	
+		if(lblMaPhong.getText().toString() !="") {
+			if(!lblThanhTien.getText().equalsIgnoreCase("")) {
+				String maHD = daoMa.getMaHD();
+				Phong p = daoPhong.getPhongTheoMa(lblMaPhong.getText());
+				KhachHang kh = daoKhachHang.getKHTheoMa(lblMaKH.getText());
+				NhanVien nv = daoNhanVien.getNVTheoMa(sHeaderMaNV);
+				Date ngayLap = dNgayHienTai;
+
+				int gioVao = Integer.parseInt(lblGioVao.getText()),
+					phutVao = Integer.parseInt(lblPhutVao.getText());
+				int gioRa = Integer.parseInt(cbbGioRa.getSelectedItem().toString()),
+						phutRa = Integer.parseInt(cbbPhutRa.getSelectedItem().toString());
+				String phuThu = cbbPhuThu.getSelectedItem().toString();
+				String trangThaiHD = "Đã thanh toán";
+				double giamGiaThanhToan = this.giamGia;
+					
+				
+				@SuppressWarnings("deprecation")
+				HoaDon hd = new HoaDon(maHD, ngayLap, new Time(gioVao, phutVao, 0), new Time(gioRa, phutRa, 0), phuThu, trangThaiHD,giamGiaThanhToan, nv, kh, p);
+				long thanhTien = 0;
+				try {
+					thanhTien =  (long) df.parse(lblThanhTien.getText().trim());
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				FrmHoaDon frmHD = new FrmHoaDon(hd,tbMatHang,lblGiamGia.getText(),dfTable.format(tongTienThue),dfTable.format(thanhTien));
+				frmHD.setVisible(true);
+			}
+			else JOptionPane.showMessageDialog(this, "Vui lòng chọn thời gian hợp lệ trước khi in hóa đơn!");
+		}
+		else JOptionPane.showMessageDialog(this, "Vui lòng chọn phòng trước khi in hóa đơn!");
+		
+		
+		
+	}
+	
 	
 	
 	@Override
@@ -1197,7 +1250,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		}
 		if(o.equals(btnInHoaDon)) {
-			JOptionPane.showMessageDialog(this, "Chức năng đang hoàn thiện.\nVui lòng sử dụng chức năng sau khi được cập nhật.");
+			xuatHoaDon();
 		}
 		
 		
@@ -1274,6 +1327,32 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtSoLuong)&& key == KeyEvent.VK_ENTER ) {
+			btnThemMH.doClick();
+		}
+		else if(o.equals(txtTim)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

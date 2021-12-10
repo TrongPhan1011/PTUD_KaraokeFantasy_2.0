@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
@@ -39,7 +41,7 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 import java.awt.Cursor;
 
-public class FrmDangNhap extends JFrame implements ActionListener,MouseListener {
+public class FrmDangNhap extends JFrame implements ActionListener,MouseListener, KeyListener {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -186,6 +188,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		lblQuenMK.setBounds(322, 288, 103, 14);
 		getContentPane().add(lblQuenMK);
 		
+		
 		JLabel lblBackground = new JLabel("");
 		lblBackground.setBounds(0, 0, 488, 465);
 		getContentPane().add(lblBackground);
@@ -205,6 +208,9 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 		
 		lblQuenMK.addMouseListener(this);
 		
+		btnDangNhap.addKeyListener(this);
+		txtMatKhau.addKeyListener(this);
+		txtTaiKhoan.addKeyListener(this);
 	}
 
 	
@@ -286,5 +292,42 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtTaiKhoan)&& key == KeyEvent.VK_ENTER ) {
+			txtMatKhau.requestFocus();
+		}
+		else if(o.equals(txtMatKhau)&& key == KeyEvent.VK_ENTER ) {
+			btnDangNhap.doClick();
+		}
+		
+		else if(key == KeyEvent.VK_Q) {
+			loadFrmQuenMK();
+		}
+		
+		else if(key == KeyEvent.VK_ENTER) {
+			btnDangNhap.doClick();
+		}
+		else if(key == KeyEvent.VK_ESCAPE) {
+			System.exit(0);
+		}
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

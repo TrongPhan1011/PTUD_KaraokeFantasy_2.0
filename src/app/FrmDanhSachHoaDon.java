@@ -2,19 +2,18 @@ package app;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -27,7 +26,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,15 +33,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.toedter.calendar.JDateChooser;
 
 import connection.ConnectDB;
@@ -58,9 +53,7 @@ import dao.DAOMatHang;
 import dao.DAONhanVien;
 import dao.DAOPhong;
 import dao.Regex;
-import entity.CTDDP;
 import entity.CTHD;
-import entity.DonDatPhong;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.LoaiMatHang;
@@ -70,7 +63,7 @@ import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseListener {
+public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseListener,KeyListener {
 
 	
 	/**
@@ -504,6 +497,10 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		tblHoaDon.addMouseListener(this);
 		txtTim.addMouseListener(this);
 		
+		txtTim.addKeyListener(this);
+		chooserNgayBatDau.addKeyListener(this);
+		chooserNgayKetThuc.addKeyListener(this);
+		
 		
 		
 		sf = new SimpleDateFormat("dd/MM/yyyy");
@@ -725,6 +722,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
 			fileName += ".xlsx";
 		}
+		
 		xuat.xuatHoaDon(lsHD, fileName);
 		
 			
@@ -850,6 +848,38 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtTim)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+		else if(key == KeyEvent.VK_ESCAPE) {
+			btnQuayLai.doClick();
+		}
+		
+		
+		
+		
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

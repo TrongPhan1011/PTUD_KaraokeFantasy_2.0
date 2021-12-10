@@ -254,6 +254,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		chooserNgaySinh.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chooserNgaySinh.setBounds(110, 213, 191, 25);
 		chooserNgaySinh.setDateFormatString("dd/MM/yyyy");
+		chooserNgaySinh.setDate(dNgayHienTai);
 		chooserNgaySinh.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
 		chooserNgaySinh.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		chooserNgaySinh.getCalendarButton().setPreferredSize(new Dimension(30, 24));
@@ -737,24 +738,27 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	 */
 	@SuppressWarnings("deprecation")
 	private void addNV() {
-		try {
-			String phatSinhMaNV = daoPhatSinhMa.getMaNV();
-			String hoTen = txtHoTen.getText().trim();
-			String sdt = txtSDT.getText().trim();
-			String diaChi = txtDiaChi.getText().trim();
-			String chucVu = cboChucVu.getSelectedItem().toString();
-			String cccd = txtCccd.getText().trim();
-			String gioiTinh = cboGioiTinh.getSelectedItem().toString();
+		String phatSinhMaNV = daoPhatSinhMa.getMaNV();
+		String hoTen = txtHoTen.getText().trim();
+		String sdt = txtSDT.getText().trim();
+		String diaChi = txtDiaChi.getText().trim();
+		String chucVu = cboChucVu.getSelectedItem().toString();
+		String cccd = txtCccd.getText().trim();
+		String gioiTinh = cboGioiTinh.getSelectedItem().toString();
 
-			java.util.Date date = chooserNgaySinh.getDate();
-			Date ngaySinh = new Date(date.getYear(), date.getMonth(), date.getDate());
-			int age = nam - ngaySinh.getYear();
+		java.util.Date date = chooserNgaySinh.getDate();
+		Date ngaySinh = new Date(date.getYear(), date.getMonth(), date.getDate());
+		int age = nam - ngaySinh.getYear();
 
-			int caLamViec = Integer.parseInt((String) cboCaLamViec.getSelectedItem());
+		int caLamViec = Integer.parseInt((String) cboCaLamViec.getSelectedItem());
 
-			TaiKhoan tk=new TaiKhoan(phatSinhMaNV);
-			String matKhau = phatSinhMaNV.concat(sdt); //String matKhau = ""+phatSinhMaNV +sdt;
+		TaiKhoan tk=new TaiKhoan(phatSinhMaNV);
+		String matKhau = phatSinhMaNV.concat(sdt); //String matKhau = ""+phatSinhMaNV +sdt;
 
+		if(hoTen.equals("") || sdt.equals("") || diaChi.equals("") || cccd.equals("")) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+			txtHoTen.requestFocus();
+		}else {
 			if(regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexDiaChi(txtDiaChi) && regex.regexCCCD(txtCccd)) {
 				if(daoNhanVien.checkSdtNV(sdt)) {
 					if(daoNhanVien.checkCccdNV(cccd)) {
@@ -810,8 +814,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 				} else 
 					JOptionPane.showMessageDialog(this, "Số điện thoại đã đăng ký", "Thông báo", JOptionPane.ERROR_MESSAGE);
 			}
-		}catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

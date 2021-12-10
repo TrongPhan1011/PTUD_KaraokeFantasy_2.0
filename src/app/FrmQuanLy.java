@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
@@ -20,8 +21,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.LineBorder;
 
 import dao.DAODonDatPhong;
@@ -62,6 +65,8 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 	private JButton btnItemPhong;
 	private FrmMatHang frmMatHang;
 	private FrmPhong frmPhong;
+	private JPopupMenu popUp;
+	private JMenuItem popItem;
 
 	
 
@@ -137,6 +142,7 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		Icon iconDangXuat = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 25, new Color(255, 255 ,255));
 		btnDangXuat.setIcon(iconDangXuat);
 		panel.add(btnDangXuat);
+		
 		
 		lblHeaderMaNV = new JLabel(headerNV.getMaNhanVien());
 		lblHeaderMaNV.setForeground(Color.WHITE);
@@ -286,10 +292,22 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		
 		}
 		
+		
 		pContent = new JPanel();
 		pContent.setBounds(0, 86, 1269, 629);
 		getContentPane().add(pContent);
 		pContent.setLayout(null);
+		
+		popUp = new JPopupMenu();
+		popItem = new JMenuItem("Trợ giúp");
+		popUp.add(popItem);
+		
+		addMouseListener(new MouseAdapter() {
+	         public void mouseReleased(MouseEvent me) {
+	            showPopup(me); // showPopup() is our own user-defined method
+	         }
+	      }) ;
+		
 		
 		// Load frm mac dinh 
 		if(btnHeaderInfo.getText().contains("QL")){
@@ -316,6 +334,10 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 
 		
 	}
+	 void showPopup(MouseEvent me) {
+	      if(me.isPopupTrigger())
+	         popUp.show(me.getComponent(), me.getX(), me.getY());
+	   }
 	
 	//laays dsddp, so sanh ngay vs ngayhienta --> 
 	//neu bang nhau--> set gio, phut (chuyen ve phut) > 180'--> set trang thai phong --> da dat;

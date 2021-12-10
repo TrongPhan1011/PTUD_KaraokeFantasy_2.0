@@ -14,11 +14,12 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.Format;
@@ -26,13 +27,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -60,9 +62,8 @@ import entity.KhachHang;
 import entity.LoaiKH;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import javax.swing.SwingConstants;
 
-public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener {
+public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener,KeyListener {
 
 	/**
 	 * 
@@ -113,6 +114,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		return this.pMain;
 	}
 
+	@SuppressWarnings("deprecation")
 	public FrmKhachHang(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
 
 		this.sHeaderMaNV = sHeaderMaNV;
@@ -362,7 +364,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		btnExcels.setIcon(iconExcel);
 		pMain.add(btnExcels);
 		
-		Image imgNhac1 = Toolkit.getDefaultToolkit().getImage("data\\img\\IconNhac1.png");
+		
 		String cbbGioiTinh[] = { "Nam", "Nữ" };
 		for (int i = 0; i < cbbGioiTinh.length; i++) {
 			cbogioiTinh.addItem(cbbGioiTinh[i]);
@@ -449,7 +451,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		tableKH.getColumnModel().getColumn(7).setPreferredWidth(100);
 		tableKH.getColumnModel().getColumn(8).setPreferredWidth(100);
 		tableKH.getColumnModel().getColumn(9).setPreferredWidth(100);
-		tableKH.setAutoResizeMode(tableKH.AUTO_RESIZE_OFF);
+		tableKH.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		//Chữ canh trái, số canh phải
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -556,6 +558,14 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		rdoTheoTenKH.addActionListener(this);
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
+		
+		txtTK.addKeyListener(this);
+		txtHoTen.addKeyListener(this);
+		txtSDT.addKeyListener(this);
+		txtDiaChi.addKeyListener(this);
+		txtCccd.addKeyListener(this);
+		
+
 
 
 	}
@@ -640,23 +650,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		}
 	}
 
-	private void loadDanhSachKH(ArrayList<KhachHang> lstKH) {
-		clearTable();
-		for (KhachHang lskh : lstKH) {
-			LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(lskh.getLoaiKH().getMaLoaiKH());
-			String ngaySinh = "";
-			String ngayDK = "";
-			if(lskh.getNgaySinh() != null)
-				ngaySinh = dfNgaySinh.format(lskh.getNgaySinh());
-			if(lskh.getNgayDangKy() != null)
-				ngayDK = dfNgaySinh.format(lskh.getNgayDangKy());
-			
-	
-			modelKhachHang.addRow(new Object[] { lskh.getMaKhangHang(), lskh.getTenKH(), loaiKH.getTenLoaiKH(),
-					lskh.getGioiTinh(), ngaySinh, lskh.getDiaChi(), lskh.getSdt(), lskh.getCccd(),
-					ngayDK, lskh.getDiemTichLuy() });
-		}
-	}
 	private void loadDanhSachTenKHTheoLoai(ArrayList<KhachHang> kh2) {
 		clearTable();
 		String maLoai = daoLoaiKH.getMaLoaiKHTheoTen(txtTK.getText());
@@ -695,6 +688,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	 * Thêm khách hàng vào danh sách 
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	public void themKHVaoDanhSach() {
 		// int optThem = JOptionPane.showConfirmDialog(this, "Bạn có chắn chắn muốn thêm
 		// khách hàng không?", "Thông báo", JOptionPane.YES_NO_OPTION );
@@ -719,21 +713,23 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			int tuoi = nam - namSinh;
 			
 			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
-			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-					&& regex.regexDiaChi(txtDiaChi) && tuoi >= 13 ) {
-				if(daoKhachHang.checkSdtKH(sdt)) {
-					@SuppressWarnings("deprecation")
-					KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
-							gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
-					daoKhachHang.themDanhSachKH(kh);
-					loadThongTin(kh);
-					resetAll();
-					JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");						
-				}else {
-					JOptionPane.showMessageDialog(this,"Số điện thoại đã đăng kí","Thông báo" , JOptionPane.ERROR_MESSAGE);
-				}
-
-
+			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)&& regex.regexDiaChi(txtDiaChi) ) {
+				if(tuoi >= 13) {
+					if(daoKhachHang.checkSdtKH(sdt)== false) {
+						@SuppressWarnings("deprecation")
+						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
+								gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
+						daoKhachHang.themDanhSachKH(kh);
+						loadThongTin(kh);
+						resetAll();
+						JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");						
+					}else {
+						JOptionPane.showMessageDialog(this,"Số điện thoại đã đăng kí","Thông báo" , JOptionPane.ERROR_MESSAGE);
+					}
+				}else
+				{
+					JOptionPane.showMessageDialog(this,"Khách hàng chưa đủ 13 tuổi","Thông báo" , JOptionPane.ERROR_MESSAGE);
+			}
 			}
 
 
@@ -749,41 +745,53 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	 * Sửa thông tin khách hàng đã được chọn trong danh sách hoặc tìm kiểm
 	 */
 
+	@SuppressWarnings("deprecation")
 	public void suaThongTin() {
 		int row = tableKH.getSelectedRow();
 		if (row >= 0) {
 			int update = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa thông tin khách hàng  này?", "Thông báo",
 					JOptionPane.YES_NO_OPTION);
 			if (update == JOptionPane.YES_OPTION) {
+				java.util.Date date = dateChooserNgaySinh.getDate();
+				Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
+				java.util.Date date1 = dateChooserNgayDangKy.getDate();
+				Date ngayDangKy=new Date(date1.getYear(), date1.getMonth(), date1.getDate());
+				int tuoi = nam - ngaySinh.getYear();
+				//System.out.println(tuoi);
+				String maKH = modelKhachHang.getValueAt(row, 0).toString();
+				String tenKH = txtHoTen.getText().toString();
+				String sdt = txtSDT.getText().toString();
+				String diaChi = txtDiaChi.getText().toString();
+				String cccd = txtCccd.getText().toString();
+				String gioiTinh = cbogioiTinh.getSelectedItem().toString();
+				LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
+
+				
+				int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
 				if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
 						&& regex.regexDiaChi(txtDiaChi)) {
-					String maKH = modelKhachHang.getValueAt(row, 0).toString();
-					String tenKH = txtHoTen.getText().toString();
-					String sdt = txtSDT.getText().toString();
-					String diaChi = txtDiaChi.getText().toString();
-					String cccd = txtCccd.getText().toString();
-					String gioiTinh = cbogioiTinh.getSelectedItem().toString();
-					LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
-					java.util.Date date = dateChooserNgaySinh.getDate();
-					Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
-					java.util.Date date1 = dateChooserNgayDangKy.getDate();
-					Date ngayDangKy=new Date(date1.getYear(), date1.getMonth(), date1.getDate());
-					
-					int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
-					try {
-						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd,
-								ngaySinh, gioiTinh, diemTichLuy,
-								ngayDangKy, loaiKH);
-						daoKhachHang.suaThongTinKhachHang(kh);
-						resetAll();
-						loadThongTin(kh);
-						JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được sửa!", "Thông báo",
-								JOptionPane.OK_OPTION);
-					} catch (Exception e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo",
+					if(tuoi >=13) {
+							try {
+								KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd,
+										ngaySinh, gioiTinh, diemTichLuy,
+										ngayDangKy, loaiKH);
+								daoKhachHang.suaThongTinKhachHang(kh);
+								resetAll();
+								loadThongTin(kh);
+								JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được sửa!", "Thông báo",
+										JOptionPane.OK_OPTION);
+							} catch (Exception e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo",
+										JOptionPane.ERROR_MESSAGE);
+							}	
+
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Khách hàng chưa đủ 13 tuổi!", "Thông báo",
 								JOptionPane.ERROR_MESSAGE);
 					}
+
 
 				}
 			}
@@ -807,7 +815,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		dateChooserNgaySinh.setDate(dNow);
 		dateChooserNgayDangKy.setDate(dNow);
 		txtPoint.setText("");
-		clearTable();
+		loadDanhSachKH();
 		bg.clearSelection();
 	}
 
@@ -1065,8 +1073,8 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	
 	private void xuatExcel() throws IOException {
 		XuatExcels xuat = new XuatExcels();
-		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin nhân viên ra Excels", FileDialog.SAVE);
-		fileDialog.setFile("Danh sách thông tin nhân viên");
+		FileDialog fileDialog  = new FileDialog(this, "Xuất thông tin khách hàng ra Excels", FileDialog.SAVE);
+		fileDialog.setFile("Danh sách thông tin khách hàng");
 		fileDialog .setVisible(true);
 		String name = fileDialog.getFile();
 		String fileName = fileDialog.getDirectory() + name;
@@ -1077,7 +1085,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) 
 			fileName += ".xlsx";
 		
-		xuat.xuatTable(tableKH, "DANH SÁCH THÔNG TIN NHÂN VIÊN", fileName);
+		xuat.xuatTable(tableKH, "DANH SÁCH THÔNG TIN KHÁCH HÀNG", fileName);
 	}
 
 	@Override
@@ -1086,7 +1094,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	// Hiển thị thông tin khi chọn vào bảng
 	public void mouseClicked(MouseEvent e) {
@@ -1197,5 +1204,38 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtHoTen)&& key == KeyEvent.VK_ENTER ) {
+			txtSDT.requestFocus();
+		}
+		else if(o.equals(txtSDT)&& key == KeyEvent.VK_ENTER ) {
+			txtDiaChi.requestFocus();
+		}
+		else if(o.equals(txtDiaChi)&& key == KeyEvent.VK_ENTER ) {
+			txtCccd.requestFocus();
+		}
+		else if(o.equals(txtCccd)&& key == KeyEvent.VK_ENTER ) {
+			btnThemKH.requestFocus();
+		}
+		else if(o.equals(txtTK)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -62,7 +62,7 @@ public class Regex {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
-			JOptionPane.showMessageDialog(null, "CCCD không hợp lệ!\nCCD gồm 12 chữ số", "Thông báo",
+			JOptionPane.showMessageDialog(null, "CCCD không hợp lệ!\nCCCD gồm 12 chữ số", "Thông báo",
 					JOptionPane.ERROR_MESSAGE);
 			txtCCCD.requestFocus();
 			txtCCCD.selectAll();
@@ -270,6 +270,7 @@ public class Regex {
 		return true;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean regexTimKiemLoaiMatHang(JTextField ten) {
 		String in = ten.getText().toLowerCase().trim();
 
@@ -434,7 +435,7 @@ public class Regex {
 		if (!input.matches(regexKH)) {
 			JOptionPane.showMessageDialog(null,
 					"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:"
-							+ "\n - Tên khách hàng. Ví dụ: Trần Thanh Thiện hoặc Thanh Thiện"
+							+ "\n - Tên khách hàng. Ví dụ: Trần Thanh Tâm hoặc Thanh Tâm"
 							+ "\n - SĐT gồm 10 chữ số và bắt đầu bằng số 0",
 					"Thông báo", JOptionPane.ERROR_MESSAGE);
 			txtTK.requestFocus();

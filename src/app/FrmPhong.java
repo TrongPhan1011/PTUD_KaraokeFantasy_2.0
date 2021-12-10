@@ -514,7 +514,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		if(regex.regexGiaP(txtGiaPhong)) {
 			float giaP = Float.parseFloat(txtGiaPhong.getText());
 			String maP = daoMa.getMaP();
-			String tinhTrang = cboTinhTrangP.getSelectedItem().toString();
+			String tinhTrang = "Trống";
 			LoaiPhong loaiP = new LoaiPhong(daoLoaiP.getMaLoaiPTheoTen(cboLoaiP.getSelectedItem().toString()));
 
 			Phong p = new Phong(maP, tinhTrang, giaP, loaiP);
@@ -549,7 +549,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 						JOptionPane.showMessageDialog(this, "Thông tin phòng đã được sửa!", "Thông báo",
 								JOptionPane.OK_OPTION);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Quên chỉnh sửa giá phòng!!", "Thông báo",
+						JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại giá phòng!!", "Thông báo",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -583,7 +583,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Bạn chưa chọn thông tin phòng cần hủy!", "Thông báo",
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.WARNING_MESSAGE);
 		}
 		return false;
 	}
@@ -627,6 +627,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		cboLoaiP.setSelectedIndex(0);
 		cboSapXep.setSelectedIndex(0);
 		cboTinhTrangP.setSelectedIndex(0);
+		loadDanhSachPhong();
 	}
 
 	//Sap xep theo loai Phong tang dan

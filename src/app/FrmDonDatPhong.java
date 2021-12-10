@@ -895,9 +895,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				if(regex.regexTen(txtTenKH) && regex.regexSDT(txtSDT) && regex.regexDiaChi(txtDiaChi)) {
 					if(tinhTrangPhong.equals("Đã đặt")) 
 						JOptionPane.showMessageDialog(null, "Phòng này đã được đặt, vui lòng chọn phòng khác!", "Thông báo", JOptionPane.OK_OPTION);
-					if(tinhTrangPhong.equals("Đang hoạt động"))
-						JOptionPane.showMessageDialog(null, "Phòng này đang hoạt động, vui lòng chọn phòng khác!", "Thông báo", JOptionPane.OK_OPTION);
-					if(!tinhTrangPhong.equals("Đã đặt") && !tinhTrangPhong.equals("Đang hoạt động")) {
+					else {
 						if(daoKhachHang.checkSdtKH(sdt)) { //kq=true thì lấy thông tin KH cũ
 							//them vao data
 							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, kh, nv, p);

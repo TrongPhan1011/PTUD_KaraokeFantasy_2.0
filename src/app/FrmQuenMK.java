@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -40,7 +42,7 @@ import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
+public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,KeyListener {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -53,11 +55,12 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 	private JPasswordField pwMatKhauMoi;
 	private JPasswordField pwXacNhan;
 	private JTextField txtSDT;
+	private FrmDangNhap frmDN;
 
 
 	public FrmQuenMK() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Đăng nhập Karaoke Fantasy");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("Đổi mật khẩu");
 		setSize(500,500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
@@ -73,7 +76,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 		}
 		
 //khai bao dao
-		
+		frmDN = new FrmDangNhap();
 		daoNhanVien = new DAONhanVien();
 		daoTK = new DAOTaiKhoan();
 		regex = new Regex();
@@ -204,7 +207,20 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 		btnDoiMK.addActionListener(this);
 		btnQuayLai.addActionListener(this);
 		
+		txtTaiKhoan.addKeyListener(this);
+		txtSDT.addKeyListener(this);
+		pwMatKhauMoi.addKeyListener(this);
+		pwXacNhan.addKeyListener(this);
+		btnDoiMK.addKeyListener(this);
+		btnQuayLai.addKeyListener(this);
 		
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e)
+			{
+				frmDN.setVisible(true);
+			}
+		});
 		
 	}
 	
@@ -248,7 +264,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 						tk.setMatKhau(mkMoi);
 						if(daoTK.suaTK(tk)) {
 							JOptionPane.showMessageDialog(this, "Mật khẩu đã được đổi thành công.\nVui lòng chọn quay lại để đăng nhập");
-							FrmDangNhap frmDN = new FrmDangNhap();
+							
 							frmDN.setVisible(true);
 							this.setVisible(false);
 						}
@@ -314,5 +330,44 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtTaiKhoan)&& key == KeyEvent.VK_ENTER ) {
+			txtSDT.requestFocus();
+		}
+		else if(o.equals(txtSDT)&& key == KeyEvent.VK_ENTER ) {
+			pwMatKhauMoi.requestFocus();
+		}
+		else if(o.equals(pwMatKhauMoi)&& key == KeyEvent.VK_ENTER ) {
+			pwXacNhan.requestFocus();
+		}
+		else if(o.equals(pwXacNhan)&& key == KeyEvent.VK_ENTER ) {
+			btnDoiMK.doClick();
+		}
+		else if(key == KeyEvent.VK_ENTER ) {
+			btnDoiMK.doClick();
+		}
+		else if(key == KeyEvent.VK_ESCAPE ) {
+			frmDN.setVisible(true);
+			this.setVisible(false);
+		}
+		
+			
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

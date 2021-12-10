@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
@@ -66,7 +68,7 @@ import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener {
+public class FrmThanhToan extends JPanel implements ActionListener, MouseListener,ItemListener,KeyListener {
 
 	/**
 	 * 
@@ -576,6 +578,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnLamMoiHD.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnLamMoiHD.setBackground(new Color(114, 23, 153));
 		btnLamMoiHD.setIcon(iconLamMoiTT);
+	
 		
 		
 		
@@ -656,6 +659,15 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		rdbtnGiamSL.addActionListener(this);
 		btnTim.addActionListener(this);
 		btnInHoaDon.addActionListener(this);
+		
+		
+		txtSoLuong.addKeyListener(this);
+		btnThemMH.addKeyListener(this);
+		btnXoaMH.addKeyListener(this);
+		btnLamMoiHD.addKeyListener(this);
+		btnLamMoiMH.addKeyListener(this);
+		txtTim.addKeyListener(this);
+		
 		
 		
 		
@@ -1315,6 +1327,32 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtSoLuong)&& key == KeyEvent.VK_ENTER ) {
+			btnThemMH.doClick();
+		}
+		else if(o.equals(txtTim)&& key == KeyEvent.VK_ENTER ) {
+			btnTim.doClick();
+		}
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

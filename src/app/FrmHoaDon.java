@@ -1,20 +1,18 @@
 package app;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.print.PrinterException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,12 +20,10 @@ import entity.HoaDon;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-import javax.swing.JTextPane;
-import javax.swing.Icon;
-import javax.swing.JButton;
-
 public class FrmHoaDon extends JFrame  implements ActionListener{
 
+	
+	private static final long serialVersionUID = -6027396469314105075L;
 	private JPanel pMain;
 	private FixButton btnIn;
 	private JTextPane txtHD;
@@ -36,7 +32,6 @@ public class FrmHoaDon extends JFrame  implements ActionListener{
 	private String giamGia;
 	private String tongTien;
 	private String thanhTien;
-	private DecimalFormat df;
 	private SimpleDateFormat sfTime;
 	private SimpleDateFormat sfdate;
 	/**
@@ -51,6 +46,9 @@ public class FrmHoaDon extends JFrame  implements ActionListener{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 492, 664);
 		setLocationRelativeTo(null);
+		setTitle("Hóa đơn tạm");
+		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
+		setIconImage(logoApp.getImage());
 		pMain = new JPanel();
 		pMain.setBackground(new Color(255, 240, 245));
 		pMain.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,10 +72,10 @@ public class FrmHoaDon extends JFrame  implements ActionListener{
 		btnIn.setIcon(iconInHD);
 		pMain.add(btnIn);
 		
-		df = new DecimalFormat("###,###");
 		sfdate = new SimpleDateFormat("dd/MM/yyyy");
 		sfTime = new SimpleDateFormat("HH:mm");
 		loadHD();
+		
 		btnIn.addActionListener(this);
 		
 	
@@ -126,4 +124,6 @@ public class FrmHoaDon extends JFrame  implements ActionListener{
 			}
 		}
 	}
+
+
 }

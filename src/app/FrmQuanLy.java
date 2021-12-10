@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
@@ -137,6 +138,7 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		Icon iconDangXuat = IconFontSwing.buildIcon(FontAwesome.SIGN_OUT, 25, new Color(255, 255 ,255));
 		btnDangXuat.setIcon(iconDangXuat);
 		panel.add(btnDangXuat);
+		
 		
 		lblHeaderMaNV = new JLabel(headerNV.getMaNhanVien());
 		lblHeaderMaNV.setForeground(Color.WHITE);

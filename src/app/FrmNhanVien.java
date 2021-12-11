@@ -574,6 +574,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		
 		txtTim.addKeyListener(this);
 		btnTim.addKeyListener(this);
+		btnLamMoiNV.addKeyListener(this);
 	}
 
 	/**
@@ -611,6 +612,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		rdoTheoMaNV.setSelected(false);
 		rdoTheoTenNV.setSelected(false);
 		rdoTheoChucVuNV.setSelected(false);
+		
+		txtHoTen.requestFocus();
 	}
 
 	/**
@@ -1267,6 +1270,9 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		
 		if(o.equals(txtTim) && key==KeyEvent.VK_ENTER)
 			btnTim.doClick();
+		
+		else if(o.equals(txtTim) && key == KeyEvent.VK_F5)
+			btnLamMoiNV.doClick();
 	}
 
 	@Override

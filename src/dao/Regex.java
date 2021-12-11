@@ -270,25 +270,17 @@ public class Regex {
 		return true;
 	}
 
-	@SuppressWarnings("unused")
+
 	public boolean regexTimKiemLoaiMatHang(JTextField ten) {
 		String in = ten.getText().toLowerCase().trim();
 
 		String regexDA = "^[đồ ăn]*+$";
 		Pattern patternDA = Pattern.compile(regexDA);
 		Matcher matcherDA = patternDA.matcher(in);
-		
-		String regexA = "^[ăn]*+$";
-		Pattern patternA = Pattern.compile(regexA);
-		Matcher matcherA = patternA.matcher(in);
 
 		String regexDU = "^[đồ uống]*+$";
 		Pattern patternDU = Pattern.compile(regexDU);
 		Matcher matcherDU = patternDU.matcher(in);
-
-		String regexU = "^[uống]*+$";
-		Pattern patternU = Pattern.compile(regexU);
-		Matcher matcherU = patternU.matcher(in);
 
 		String regexKhac = "^[khác]*+$";
 		Pattern patternKhac = Pattern.compile(regexKhac);
@@ -298,10 +290,6 @@ public class Regex {
 		Pattern patternStop = Pattern.compile(regexStop);
 		Matcher matcherStop = patternStop.matcher(in);
 		
-		String regexN = "^[ngừng]*+$";
-		Pattern patternN = Pattern.compile(regexN);
-		Matcher matcherN = patternN.matcher(in);
-
 		if (!matcherDA.find() && !matcherDU.find() && !matcherKhac.find() && !matcherStop.find()) {
 			ten.requestFocus();
 			ten.selectAll();

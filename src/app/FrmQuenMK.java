@@ -10,10 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -22,8 +24,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
@@ -56,6 +60,8 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 	private JPasswordField pwXacNhan;
 	private JTextField txtSDT;
 	private FrmDangNhap frmDN;
+	private JPopupMenu popUp;
+	private JMenuItem popItem;
 
 
 	public FrmQuenMK() {
@@ -197,15 +203,20 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 		Image resizeBackground = imgBackground.getScaledInstance(lblBackground.getWidth(), lblBackground.getHeight(), 0);
 		lblBackground.setIcon(new ImageIcon(resizeBackground));
 		
+		popUp = new JPopupMenu();
+		popItem = new JMenuItem("Trợ giúp");
+		popUp.add(popItem);
 		
+		addMouseListener(new MouseAdapter() {
+	         public void mouseReleased(MouseEvent me) {
+	            showPopup(me); 
+	         }
+	    });
 		
-		//txtTaiKhoan.setText("NV002");
-		
-	
-//		txtMatKhau.setText("QL003");
 		
 		btnDoiMK.addActionListener(this);
 		btnQuayLai.addActionListener(this);
+		popItem.addActionListener(this);
 		
 		txtTaiKhoan.addKeyListener(this);
 		txtSDT.addKeyListener(this);
@@ -213,6 +224,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 		pwXacNhan.addKeyListener(this);
 		btnDoiMK.addKeyListener(this);
 		btnQuayLai.addKeyListener(this);
+		
 		
 		
 		addWindowListener(new WindowAdapter() {
@@ -223,6 +235,12 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 		});
 		
 	}
+	
+	 void showPopup(MouseEvent me) {
+	      if(me.isPopupTrigger())
+	         popUp.show(me.getComponent(), me.getX(), me.getY());
+	   }
+
 	
 	public boolean kiemTraRong() {
 		if(txtTaiKhoan.getText().trim().length() == 0||txtSDT.getText().trim().length() == 0||pwMatKhauMoi.getText().trim().length() == 0||pwXacNhan.getText().trim().length() == 0) {
@@ -299,7 +317,14 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 			doiMK();
 			
 		}
-		
+		 if(o.equals(popItem)) {
+			String[] commands = {"cmd", "/c", "data\\help\\HELP.chm"};
+			try {
+				Runtime.getRuntime().exec(commands);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 		
 	}

@@ -15,6 +15,9 @@ import java.awt.event.FocusListener;
 //import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -65,11 +68,7 @@ import entity.Phong;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-/**
- * @author DinhQuangTuan-19468641
- *
- */
-public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListener {
+public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListener, KeyListener {
 
 	/**
 	 * 
@@ -619,6 +618,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		rdoTheoMaPhong.addActionListener(this);
 		rdoTheoLoaiPhong.addActionListener(this);
 
+		txtTim.addKeyListener(this);
+		btnTim.addKeyListener(this);
 	}
 
 
@@ -667,6 +668,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 		removeDanhSachDDP(modelDDP);
 		loadDanhSachDDP(ddp);
+		
+		txtTenKH.requestFocus();
 	}
 
 
@@ -1181,5 +1184,26 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 			txtTim.setForeground(Colors.LightGray);
 			txtTim.setText("Tìm đơn đặt phòng theo họ tên và sđt khách hàng, tìm khách hàng theo sđt.");
 		}
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		
+		if(o.equals(txtTim) && key==KeyEvent.VK_ENTER)
+			btnTim.doClick();
+		
+		else if(o.equals(txtTim) && key == KeyEvent.VK_F5)
+			btnLamMoiDDP.doClick();
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -17,6 +17,9 @@ import java.awt.event.FocusListener;
 //import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -62,10 +65,7 @@ import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-/**
- * @author DinhQuangTuan-19468641
- */
-public class FrmNhanVien extends JFrame implements ActionListener, MouseListener, FocusListener {
+public class FrmNhanVien extends JFrame implements ActionListener, MouseListener, FocusListener, KeyListener {
 
 	/**
 	 * 
@@ -571,6 +571,10 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		rdoTheoChucVuNV.addActionListener(this);
 
 		tblNV.addMouseListener(this);
+		
+		txtTim.addKeyListener(this);
+		btnTim.addKeyListener(this);
+		btnLamMoiNV.addKeyListener(this);
 	}
 
 	/**
@@ -608,6 +612,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		rdoTheoMaNV.setSelected(false);
 		rdoTheoTenNV.setSelected(false);
 		rdoTheoChucVuNV.setSelected(false);
+		
+		txtHoTen.requestFocus();
 	}
 
 	/**
@@ -1249,5 +1255,29 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 			txtTim.setForeground(Colors.LightGray);
 			txtTim.setText("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.");
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		
+		if(o.equals(txtTim) && key==KeyEvent.VK_ENTER)
+			btnTim.doClick();
+		
+		else if(o.equals(txtTim) && key == KeyEvent.VK_F5)
+			btnLamMoiNV.doClick();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

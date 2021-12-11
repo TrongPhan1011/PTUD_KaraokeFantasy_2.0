@@ -757,10 +757,10 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 				loadTenMH(lstMH);
 			}
 			if(regex.regexTimKiemLoaiMatHang(txtTim)) {
-				lstMH1 = daoMH.getLMH(input);
-				loadLoaiMH(lstMH1);	
+				lstMH = daoMH.getLMH(input);
+				loadLoaiMH(lstMH);	
 			}else
-			if(lstMH.size() == 0 && lstMH1.size() == 0)
+			if(lstMH.size() == 0)
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin phù hợp.");
 		}
 		else {

@@ -713,21 +713,23 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			int tuoi = nam - namSinh;
 			
 			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
-			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
-					&& regex.regexDiaChi(txtDiaChi) && tuoi >= 13 ) {
-				if(daoKhachHang.checkSdtKH(sdt)) {
-					
-					KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
-							gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
-					daoKhachHang.themDanhSachKH(kh);
-					loadThongTin(kh);
-					resetAll();
-					JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");						
-				}else {
-					JOptionPane.showMessageDialog(this,"Số điện thoại đã đăng kí","Thông báo" , JOptionPane.ERROR_MESSAGE);
-				}
-
-
+			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)&& regex.regexDiaChi(txtDiaChi) ) {
+				if(tuoi >= 13) {
+					if(daoKhachHang.checkSdtKH(sdt)== false) {
+						@SuppressWarnings("deprecation")
+						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
+								gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
+						daoKhachHang.themDanhSachKH(kh);
+						loadThongTin(kh);
+						resetAll();
+						JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công");						
+					}else {
+						JOptionPane.showMessageDialog(this,"Số điện thoại đã đăng kí","Thông báo" , JOptionPane.ERROR_MESSAGE);
+					}
+				}else
+				{
+					JOptionPane.showMessageDialog(this,"Khách hàng chưa đủ 13 tuổi","Thông báo" , JOptionPane.ERROR_MESSAGE);
+			}
 			}
 
 
@@ -750,35 +752,46 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			int update = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa thông tin khách hàng  này?", "Thông báo",
 					JOptionPane.YES_NO_OPTION);
 			if (update == JOptionPane.YES_OPTION) {
+				java.util.Date date = dateChooserNgaySinh.getDate();
+				Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
+				java.util.Date date1 = dateChooserNgayDangKy.getDate();
+				Date ngayDangKy=new Date(date1.getYear(), date1.getMonth(), date1.getDate());
+				int tuoi = nam - ngaySinh.getYear();
+				//System.out.println(tuoi);
+				String maKH = modelKhachHang.getValueAt(row, 0).toString();
+				String tenKH = txtHoTen.getText().toString();
+				String sdt = txtSDT.getText().toString();
+				String diaChi = txtDiaChi.getText().toString();
+				String cccd = txtCccd.getText().toString();
+				String gioiTinh = cbogioiTinh.getSelectedItem().toString();
+				LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
+
+				
+				int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
 				if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)
 						&& regex.regexDiaChi(txtDiaChi)) {
-					String maKH = modelKhachHang.getValueAt(row, 0).toString();
-					String tenKH = txtHoTen.getText().toString();
-					String sdt = txtSDT.getText().toString();
-					String diaChi = txtDiaChi.getText().toString();
-					String cccd = txtCccd.getText().toString();
-					String gioiTinh = cbogioiTinh.getSelectedItem().toString();
-					LoaiKH loaiKH = new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen(cboloaiKH.getSelectedItem().toString()));
-					java.util.Date date = dateChooserNgaySinh.getDate();
-					Date ngaySinh=new Date(date.getYear(), date.getMonth(), date.getDate());
-					java.util.Date date1 = dateChooserNgayDangKy.getDate();
-					Date ngayDangKy=new Date(date1.getYear(), date1.getMonth(), date1.getDate());
-					
-					int diemTichLuy = Integer.parseInt(txtPoint.getText().toString());
-					try {
-						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd,
-								ngaySinh, gioiTinh, diemTichLuy,
-								ngayDangKy, loaiKH);
-						daoKhachHang.suaThongTinKhachHang(kh);
-						resetAll();
-						loadThongTin(kh);
-						JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được sửa!", "Thông báo",
-								JOptionPane.OK_OPTION);
-					} catch (Exception e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo",
+					if(tuoi >=13) {
+							try {
+								KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd,
+										ngaySinh, gioiTinh, diemTichLuy,
+										ngayDangKy, loaiKH);
+								daoKhachHang.suaThongTinKhachHang(kh);
+								resetAll();
+								loadThongTin(kh);
+								JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được sửa!", "Thông báo",
+										JOptionPane.OK_OPTION);
+							} catch (Exception e) {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo",
+										JOptionPane.ERROR_MESSAGE);
+							}	
+
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Khách hàng chưa đủ 13 tuổi!", "Thông báo",
 								JOptionPane.ERROR_MESSAGE);
 					}
+
 
 				}
 			}
@@ -802,7 +815,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		dateChooserNgaySinh.setDate(dNow);
 		dateChooserNgayDangKy.setDate(dNow);
 		txtPoint.setText("");
-		clearTable();
+		loadDanhSachKH();
 		bg.clearSelection();
 	}
 

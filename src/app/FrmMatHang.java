@@ -484,6 +484,7 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 		txtTenMH.requestFocus();
 		cboSapXep.setSelectedIndex(0);
 		bgRdo.clearSelection();
+		loadTableMH();
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -304,7 +305,7 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		
 		addMouseListener(new MouseAdapter() {
 	         public void mouseReleased(MouseEvent me) {
-	            showPopup(me); // showPopup() is our own user-defined method
+	            showPopup(me); 
 	         }
 	      }) ;
 		
@@ -331,6 +332,8 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		btnItemPhong.addActionListener(this);
 		btnItemKH.addActionListener(this);
 		btnItemTK.addActionListener(this);
+		
+		popItem.addActionListener(this);
 
 		
 	}
@@ -511,6 +514,14 @@ public class FrmQuanLy extends JFrame implements ActionListener,MouseListener{
 		
 		if(o.equals(btnItemTK)) {
 			loadFrmThongKe();
+		}
+		if(o.equals(popItem)) {
+			String[] commands = {"cmd", "/c", "data\\help\\HELP.chm"};
+			try {
+				Runtime.getRuntime().exec(commands);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		

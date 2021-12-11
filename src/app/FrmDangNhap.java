@@ -10,8 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -20,8 +22,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
@@ -53,6 +57,8 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 	private DAOTaiKhoan daoTK;
 	private JPasswordField txtMatKhau;
 	private JLabel lblQuenMK;
+	private JPopupMenu popUp;
+	private JMenuItem popItem;
 	
 	public static void main(String[] args) {
 
@@ -196,6 +202,15 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		Image resizeBackground = imgBackground.getScaledInstance(lblBackground.getWidth(), lblBackground.getHeight(), 0);
 		lblBackground.setIcon(new ImageIcon(resizeBackground));
 		
+		popUp = new JPopupMenu();
+		popItem = new JMenuItem("Trợ giúp");
+		popUp.add(popItem);
+		
+		addMouseListener(new MouseAdapter() {
+	         public void mouseReleased(MouseEvent me) {
+	            showPopup(me); 
+	         }
+	    });
 		
 		
 		txtTaiKhoan.setText("NV002");
@@ -211,10 +226,17 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		btnDangNhap.addKeyListener(this);
 		txtMatKhau.addKeyListener(this);
 		txtTaiKhoan.addKeyListener(this);
+		popItem.addActionListener(this);
 	}
+	
+	 void showPopup(MouseEvent me) {
+	      if(me.isPopupTrigger())
+	         popUp.show(me.getComponent(), me.getX(), me.getY());
+	   }
 
 	
 	//Kiểm tra đăng nhập
+	@SuppressWarnings("deprecation")
 	public void dangNhap() {
 		
 		String maTK = txtTaiKhoan.getText().toString().trim();
@@ -246,10 +268,18 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		if(o.equals(btnThoat)) {
 			System.exit(0);
 		}
-		if(o.equals(btnDangNhap)) {	
+		else if(o.equals(btnDangNhap)) {	
 			
 			dangNhap();
 			
+		}
+		else if(o.equals(popItem)) {
+			String[] commands = {"cmd", "/c", "data\\help\\HELP.chm"};
+			try {
+				Runtime.getRuntime().exec(commands);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		

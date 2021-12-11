@@ -224,6 +224,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		lblQuenMK.addMouseListener(this);
 		
 		btnDangNhap.addKeyListener(this);
+		btnThoat.addKeyListener(this);
 		txtMatKhau.addKeyListener(this);
 		txtTaiKhoan.addKeyListener(this);
 		popItem.addActionListener(this);
@@ -339,6 +340,15 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		}
 		else if(o.equals(txtMatKhau)&& key == KeyEvent.VK_ENTER ) {
 			btnDangNhap.doClick();
+		}
+		else if(o.equals(txtTaiKhoan)&& key == KeyEvent.VK_TAB ) {
+			txtMatKhau.requestFocus();
+		}
+		else if(o.equals(txtMatKhau)&& key == KeyEvent.VK_TAB ) {
+			btnDangNhap.requestFocus();
+		}
+		else if(o.equals(btnDangNhap)&& key == KeyEvent.VK_TAB ) {
+			btnThoat.requestFocus();
 		}
 		
 		else if(key == KeyEvent.VK_Q) {

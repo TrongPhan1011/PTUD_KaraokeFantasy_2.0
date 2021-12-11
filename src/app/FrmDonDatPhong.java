@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -687,16 +688,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 					infoP.getMaPhong(), lp.getTenLoaiPhong(), dfGiaPhong.format(infoP.getGiaPhong()), infoP.getTinhTrangPhong()
 			});
 		}
-		for(int i=0; i<tblPhong.getRowCount(); i++) {
-			@SuppressWarnings("unused")
-			String loaiP = tblPhong.getValueAt(i, 1).toString();
-			//			while(loaiP.equals("Phòng VIP")) {
-			//				tblPhong.setBackground(Color.yellow);
-			//				break;
-			//			}
-			//			if(loaiP.equals("Phòng trung"))
-			//				tblPhong.setBackground(Color.blue);
-		}
+		changeColorRow(tblPhong);
 	}
 
 
@@ -716,11 +708,30 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 					dfNgay.format(infoDDP.getNgayDen()), dfHienGio.format(infoDDP.getGioDen()), nv.getTenNhanVien(), dfNgay.format(infoDDP.getNgayLap()), infoDDP.getTrangThaiDDP()
 			});
 		}
-		//		for(int i=0; i<=tblPhong.getRowCount(); i++) {
-		//			String trangThaiP = tblPhong.getValueAt(i, 4).toString();
-		//			if(trangThaiP.equals("Đã đặt"))
-		//				tblPhong.setBackground(Color.yellow);
-		//		}
+		
+	}
+	
+	public  void changeColorRow(JTable tb) {
+		tb.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+			private static final long serialVersionUID = 5206972278640725451L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table,
+		            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+		        String status = (String)table.getModel().getValueAt(row, 3);
+		        if ("Đã đặt".equals(status)) {
+		            setBackground(Color.yellow);
+		            setForeground(Color.red);
+		        } else {
+		            setBackground(table.getBackground());
+		            setForeground(table.getForeground());
+		        }       
+		        return this;
+		    }   
+		});
 	}
 
 	/**

@@ -718,6 +718,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		}
 	}
 	
+
+	
 	/**
 	 * Tải thông tin phòng khi có mã phòng lên giao diện ở các label, đồng thời tải các danh sách mặt hàng đơn đặt phòng lên bảng
 	 * @param Phong

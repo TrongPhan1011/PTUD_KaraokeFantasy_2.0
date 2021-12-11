@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -57,7 +59,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
 
-public class FrmMatHang extends JFrame implements ActionListener, MouseListener {
+public class FrmMatHang extends JFrame implements ActionListener, MouseListener, KeyListener {
 	/**
 	 * 
 	 */
@@ -412,7 +414,7 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 			cboLoaiMH.addItem(lmh.getTenLoaiMatHang());
 		}
 		/**
-		 * Sự kiện buttons, chuột
+		 * Sự kiện buttons, chuột, key
 		 */
 		btnThemMH.addActionListener(this);
 		btnXoaMH.addActionListener(this);
@@ -432,6 +434,16 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 		rdoTheoTenMH.addActionListener(this);
 		cboSapXep.addActionListener(this);
 		
+		txtTenMH.addKeyListener(this);
+		txtSoLuong.addKeyListener(this);
+		txtDonGia.addKeyListener(this);
+		txtTim.addKeyListener(this);
+		btnThemMH.addKeyListener(this);
+		btnSuaMH.addKeyListener(this);
+		btnXoaMH.addKeyListener(this);
+		btnReset.addKeyListener(this);
+		btnTim.addKeyListener(this);
+		txtTim.addKeyListener(this);
 		/**
 		 * Định dạng giá trị
 		 */
@@ -542,30 +554,33 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 	 * Thêm mặt hàng vào table và SQL Server
 	 */
 	public void ThemMH() {
-		try {
-			String maMH = daoPhatSinhMa.getMaMH();
-			String tenMH = txtTenMH.getText();
-			String loaiMH = cboLoaiMH.getSelectedItem().toString();
-			String maLMH = daoLMH.getMaLoaiMHTheoTen(loaiMH);
-			int soluong = Integer.parseInt(txtSoLuong.getText());
-			double dongia = Double.parseDouble(txtDonGia.getText());
-			MatHang mh = new MatHang(maMH, tenMH, soluong, dongia, new LoaiMatHang(maLMH));
-			if(regex.regexTenMH(txtTenMH)) {
-				if(regex.regexSoLuong(txtSoLuong)) {
-					if (regex.regexGiaMH(txtDonGia)) {
-							daoMH.ThemMH(mh);
-							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
-							LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
-							modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
-						}else {
-							JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
-						}
+		String maMH = daoPhatSinhMa.getMaMH();
+		String tenMH = txtTenMH.getText().trim();
+		String loaiMH = cboLoaiMH.getSelectedItem().toString();
+		String maLMH = daoLMH.getMaLoaiMHTheoTen(loaiMH);
+		if(txtTenMH.equals("") || txtSoLuong.equals("") || txtDonGia.equals("") ) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+			txtTenMH.requestFocus();
+		}else
+		if(regex.regexTenMH(txtTenMH)) {
+			if(regex.regexSoLuong(txtSoLuong)) {
+				if (regex.regexGiaMH(txtDonGia)) {
+					int soluong = Integer.parseInt(txtSoLuong.getText());
+					double dongia = Double.parseDouble(txtDonGia.getText());
+					MatHang mh = new MatHang(maMH, tenMH, soluong, dongia, new LoaiMatHang(maLMH));
+					try {
+						daoMH.ThemMH(mh);
+					} catch (Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(this, "Thêm mặt hàng thất bại!");
+					}
+					clearTable();
+					JOptionPane.showMessageDialog(this, "Thêm mặt hàng thành công!");
+					LoaiMatHang lMH = daoLMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
+					modelMatHang.addRow(new Object[] {mh.getMaMatHang(), mh.getTenMatHang(), lMH.getTenLoaiMatHang(), mh.getSoLuongMatHang(), dfVND.format(Math.round(mh.getGiaMatHang())) } );
+					}
 				}
 			} 
-				
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
-		}
 	}
 	/**
 	 * Xóa mặt hàng khỏi table, update mặt hàng thành ngừng kinh doanh trên SQL Server
@@ -730,18 +745,22 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 	/**
 	 * Tìm mặt hàng theo tên mặt hàng, loại mặt hàng
 	 */
+	@SuppressWarnings("unlikely-arg-type")
 	public void timMH() {
-		String info = txtTim.getText().toLowerCase().trim();
-		ArrayList<MatHang> mh1 = daoMH.getTenMH(info);
-		ArrayList<MatHang> mh2 = daoMH.getLMH(info);
-		if(!info.equals("") && !info.equals("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng")) {
-			if(regex.regexTimKiemLoaiMatHang(txtTim)) {
-				loadLoaiMH(mh2);	
-			}else
-			if(regex.regexTenMH(txtTim)) {
-					loadTenMH(mh1);
+		ArrayList<MatHang> lstMH = null;
+		ArrayList<MatHang> lstMH1 = null;
+		String input = txtTim.getText().trim();
+		String regexTenMH= "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
+		if(!txtTim.equals("") && !txtTim.getText().equals("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng")) {
+			if(input.matches(regexTenMH)) {
+				lstMH = daoMH.getTenMH(input);
+				loadTenMH(lstMH);
 			}
-			else
+			if(regex.regexTimKiemLoaiMatHang(txtTim)) {
+				lstMH = daoMH.getLMH(input);
+				loadLoaiMH(lstMH);	
+			}else
+			if(lstMH.size() == 0)
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin phù hợp.");
 		}
 		else {
@@ -813,22 +832,46 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener 
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		int key = e.getKeyCode();
+		if(o.equals(txtTim) && key == KeyEvent.VK_ENTER) {
+			btnTim.doClick();
+		}
+		else if(o.equals(txtSoLuong) && key == KeyEvent.VK_ENTER) {
+			btnThemMH.doClick();
+		}
+		else if (o.equals(txtSoLuong) && key == KeyEvent.VK_TAB) {
+			cboLoaiMH.requestFocus();
+		}
+		else if (o.equals(cboLoaiMH) && key == KeyEvent.VK_TAB)  {
+			btnThemMH.requestFocus();
+		}
+		else if (o.equals(btnThemMH)  && key == KeyEvent.VK_TAB) {
+			btnSuaMH.requestFocus();
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+				
 	}
 }

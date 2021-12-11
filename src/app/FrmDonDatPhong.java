@@ -668,6 +668,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 		removeDanhSachDDP(modelDDP);
 		loadDanhSachDDP(ddp);
+		
+		txtTenKH.requestFocus();
 	}
 
 
@@ -1195,6 +1197,9 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		
 		if(o.equals(txtTim) && key==KeyEvent.VK_ENTER)
 			btnTim.doClick();
+		
+		else if(o.equals(txtTim) && key == KeyEvent.VK_F5)
+			btnLamMoiDDP.doClick();
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {

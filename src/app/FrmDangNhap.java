@@ -253,9 +253,12 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		}
 		else {
 			NhanVien nv = daoNhanVien.getNVTheoTK(tk.getMaTK());
-			FrmQuanLy frmQL = new FrmQuanLy(nv);
-			frmQL.setVisible(true);
-			this.setVisible(false);
+			if(!nv.getTrangThaiLamViec().equalsIgnoreCase("Đã nghỉ việc")){
+				FrmQuanLy frmQL = new FrmQuanLy(nv);
+				frmQL.setVisible(true);
+				this.setVisible(false);
+			}
+			else JOptionPane.showMessageDialog(this, "Nhân viên đã nghỉ việc!\n Vui lòng đăng nhập tài khoản khác");
 		}
 		
 		

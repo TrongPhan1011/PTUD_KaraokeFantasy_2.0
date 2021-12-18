@@ -105,7 +105,7 @@ public class FrmHoaDon extends JFrame  implements ActionListener{
 			else txtHD.setText(txtHD.getText()+ "   "+stt+"   "+model.getValueAt(i, 0).toString()+"\t\t\t"+model.getValueAt(i, 2)+"\t   "+model.getValueAt(i, 3)+"\n");
 		}
 		txtHD.setText(txtHD.getText()+ "\t---------------------------------------\n");
-		txtHD.setText(txtHD.getText()+ "\t\t\tGiảm giá:         "+giamGia+"\n");
+		txtHD.setText(txtHD.getText()+ "\t\t\tGiảm giá:   "+giamGia+"\n");
 		txtHD.setText(txtHD.getText()+ "\t\t\tTiền thuê:        "+tongTien+"\n");
 		txtHD.setText(txtHD.getText()+ "\t\t\tThành tiền:       "+thanhTien+"\n");
 		txtHD.setText(txtHD.getText()+ "\t---------------------------------------\n");

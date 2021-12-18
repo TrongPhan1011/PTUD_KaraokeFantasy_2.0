@@ -53,6 +53,19 @@ public class DAODonDatPhong {
 		con.close();
 		return false;
 	}
+	public boolean capNhatTrangThaiDDP(String ma) throws SQLException {
+		Connection con = ConnectDB.getConnection();
+		String sql = "update DonDatPhong set TrangThaiDDP = N'Đã trả phòng' where maDDP = '"+ma+"'";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.close();
+		return false;
+	}
 
 	public ArrayList<DonDatPhong> getAllDanhSachDDP() {
 		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();

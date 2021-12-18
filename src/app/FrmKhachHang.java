@@ -1094,9 +1094,11 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	// Hiển thị thông tin khi chọn vào bảng
 	public void mouseClicked(MouseEvent e) {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(tableKH)) {
@@ -1104,17 +1106,35 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			txtHoTen.setText(modelKhachHang.getValueAt(row, 1).toString());
 			cboloaiKH.setSelectedItem(modelKhachHang.getValueAt(row, 2).toString());
 			txtSDT.setText(modelKhachHang.getValueAt(row, 6).toString());
-			txtCccd.setText(modelKhachHang.getValueAt(row, 7).toString());
+			if(modelKhachHang.getValueAt(row, 7) == null) {
+				txtCccd.setText("");
+			}
+			else
+				txtCccd.setText(modelKhachHang.getValueAt(row, 7).toString());
 			txtDiaChi.setText(modelKhachHang.getValueAt(row, 5).toString());
-			cbogioiTinh.setSelectedItem(modelKhachHang.getValueAt(row, 3).toString());
+			if(modelKhachHang.getValueAt(row, 3)== null) {
+				cbogioiTinh.setSelectedIndex(-1);
+			}else
+				cbogioiTinh.setSelectedItem(modelKhachHang.getValueAt(row, 3).toString());
 			txtPoint.setText(modelKhachHang.getValueAt(row, 9).toString());
-			String ngaySinh = modelKhachHang.getValueAt(row, 4).toString();
-			String ngayDangKy = modelKhachHang.getValueAt(row, 8).toString();
+			//modelKhachHang.getValueAt(row, 4)--> ngay sinh
+			//modelKhachHang.getValueAt(row, 8) --> ngay đk
+			
+			java.util.Date d = dNow;
+			java.util.Date d1 = dNow;
+			
+			// 
 
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			try {
-				java.util.Date d = df.parse(ngaySinh);
-				java.util.Date d1 = df.parse(ngayDangKy);
+				//java.util.Date d = df.parse(ngaySinh);
+				if(!modelKhachHang.getValueAt(row, 4).equals("")) {
+					d = df.parse(modelKhachHang.getValueAt(row, 4).toString());
+				}
+				if(!modelKhachHang.getValueAt(row, 8).equals("")) {
+					d = df.parse(modelKhachHang.getValueAt(row, 8).toString());
+				}
+				
+				
 				dateChooserNgaySinh.setDate(d);
 				dateChooserNgayDangKy.setDate(d1);
 			} catch (ParseException e1) {

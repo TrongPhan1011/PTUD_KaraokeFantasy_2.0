@@ -661,6 +661,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		nowMinutes = timeNow2.getMinutes();
 		cboGio.setSelectedItem(dftxtGio.format(nowHours));
 		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
+		
+		cboTrangThaiDDP.setSelectedItem("Chờ xác nhận");
 
 		bg.clearSelection();
 

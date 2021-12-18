@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -255,7 +256,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		txtSDT.setColumns(10);
 		txtSDT.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		txtSDT.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
-		txtSDT.setText("0944302210");
+		txtSDT.setText("0903142210");
 		pNhapThongTin.add(txtSDT);
 
 		lblDiaChi = new JLabel("Địa chỉ:");
@@ -660,6 +661,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		nowMinutes = timeNow2.getMinutes();
 		cboGio.setSelectedItem(dftxtGio.format(nowHours));
 		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
+		
+		cboTrangThaiDDP.setSelectedItem("Chờ xác nhận");
 
 		bg.clearSelection();
 
@@ -672,7 +675,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		txtTenKH.requestFocus();
 	}
 
-
 	/**
 	 * Hiển thị danh sách thông tin phòng trống và đã đặt gồm:
 	 * mã phòng, loại phòng, giá phòng, tình trạng phòng
@@ -683,22 +685,13 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		ArrayList<Phong> lstP = daoPhong.getPhongTrongVaDaDat();
 		for(Phong infoP : lstP) {
 			LoaiPhong lp = daoLoaiPhong.getLoaiPhongTheoMa(infoP.getLoaiPhong().getMaLoaiPhong());
+			String gia = dfGiaPhong.format(infoP.getGiaPhong());
 			modelPhong.addRow(new Object[] {
-					infoP.getMaPhong(), lp.getTenLoaiPhong(), dfGiaPhong.format(infoP.getGiaPhong()), infoP.getTinhTrangPhong()
+					infoP.getMaPhong(), lp.getTenLoaiPhong(), gia, infoP.getTinhTrangPhong()
 			});
 		}
-		for(int i=0; i<tblPhong.getRowCount(); i++) {
-			@SuppressWarnings("unused")
-			String loaiP = tblPhong.getValueAt(i, 1).toString();
-			//			while(loaiP.equals("Phòng VIP")) {
-			//				tblPhong.setBackground(Color.yellow);
-			//				break;
-			//			}
-			//			if(loaiP.equals("Phòng trung"))
-			//				tblPhong.setBackground(Color.blue);
-		}
+		changeColorRow(tblPhong);
 	}
-
 
 	/**
 	 * Hiển thị danh sách thông tin đơn đặt phòng, không hiển thị đơn đã hủy, thông tin gồm:
@@ -716,11 +709,34 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 					dfNgay.format(infoDDP.getNgayDen()), dfHienGio.format(infoDDP.getGioDen()), nv.getTenNhanVien(), dfNgay.format(infoDDP.getNgayLap()), infoDDP.getTrangThaiDDP()
 			});
 		}
-		//		for(int i=0; i<=tblPhong.getRowCount(); i++) {
-		//			String trangThaiP = tblPhong.getValueAt(i, 4).toString();
-		//			if(trangThaiP.equals("Đã đặt"))
-		//				tblPhong.setBackground(Color.yellow);
-		//		}
+		
+	}
+	
+	/**
+	 * Thay đổi màu của dòng trong bảng chọn phòng có trạng thái phòng "Đã đặt"
+	 * @param tb
+	 */
+	public void changeColorRow(JTable tb) {
+		tb.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+			private static final long serialVersionUID = 5206972278640725451L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table,
+		            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+		        String status = (String)table.getModel().getValueAt(row, 3);
+		        if ("Đã đặt".equals(status)) {
+		            setBackground(Color.yellow);
+		            setForeground(Color.red);
+		        } else {
+		            setBackground(table.getBackground());
+		            setForeground(table.getForeground());
+		        }       
+		        return this;
+		    }   
+		});
 	}
 
 	/**
@@ -739,7 +755,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 			});
 		}
 	}
-
 
 	/**
 	 * Hiện danh sách thông tin ĐĐP theo họ tên của KH
@@ -764,7 +779,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	@SuppressWarnings("deprecation")
 	private void choose1DDP() {
 		int selectedRow = tblDDP.getSelectedRow();
-		if(selectedRow>=0 && tblPhong.getSelectedRow()==-1) {
+		if((selectedRow>=0 && tblPhong.getSelectedRow()==-1) || (selectedRow>=0 && tblPhong.getSelectedRow()!=-1)) {
 			String maDDP = tblDDP.getValueAt(selectedRow, 0).toString();
 			String sdt = tblDDP.getValueAt(selectedRow, 3).toString();
 
@@ -791,7 +806,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 			}
 		}
 	}
-
 
 	/**
 	 * Sự kiện tìm kiếm thông tin ĐĐP theo họ tên và sđt của KH
@@ -856,7 +870,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		}
 	}
 
-
 	/**
 	 * Kiểm tra các thông tin khách hàng trước khi đặt đơn
 	 * Tìm kiếm KH theo sđt, nếu thông tin KH đã có trong dữ liệu thì hiện thông tin KH lên và đặt đơn
@@ -910,13 +923,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 								JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 							}
 
-							xoaTrang();
-							removeDanhSachPhong(modelPhong);
-							loadDSPhongTrongVaDaDat(p);
-							modelDDP.addRow(new Object[] {
-									phatSinhMaDDP, maPhongChon, kh.getTenKH(), sdt, 
-									dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
-							});
 						}
 
 						if(!daoKhachHang.checkSdtKH(sdt)) {	//kq=false thì thêm KH mới
@@ -931,11 +937,11 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 							}
-
-							xoaTrang();
-							removeDanhSachPhong(modelPhong);
-							loadDSPhongTrongVaDaDat(p);
 						}
+						
+						xoaTrang();
+						removeDanhSachPhong(modelPhong);
+						loadDSPhongTrongVaDaDat(p);
 						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
@@ -963,9 +969,11 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 			int minNow = dateNow.getMinutes();
 
 			if(ngayDen.equals(dNgayHienTai)) {
-				if(gio >= hourNow && phut >= minNow) 
+				if(gio>hourNow)
 					checkInfoKH();
-				else
+				if(gio==hourNow && phut>=minNow) 
+					checkInfoKH();
+				if(gio<hourNow || (gio==hourNow && phut<minNow))
 					JOptionPane.showMessageDialog(this, "Giờ đến phải được đặt sau hoặc ngay giờ hiện tại! \nGiờ hiện tại là: "+dfHienGio.format(dateNow), "Thông báo", JOptionPane.WARNING_MESSAGE);
 			}
 			if(ngayDen.after(dNgayHienTai)) 
@@ -987,7 +995,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private void updateDDP() throws SQLException { //thông tin KH trong ddp ko đc sửa
 		int row = tblDDP.getSelectedRow();
 		if(row>=0) {
-			int update = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa thông tin nhân viên này?", "Thông báo", JOptionPane.YES_NO_OPTION);
+			int update = JOptionPane.showConfirmDialog(this, "Bạn muốn sửa thông tin đơn đặt phòng này?", "Thông báo", JOptionPane.YES_NO_OPTION);
 			if(update == JOptionPane.YES_OPTION) {
 				String maDDP = tblDDP.getValueAt(row, 0).toString();
 				String maPhong = tblDDP.getValueAt(row, 1).toString();

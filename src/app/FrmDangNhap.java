@@ -189,6 +189,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		lblNhac2.setIcon(new ImageIcon(resizeNhac2));
 		
 		lblQuenMK = new JLabel("Quên mật khẩu?");
+		lblQuenMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblQuenMK.setForeground(Color.WHITE);
 		lblQuenMK.setFont(new Font("SansSerif", Font.ITALIC, 12));
 		lblQuenMK.setBounds(322, 288, 103, 14);

@@ -116,7 +116,7 @@ public class DAODonDatPhong {
 			e.printStackTrace();
 		}
 		return lsDDP;
-	} 
+	}
 
 	public DonDatPhong getDDPTheoMaPhong(String ma){
 		DonDatPhong ddp = new DonDatPhong();
@@ -151,7 +151,7 @@ public class DAODonDatPhong {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		try {
-			PreparedStatement ps = con.prepareStatement("select * from DonDatPhong where maKH = N'"+ma+"'");
+			PreparedStatement ps = con.prepareStatement("select * from DonDatPhong where maKH = N'"+ma+"' and TrangThaiDDP = N'Chờ xác nhận'");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				DonDatPhong ddp=new DonDatPhong();

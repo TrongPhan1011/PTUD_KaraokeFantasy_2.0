@@ -45,6 +45,7 @@ import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
+import java.awt.Cursor;
 
 public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,KeyListener {
 
@@ -125,6 +126,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 		getContentPane().add(lblSubQuenMK);
 		
 		btnDoiMK = new JButton("Đổi mật khẩu");
+		btnDoiMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDoiMK.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnDoiMK.setBackground(new Color(164, 44,167));
 		btnDoiMK.setBorder(new LineBorder(Color.WHITE, 2, true));
@@ -137,6 +139,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 		getContentPane().add(btnDoiMK);
 		
 		btnQuayLai = new JButton("Quay lại");
+		btnQuayLai.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnQuayLai.setBorder(new LineBorder(new Color(255, 255, 255), 2, true));

@@ -10,8 +10,8 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -63,14 +63,17 @@ import entity.LoaiKH;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
-public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener,KeyListener {
+public class FrmKhachHang extends JFrame implements ActionListener, MouseListener, ItemListener, FocusListener, KeyListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private String sHeaderMaNV;
+	@SuppressWarnings("unused")
 	private String sHeaderTenNV;
+	@SuppressWarnings("unused")
 	private Date dNgayHienTai;
 	private LocalDate now;
 	private int ngay;
@@ -137,11 +140,11 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		//dfNgayDangKy  = new SimpleDateFormat("dd/MM/yyyy");
 
 		// Giao dien
-		setLayout(null);
+		getContentPane().setLayout(null);
 		pMain = new Panel();
 		pMain.setBackground(Color.WHITE);
 		pMain.setBounds(0, 0, 1281, 629);
-		add(pMain);
+		getContentPane().add(pMain);
 		pMain.setLayout(null);
 
 		
@@ -319,25 +322,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		txtTK.setForeground(Colors.LightGray);
 		txtTK.setBorder(new LineBorder(new Color(114, 23, 153), 2, true));
 		txtTK.setBounds(421, 11, 526, 33);
-		txtTK.addFocusListener(new FocusAdapter() { // place holder
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
-					txtTK.setText("");
-					txtTK.setFont(new Font("SansSerif", Font.PLAIN, 15));
-					txtTK.setForeground(Color.BLACK);
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtTK.getText().equals("")) {
-					txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
-					txtTK.setText("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.");
-					txtTK.setForeground(Colors.LightGray);
-				}
-			}
-		});
 		pMain.add(txtTK);
 
 		// btnTim
@@ -544,8 +528,9 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		for (LoaiKH lkh : lsLoaiKH) {
 			cboloaiKH.addItem(lkh.getTenLoaiKH());
 		}
+		
 		// add actions
-		 dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
+		dfNgaySinh = new SimpleDateFormat("dd/MM/yyyy");
 		loadDanhSachKH();
 		btnThemKH.addActionListener(this);
 		btnXoaKH.addActionListener(this);
@@ -559,15 +544,12 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		rdoTheoLoaiKH.addActionListener(this);
 		cboSort.addActionListener(this);
 		
+		txtTK.addFocusListener(this);
 		txtTK.addKeyListener(this);
 		txtHoTen.addKeyListener(this);
 		txtSDT.addKeyListener(this);
 		txtDiaChi.addKeyListener(this);
 		txtCccd.addKeyListener(this);
-		
-
-
-
 	}
 
 	//end giao diện
@@ -716,7 +698,6 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)&& regex.regexDiaChi(txtDiaChi) ) {
 				if(tuoi >= 13) {
 					if(daoKhachHang.checkSdtKH(sdt)== false) {
-						@SuppressWarnings("deprecation")
 						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
 								gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
 						daoKhachHang.themDanhSachKH(kh);
@@ -807,7 +788,10 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	 */
 
 	public void resetAll() {
-		txtTK.setText("");
+		txtTK.setText("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.");
+		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
+		txtTK.setForeground(Colors.LightGray);
+		
 		txtHoTen.setText("");
 		txtSDT.setText("");
 		txtCccd.setText("");
@@ -1257,5 +1241,23 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		if (txtTK.getText().equals("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.")) {
+			txtTK.setText("");
+			txtTK.setFont(new Font("SansSerif", Font.PLAIN, 15));
+			txtTK.setForeground(Color.BLACK);
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		if (txtTK.getText().equals("")) {
+			txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
+			txtTK.setText("Tìm khách hàng theo mã, tên, sđt và loại khách hàng.");
+			txtTK.setForeground(Colors.LightGray);
+		}
 	}
 }

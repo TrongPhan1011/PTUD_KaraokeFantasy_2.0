@@ -591,7 +591,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	/**
 	 * Xóa trắng textfield và textarea, đặt lại mặc định các combobox và các button
 	 */
-	private void xoaTrang() {
+	private void resetAll() {
 		txtTim.setText("Tìm nhân viên theo mã nhân viên, tên nhân viên, sđt, ca làm việc.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
@@ -804,7 +804,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 							}
 
 							//them vao table  
-							xoaTrang();
+							resetAll();
 							modelNV.addRow(new Object[] {
 									phatSinhMaNV, hoTen, chucVu, gioiTinh, 
 									dfNgaySinh.format(chooserNgaySinh.getDate()), diaChi, sdt, cccd,
@@ -1127,7 +1127,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 
 		//làm mới
 		if(o.equals(btnLamMoiNV)) {
-			xoaTrang();
+			resetAll();
 			bg.clearSelection();
 			removeDanhSachNV(modelNV);
 			loadDanhSachNV(nv);

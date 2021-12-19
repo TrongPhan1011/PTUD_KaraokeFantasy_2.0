@@ -26,7 +26,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,33 +46,27 @@ import javax.swing.table.JTableHeader;
 
 import com.mindfusion.drawing.Colors;
 
-import connection.ConnectDB;
-import dao.DAOLoaiMH;
 import dao.DAOLoaiPhong;
-import dao.DAOMatHang;
 import dao.DAOPhatSinhMa;
 import dao.DAOPhong;
 import dao.Regex;
-import entity.KhachHang;
-import entity.LoaiKH;
-import entity.LoaiMatHang;
 import entity.LoaiPhong;
-import entity.NhanVien;
 import entity.Phong;
-import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
 
 public class FrmPhong extends JFrame implements ActionListener, MouseListener, ItemListener,KeyListener  {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private String sHeaderMaNV;
+	@SuppressWarnings("unused")
 	private String sHeaderTenNV;
 	private Panel pMain;
+	@SuppressWarnings("unused")
 	private Date dNgayHienTai;
 	private JTextField txtTK;
 	private JTextField txtTenP;
@@ -95,7 +88,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 	private DAOPhong daoPhong;
 	private DAOLoaiPhong daoLoaiP;
 	private DAOPhatSinhMa daoMa;
-	private DecimalFormat dfGiaP=new DecimalFormat("###,###");
+	private DecimalFormat dfGiaP, dftxtGiaP;
 	private Regex regex;
 	private ArrayList<LoaiPhong> loaiP;
 	private Phong p;
@@ -113,12 +106,15 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		daoLoaiP = new DAOLoaiPhong();
 		daoMa = new DAOPhatSinhMa();
 		regex = new Regex();
+		//dinh dang
+		dfGiaP=new DecimalFormat("###,###");
+		dftxtGiaP=new DecimalFormat("######");
 		//giao dien
-		setLayout(null);
+		getContentPane().setLayout(null);
 		pMain = new Panel();
 		pMain.setBackground(Color.WHITE);
 		pMain.setBounds(0, 0, 1281, 629);
-		add(pMain);
+		getContentPane().add(pMain);
 		pMain.setLayout(null);
 
 		pNhapThongTin = new JPanel();
@@ -340,11 +336,6 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		rdoTheoGiaP.setFont(new Font("SansSerif", Font.BOLD, 14));
 		rdoTheoGiaP.setBackground(new Color(171, 192, 238));
 		pSapXep.add(rdoTheoGiaP);
-
-
-
-
-
 
 		bgRdo=new ButtonGroup();
 		bgRdo.add(rdoTheoMaP);
@@ -628,9 +619,12 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 
 	//Làm mới
 	public void resetAll() {
+		txtTK.setText("Tìm theo mã phòng, loại phòng, tình trạng phòng");
+		txtTK.setFont(new Font("SansSerif", Font.ITALIC, 15));
+		txtTK.setForeground(Colors.LightGray);
+		
 		txtGiaPhong.setText("");
 		txtTenP.setText("");
-		txtTK.setText("");
 		cboLoaiP.setSelectedIndex(0);
 		cboSapXep.setSelectedIndex(0);
 		cboTinhTrangP.setSelectedIndex(0);
@@ -745,9 +739,17 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener, I
 		Object o = e.getSource();
 		if(o.equals(tblPhong)) {
 			int row = tblPhong.getSelectedRow();
+			String maPhong = tblPhong.getValueAt(row, 0).toString();
+			
 			txtTenP.setText(modelPhong.getValueAt(row, 0).toString());
 			cboLoaiP.setSelectedItem(modelPhong.getValueAt(row, 1));
-			txtGiaPhong.setText(modelPhong.getValueAt(row, 2).toString());
+			
+			ArrayList<Phong> lstPhong = daoPhong.getDanhSachPhong();
+			for(Phong p : lstPhong) {
+				if(maPhong.equals(p.getMaPhong())) 
+					txtGiaPhong.setText(dftxtGiaP.format(Math.round(p.getGiaPhong())));
+			}
+			
 			cboTinhTrangP.setSelectedItem(modelPhong.getValueAt(row, 3).toString());
 		}
 

@@ -1296,10 +1296,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 				cbbTenMH.addItem(mh.getTenMatHang());
 			}
 		}
-		if(o == cbbGioRa.getSelectedItem()|| o== cbbPhutRa.getSelectedItem() || o == cbbPhuThu.getSelectedItem()) {
-			/*
-			 * Nếu giờ ra != 0 hoặc phút ra  != 0 thì sẽ load thành tiền
-			 */
+		if(!lblMaPhong.getText().equals("")&&(o == cbbGioRa.getSelectedItem()|| o== cbbPhutRa.getSelectedItem() || o == cbbPhuThu.getSelectedItem())) {
+			
 			if(!cbbGioRa.getSelectedItem().toString().equalsIgnoreCase("0")||!cbbPhutRa.getSelectedItem().toString().equalsIgnoreCase("0"))
 				loadThanhTien();
 		}

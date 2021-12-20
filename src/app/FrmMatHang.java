@@ -96,8 +96,8 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 	public Panel getFrmMatHang() {
 		return this.pMain;
 	}
+	
 	public FrmMatHang(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
-		
 		/**
 		 * pMain
 		 */
@@ -241,10 +241,10 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 		
 		/**
 		 * Nút xuất file Excel
-		 * JButton btnExcels
+		 * JButton btnExcel
 		 * Icon iconExcel
 		 */
-		btnExcels = new FixButton("Xuất Excels");
+		btnExcels = new FixButton("Xuất Excel");
 		btnExcels.setForeground(Color.WHITE);
 		btnExcels.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnExcels.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
@@ -253,7 +253,6 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 		Icon iconExcel = IconFontSwing.buildIcon(FontAwesome.FILE_EXCEL_O, 20, Color.white);
 		btnExcels.setIcon(iconExcel);
 		pMain.add(btnExcels);
-
 
 		/**
 		 * Các buttons
@@ -405,7 +404,6 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 		lblBackGround.setIcon(new ImageIcon(resizeBG));
 		pMain.add(lblBackGround);
 
-
 		/**
 		 * Load loại mặt hàng vào ComboBox loại mặt hàng
 		 */
@@ -540,7 +538,6 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 		}
 		if(o.equals(cboSapXep)) {
 			bgRdo.clearSelection();
-			clearTable();
 		}
 		if(o.equals(btnExcels)) {
 			try {
@@ -553,12 +550,13 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 	/**
 	 * Thêm mặt hàng vào table và SQL Server
 	 */
+	@SuppressWarnings("unlikely-arg-type")
 	public void ThemMH() {
 		String maMH = daoPhatSinhMa.getMaMH();
 		String tenMH = txtTenMH.getText().trim();
 		String loaiMH = cboLoaiMH.getSelectedItem().toString();
 		String maLMH = daoLMH.getMaLoaiMHTheoTen(loaiMH);
-		if(txtTenMH.equals("") || txtSoLuong.equals("") || txtDonGia.equals("") ) {
+		if(tenMH.equals("") || txtSoLuong.equals("") || txtDonGia.equals("") ) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 			txtTenMH.requestFocus();
 		}else
@@ -748,7 +746,6 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 	@SuppressWarnings("unlikely-arg-type")
 	public void timMH() {
 		ArrayList<MatHang> lstMH = null;
-		ArrayList<MatHang> lstMH1 = null;
 		String input = txtTim.getText().trim();
 		String regexTenMH= "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
 		if(!txtTim.equals("") && !txtTim.getText().equals("Tìm mặt hàng theo tên mặt hàng, loại mặt hàng")) {
@@ -761,7 +758,10 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 				loadLoaiMH(lstMH);	
 			}else
 			if(lstMH.size() == 0)
-				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin phù hợp.");
+				JOptionPane.showMessageDialog(null,
+						"Thông tin tìm kiếm không hợp lệ!\nThông tin có thể tìm kiếm:\n - Tên mặt hàng. Ví dụ: Bia Heiniken,..."
+								+ "\n - Loại mặt hàng. Ví dụ: Đồ uống, đồ ăn.",
+						"Thông báo", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			clearTable();
@@ -823,7 +823,6 @@ public class FrmMatHang extends JFrame implements ActionListener, MouseListener,
 			try {
 				txtDonGia.setText(dfVND.parse(modelMatHang.getValueAt(row, 4).toString())+"");
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			cboLoaiMH.setSelectedItem(modelMatHang.getValueAt(row, 2).toString());

@@ -143,7 +143,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		daoMatHang = new DAOMatHang();
 		daoHoaDon = new DAOHoaDon();
 		daoPhong = new DAOPhong();
-		daoKH = new DAOKhachHang();
 
 		setLayout(null);
 		pMain = new Panel();

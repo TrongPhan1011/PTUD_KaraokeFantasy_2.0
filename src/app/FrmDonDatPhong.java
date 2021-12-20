@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-//import java.awt.event.ItemEvent;
-//import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
@@ -70,7 +68,6 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
 public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListener, KeyListener {
-
 	/**
 	 * 
 	 */
@@ -118,6 +115,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	public Panel getFrmDDP() {
 		return this.pMain;
 	}
+	
 	/**
 	 * Kế thừa tên và mã NV, ngày hiện tại của FrmQuanLy
 	 * @param sHeaderTenNV
@@ -867,7 +865,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						txtTenKH.setText(khachHang.getTenKH());
 						txtSDT.setText(khachHang.getSdt());
 						txtDiaChi.setText(khachHang.getDiaChi());
-						//chooserNgayDen.setDate(dNow);
 
 						loadDDPTheoTenKH(lstDDP);
 					}

@@ -189,6 +189,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		lblNhac2.setIcon(new ImageIcon(resizeNhac2));
 		
 		lblQuenMK = new JLabel("Quên mật khẩu?");
+		lblQuenMK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblQuenMK.setForeground(Color.WHITE);
 		lblQuenMK.setFont(new Font("SansSerif", Font.ITALIC, 12));
 		lblQuenMK.setBounds(322, 288, 103, 14);
@@ -253,9 +254,12 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		}
 		else {
 			NhanVien nv = daoNhanVien.getNVTheoTK(tk.getMaTK());
-			FrmQuanLy frmQL = new FrmQuanLy(nv);
-			frmQL.setVisible(true);
-			this.setVisible(false);
+			if(!nv.getTrangThaiLamViec().equalsIgnoreCase("Đã nghỉ việc")){
+				FrmQuanLy frmQL = new FrmQuanLy(nv);
+				frmQL.setVisible(true);
+				this.setVisible(false);
+			}
+			else JOptionPane.showMessageDialog(this, "Nhân viên đã nghỉ việc!\n Vui lòng đăng nhập tài khoản khác");
 		}
 		
 		

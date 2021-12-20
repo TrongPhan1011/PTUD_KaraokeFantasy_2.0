@@ -109,7 +109,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private int thang;
 	private int nam;
 	private Date dNow;
-	private SpringLayout springLayout;
 	private FixButton btnLamMoi;
 	private JDateChooser dateChooserThongKeNgayBatDau;
 	private JDateChooser dateChooserThongKeNgayKetThuc;
@@ -117,7 +116,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private DAOMatHang daoMatHang;
 	private DAOHoaDon daoHoaDon;
 	private DAOPhong daoPhong;
-	private DAOKhachHang daoKH;
 	private JButton btnExcels;
 	private DecimalFormat df;
 	private DecimalFormat dfs;

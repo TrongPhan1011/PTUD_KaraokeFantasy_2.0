@@ -377,7 +377,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnXoaMH.setIcon(iconXoaMH);
 		pDichVu.add(btnXoaMH);
 		
-		btnLamMoiMH = new FixButton("Làm mới");
+		btnLamMoiMH = new FixButton("Làm mới mặt hàng");
 		btnLamMoiMH.setForeground(Color.WHITE);
 		btnLamMoiMH.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnLamMoiMH.setBackground(new Color(114, 23, 153));
@@ -572,6 +572,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblThanhTien.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 20));
 		
 		btnLamMoiHD = new FixButton("Làm mới");
+		btnLamMoiHD.setToolTipText("Làm mới toàn bộ giao diện thanh toán");
 		btnLamMoiHD.setBounds(541, 55, 186, 33);
 		pThanhToan.add(btnLamMoiHD);
 		btnLamMoiHD.setForeground(Color.WHITE);
@@ -667,10 +668,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		btnLamMoiHD.addKeyListener(this);
 		btnLamMoiMH.addKeyListener(this);
 		txtTim.addKeyListener(this);
-		
-		
-		
-		
+
 	}
 
 	
@@ -884,7 +882,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		if(timRow() != -1) {
 			daoCTDDP.suaSoluongMH(ctddp.getDonDatPhong().getMaDDP(), ctddp.getMatHang().getMaMatHang(), getSoLuongMH());
 			modelMatHang.setValueAt(getSoLuongMH(),timRow(), 2);
-			double giaMoi = mh.getGiaMatHang()* getSoLuongMH();
+			double giaMoi = mh.getGiaMatHang()* Integer.parseInt(modelMatHang.getValueAt(timRow(), 2).toString());
 			modelMatHang.setValueAt(dfTable.format(giaMoi), timRow(), 4);
 			
 			
@@ -943,7 +941,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 			if(row > 0) {
 				daoCTDDP.suaSoluongMH(ctddp.getDonDatPhong().getMaDDP(), ctddp.getMatHang().getMaMatHang(), row);
 				modelMatHang.setValueAt(giamSL(),timRow(), 2);
-				double giaMoi = ctddp.getMatHang().getGiaMatHang()* ctddp.getSoLuongMH();
+				double giaMoi = ctddp.getMatHang().getGiaMatHang()* Integer.parseInt(modelMatHang.getValueAt(timRow(), 2).toString());
 				modelMatHang.setValueAt(dfTable.format(giaMoi), timRow(), 4);
 			}
 			else {
@@ -983,7 +981,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 						else if(soLuongMH <= soLuongTon) {
 								if(kiemTraMatHangTrongBang(ctddp,mh)) {
 									daoCTDDP.themCTDDP(ctddp);
-									double tongTien = mh.getGiaMatHang() * soLuongMH;
+									double tongTien = mh.getGiaMatHang() * ctddp.getSoLuongMH();
 									modelMatHang.addRow(new Object[] {
 										tenMH,loaiMH,ctddp.getSoLuongMH(),dfTable.format(Math.round( mh.getGiaMatHang())),dfTable.format(Math.round(tongTien))
 									});
@@ -1035,9 +1033,9 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	 * @return KhachHang
 	 */
 	public KhachHang capNhatKHThanhToan(KhachHang kh) {
-		if(!kh.getCccd().equalsIgnoreCase("")) {
+		if(kh.getCccd()!=null) {
 			int diemTichLuy = kh.getDiemTichLuy() + 1;
-			if(diemTichLuy >= 20) {
+			if(diemTichLuy >= 20&&!kh.getLoaiKH().getMaLoaiKH().equals("LKH003")) {
 				kh.setLoaiKH(new LoaiKH("LKH003"));
 				JOptionPane.showMessageDialog(this,"Khách hàng đã được nâng lên thành khách hàng VIP");
 			}
@@ -1099,6 +1097,13 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 					
 					daoKhachHang.suaThongTinKhachHang(capNhatKHThanhToan(kh));
 					daoPhong.capnhatTrangThaiPhong(p.getMaPhong(), "Trống");
+					DonDatPhong ddp = daoDDP.getDDPTheoMaPhong(p.getMaPhong());
+					try {
+						daoDDP.capNhatTrangThaiDDP(ddp.getMaDDP());
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(this, "Thanh toán thành công");
 					resetAll();
 				}
 				else JOptionPane.showMessageDialog(this, "Vui lòng chọn thời gian hợp lệ trước khi thanh toán!");
@@ -1167,6 +1172,19 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		lblThanhToanLoaiKH.setText("");
 		
 		
+	}
+	
+	public void lamMoiThanhToan() {
+		lblGiaPhong.setText("");
+		lblPhuThu.setText("");
+		lblThoiGian.setText("");
+		lblThanhTien.setText("");
+		cbbGioRa.setSelectedIndex(0);
+		cbbPhutRa.setSelectedIndex(0);
+		cbbPhuThu.setSelectedIndex(0);
+		
+		lblGiamGia.setText("");
+		lblThanhToanLoaiKH.setText("");
 	}
 	
 	public void xuatHoaDon() {
@@ -1240,9 +1258,11 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		
 		if(o.equals(btnThemMH)) {
 			themMHVaoCTDDP();
+			lamMoiThanhToan();
 		}
 		if(o.equals(btnXoaMH)) {
 			xoaCTDDP();
+			lamMoiThanhToan();
 		}
 		if(o.equals(btnThanhToan)) {
 			themHD();
@@ -1276,10 +1296,8 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 				cbbTenMH.addItem(mh.getTenMatHang());
 			}
 		}
-		if(o == cbbGioRa.getSelectedItem()|| o== cbbPhutRa.getSelectedItem() || o == cbbPhuThu.getSelectedItem()) {
-			/*
-			 * Nếu giờ ra != 0 hoặc phút ra  != 0 thì sẽ load thành tiền
-			 */
+		if(!lblMaPhong.getText().equals("")&&(o == cbbGioRa.getSelectedItem()|| o== cbbPhutRa.getSelectedItem() || o == cbbPhuThu.getSelectedItem())) {
+			
 			if(!cbbGioRa.getSelectedItem().toString().equalsIgnoreCase("0")||!cbbPhutRa.getSelectedItem().toString().equalsIgnoreCase("0"))
 				loadThanhTien();
 		}

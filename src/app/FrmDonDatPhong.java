@@ -645,14 +645,18 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	 * Xóa trắng textfield và textarea, đặt lại mặc định các combobox và các button
 	 */
 	@SuppressWarnings("deprecation")
-	private void xoaTrang() {
+	private void resetAll() {
 		txtTim.setText("Tìm đơn đặt phòng theo họ tên và sđt khách hàng, tìm khách hàng theo sđt.");
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 15));
 		txtTim.setForeground(Colors.LightGray);
-
+		
+		cboLoaiKH.setEnabled(true);
 		txtTenKH.setText("");
+		txtTenKH.setEditable(true);
 		txtSDT.setText("");
+		txtSDT.setEditable(true);
 		txtDiaChi.setText("");
+		txtDiaChi.setEditable(true);
 
 		chooserNgayDen.setDate(dNgayHienTai);
 
@@ -780,6 +784,14 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	private void choose1DDP() {
 		int selectedRow = tblDDP.getSelectedRow();
 		if((selectedRow>=0 && tblPhong.getSelectedRow()==-1) || (selectedRow>=0 && tblPhong.getSelectedRow()!=-1)) {
+			cboLoaiKH.setEnabled(false);
+			txtTenKH.setEditable(false);
+			txtTenKH.setForeground(Color.gray);
+			txtSDT.setEditable(false);
+			txtSDT.setForeground(Color.gray);
+			txtDiaChi.setEditable(false);
+			txtDiaChi.setForeground(Color.gray);
+			
 			String maDDP = tblDDP.getValueAt(selectedRow, 0).toString();
 			String sdt = tblDDP.getValueAt(selectedRow, 3).toString();
 
@@ -811,6 +823,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 	 * Sự kiện tìm kiếm thông tin ĐĐP theo họ tên và sđt của KH
 	 * Sự kiện tìm kiếm thông tin KH theo sđt của KH
 	 */
+	@SuppressWarnings("deprecation")
 	private void findKHVaDDP() {
 		String input = txtTim.getText().trim();
 		input = input.toUpperCase();
@@ -825,8 +838,6 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				for(KhachHang khachHang : lstKH1) {
 					ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDDPTheoMaKH(khachHang.getMaKhangHang());
 					if(input.equals(khachHang.getSdt())) {
-						//if(!daoKhachHang.checkSdtKH(input)) {
-
 						KhachHang kh = daoKhachHang.getKHTheoSDT(input);
 						LoaiKH lkh = daoLoaiKH.getLoaiKHTheoMaLoai(kh.getLoaiKH().getMaLoaiKH());
 
@@ -868,6 +879,16 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				}
 			}
 		}
+		
+		chooserNgayDen.setDate(dNgayHienTai);
+
+		timeNow2 = new java.util.Date();
+		nowHours = timeNow2.getHours();
+		nowMinutes = timeNow2.getMinutes();
+		cboGio.setSelectedItem(dftxtGio.format(nowHours));
+		cboPhut.setSelectedItem(dftxtPhut.format(nowMinutes));
+		
+		cboTrangThaiDDP.setSelectedItem("Chờ xác nhận");
 	}
 
 	/**
@@ -939,7 +960,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 							}
 						}
 						
-						xoaTrang();
+						resetAll();
 						removeDanhSachPhong(modelPhong);
 						loadDSPhongTrongVaDaDat(p);
 						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -1020,6 +1041,18 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 				String trangThaiDDP = cboTrangThaiDDP.getSelectedItem().toString();
 
+				ArrayList<KhachHang> lstKH = daoKhachHang.getMaVaSDTKH(sdt);
+				for(KhachHang khachHang : lstKH) {
+					if(sdt.equals(khachHang.getSdt())) {
+						LoaiKH loaiKH = daoLoaiKH.getLoaiKHTheoMaLoai(khachHang.getLoaiKH().getMaLoaiKH());
+
+						cboLoaiKH.setSelectedItem(loaiKH.getTenLoaiKH());
+						txtTenKH.setText(khachHang.getTenKH());
+						txtSDT.setText(khachHang.getSdt());
+						txtDiaChi.setText(khachHang.getDiaChi());
+					}
+				}
+				
 				DonDatPhong ddp=new DonDatPhong();
 				ddp.setNgayLap(ngayLap);
 				ddp.setGioDen(gioDen);
@@ -1042,6 +1075,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						maDDP, maPhong, kh.getTenKH(), kh.getSdt(),
 						dfNgay.format(ngayDen), dfHienGio.format(gioDen), nv.getTenNhanVien(), dfNgay.format(ngayLap), trangThaiDDP
 				});
+				JOptionPane.showMessageDialog(this, "Sửa thông tin đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
@@ -1146,7 +1180,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 		//làm mới
 		if(o.equals(btnLamMoiDDP)) {
-			xoaTrang();
+			resetAll();
 		}
 
 		//xóa chọn radbutton khi chọn combobox

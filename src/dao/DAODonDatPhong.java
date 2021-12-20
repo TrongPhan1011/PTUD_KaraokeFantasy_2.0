@@ -53,6 +53,19 @@ public class DAODonDatPhong {
 		con.close();
 		return false;
 	}
+	public boolean capNhatTrangThaiDDP(String ma) throws SQLException {
+		Connection con = ConnectDB.getConnection();
+		String sql = "update DonDatPhong set TrangThaiDDP = N'Đã trả phòng' where maDDP = '"+ma+"'";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.close();
+		return false;
+	}
 
 	public ArrayList<DonDatPhong> getAllDanhSachDDP() {
 		ArrayList<DonDatPhong> lsDDP = new ArrayList<DonDatPhong>();
@@ -103,7 +116,7 @@ public class DAODonDatPhong {
 			e.printStackTrace();
 		}
 		return lsDDP;
-	} 
+	}
 
 	public DonDatPhong getDDPTheoMaPhong(String ma){
 		DonDatPhong ddp = new DonDatPhong();
@@ -138,7 +151,7 @@ public class DAODonDatPhong {
 		ConnectDB.getinstance();
 		Connection con = ConnectDB.getConnection();
 		try {
-			PreparedStatement ps = con.prepareStatement("select * from DonDatPhong where maKH = N'"+ma+"'");
+			PreparedStatement ps = con.prepareStatement("select * from DonDatPhong where maKH = N'"+ma+"' and TrangThaiDDP = N'Chờ xác nhận'");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				DonDatPhong ddp=new DonDatPhong();

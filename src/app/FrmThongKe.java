@@ -109,7 +109,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private int thang;
 	private int nam;
 	private Date dNow;
-	private SpringLayout springLayout;
 	private FixButton btnLamMoi;
 	private JDateChooser dateChooserThongKeNgayBatDau;
 	private JDateChooser dateChooserThongKeNgayKetThuc;
@@ -117,7 +116,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private DAOMatHang daoMatHang;
 	private DAOHoaDon daoHoaDon;
 	private DAOPhong daoPhong;
-	private DAOKhachHang daoKH;
 	private JButton btnExcels;
 	private DecimalFormat df;
 	private DecimalFormat dfs;
@@ -127,6 +125,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	public Panel getFrmThongKe() {
 		return this.pMain;
 	}
+	@SuppressWarnings("deprecation")
 	public FrmThongKe(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
 		this.sHeaderMaNV = sHeaderMaNV;
 		this.sHeaderTenNV = sHeaderTenNV;
@@ -144,7 +143,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		daoMatHang = new DAOMatHang();
 		daoHoaDon = new DAOHoaDon();
 		daoPhong = new DAOPhong();
-		daoKH = new DAOKhachHang();
 
 		setLayout(null);
 		pMain = new Panel();
@@ -152,7 +150,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		pMain.setBounds(0, 0, 1281, 629);
 		add(pMain);
 		pMain.setLayout(null);
-		/////////////////////////////////////------------------------------------------
+
 		now = LocalDate.now();
 		ngay = now.getDayOfMonth();
 		thang = now.getMonthValue();
@@ -172,7 +170,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblNgayHienTai.setFont(new Font("SansSerif", Font.BOLD, 22));
 		lblNgayHienTai.setBounds(521, -2, 151, 41);
 		pMain.add(lblNgayHienTai);
-		/////////////////////////////////////------------------------------------------
+
 		JPanel pThongKe = new JPanel();
 		pThongKe.setBackground(new Color(238,239,243,90));
 		pThongKe.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, Color.BLACK));
@@ -199,45 +197,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblChonNgay.setBounds(25, 15, 100, 36);
 		pThongKe.add(lblChonNgay);
 
-		//		JLabel lblNgaySinh = new JLabel("Ngày sinh:");
-		//		lblNgaySinh.setFont(new Font("SansSerif", Font.BOLD, 15));
-		//		lblNgaySinh.setBounds(859, 65, 90, 18);
-		//		pMain.add(lblNgaySinh);
-
-		SqlDateModel modelNgaySinh=new SqlDateModel();
-		modelNgaySinh.setSelected(true);
-		//modelNgaySinh.setDate(2000, 0, 1); //month= 0+1 = 1
-		Properties p=new Properties();
-		p.put("text.day", "Day");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-		JDatePanelImpl panel=new JDatePanelImpl(modelNgaySinh, p);
-		JDatePickerImpl datePicker=new JDatePickerImpl(panel, new AbstractFormatter() {
-
-			/**
-			 *  thêm table ở đâu v
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object stringToValue(String text) throws ParseException {
-				//				text=new String("Chọn ngày");
-				//				return text;
-				return "";
-			}
-
-			@Override
-			public String valueToString(Object value) throws ParseException {
-				if(value != null) {
-					Calendar cal = (Calendar) value;
-					SimpleDateFormat format=new SimpleDateFormat("dd-MM-yyyy");
-					String strDate = format.format(cal.getTime());
-					return strDate;
-				}
-				return "";
-			}
-			
-		});
 		now = LocalDate.now();
 		ngay = now.getDayOfMonth();
 		thang = now.getMonthValue()-1;
@@ -247,7 +206,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		
 		dateChooserThongKeNgayBatDau = new JDateChooser();
 		dateChooserThongKeNgayBatDau.setDateFormatString("dd/MM/yyyy");
-		//dateChooserThongKeTheoNgay.setBorder(new LineBorder(new Color(114, 23, 153), 1, true));
+
 		dateChooserThongKeNgayBatDau.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		dateChooserThongKeNgayBatDau.getCalendarButton().setPreferredSize(new Dimension(30, 24));
 		dateChooserThongKeNgayBatDau.getCalendarButton().setBackground(new Color(102, 0, 153));
@@ -260,25 +219,13 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		pThongKe.add(dateChooserThongKeNgayBatDau);
 
 
-		//		ftfNgaySinh.setBounds(964, 62, 100, 25);
-		//		ftfNgaySinh.setEditable(false);
-		//		pMain.add(ftfNgaySinh);
-		//		
-		
-
 		
 		btnTK = new FixButton("Thống kê");
-
 		btnTK.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		//		btnTK.setFont(new Font("SansSerif", Font.ITALIC, 25));
 		btnTK.setForeground(Color.WHITE);
 		btnTK.setFont(new Font("SansSerif", Font.BOLD, 20));
-		//		btnTK.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnTK.setBackground(new Color(114, 23, 153));
 		btnTK.setBounds(10, 112, 300, 36);
-//		Image imgLamMoiKH = Toolkit.getDefaultToolkit().getImage("data\\img\\iconThongKe.png");
-//		Image resizeImgLamMoiKH = imgLamMoiKH.getScaledInstance(25, 25, 0);
-//		btnTK.setIcon(new ImageIcon(resizeImgLamMoiKH));
 		Icon iconChart = IconFontSwing.buildIcon(FontAwesome.BAR_CHART, 20, Color.white);
 		btnTK.setIcon(iconChart);
 		pThongKe.add(btnTK);
@@ -286,10 +233,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		btnLamMoi = new FixButton("Làm mới");
 
 		btnLamMoi.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		//		btnTK.setFont(new Font("SansSerif", Font.ITALIC, 25));
 		btnLamMoi.setForeground(Color.WHITE);
 		btnLamMoi.setFont(new Font("SansSerif", Font.BOLD, 20));
-		//		btnTK.setBorder(new LineBorder(new Color(0, 146, 182), 2, true));
 		btnLamMoi.setBackground(new Color(114, 23, 153));
 		btnLamMoi.setBounds(10, 153, 300, 36);
 		Icon iconLamMoi = IconFontSwing.buildIcon(FontAwesome.REFRESH, 20, Color.white);
@@ -360,8 +305,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblDollar.setForeground(Color.ORANGE);
 		lblDollar.setBounds(107, 11, 226, 87);
 		pTongDoanhThu.add(lblDollar);
-		Icon iconSoKH = IconFontSwing.buildIcon(FontAwesome.USERS, 60, new Color(0, 172, 234));
-		Icon iconSoMH = IconFontSwing.buildIcon(FontAwesome.GLASS, 60, Colors.LightGray);
 
 		JPanel pTgPhongSD = new JPanel();
 		pTgPhongSD.setBackground(new Color(238,239,243,90));
@@ -404,11 +347,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		pMain.add(lblBackGround);
 		
 
-		///Jchart
-		
-	
-		
-
 
 		///ActionListener
 		btnExcels.addActionListener(this);
@@ -423,8 +361,10 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	}
 	//số tiền thuê
 	public double tinhTienThue(double giaPhong, HoaDon hd) {
+		@SuppressWarnings("deprecation")
 		int gioVao = hd.getGioVao().getHours(),
 				phutVao = hd.getGioVao().getMinutes();
+		@SuppressWarnings("deprecation")
 		int gioRa = hd.getGioRa().getHours(),
 				phutRa = hd.getGioRa().getMinutes();
 
@@ -474,7 +414,9 @@ public class FrmThongKe extends JFrame implements ActionListener{
 			giaPhong = giaPhuThu + giaPhong;
 			double tongTienThue = tinhTienThue(giaPhong, hd);
 
+			@SuppressWarnings("unused")
 			int tongGioThue = (int) ((tongTienThue)/giaPhong);
+			@SuppressWarnings("unused")
 			int tongPhutThue = (int) (((tongTienThue*60)/giaPhong) % 60);
 
 
@@ -511,6 +453,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		else JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!");
 	}
 
+	@SuppressWarnings({ "unused", "deprecation" })
 	public void xuatDoanhThu(ArrayList<HoaDon> lsHD,String path) throws IOException {
 		Workbook workbook = null;
 		 
@@ -541,9 +484,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
    
 		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
 		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
-		@SuppressWarnings("deprecation")
+
 		Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-		@SuppressWarnings("deprecation")
 		Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 		long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
 		
@@ -604,6 +546,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void xuatSoGio(ArrayList<HoaDon> lsHD,String path) throws IOException {
 		Workbook workbook = null;
 		 
@@ -634,9 +577,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
    
 		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
 		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
-		@SuppressWarnings("deprecation")
+
 		Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-		@SuppressWarnings("deprecation")
 		Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 		long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
 		for(int i = 0;i<=noDay;i++) {
@@ -681,13 +623,13 @@ public class FrmThongKe extends JFrame implements ActionListener{
 
 
 	//load thống kê số giờ đã sử dụng cho các phòng
+	@SuppressWarnings("deprecation")
 	public void loadThongKeSoGio() {
 		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
 		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
 		
-		@SuppressWarnings("deprecation")
+
 		Date ngayBatDau = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-		@SuppressWarnings("deprecation")
 		Date ngayKetThuc = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 		ArrayList<HoaDon> lstHD = daoHoaDon.getHDTheoNgay(ngayBatDau, ngayKetThuc);
 		if(ngayBatDau.before(ngayKetThuc)||ngayBatDau.equals(ngayKetThuc)) {
@@ -742,14 +684,14 @@ public class FrmThongKe extends JFrame implements ActionListener{
         return barChart;
 	}
 	 
-	 public CategoryDataset createDataset() throws RemoteException {
+	 @SuppressWarnings({ "unused", "deprecation" })
+	public CategoryDataset createDataset() throws RemoteException {
 		 final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		 
 			java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
 			java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
-			@SuppressWarnings("deprecation")
+
 			Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-			@SuppressWarnings("deprecation")
 			Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 			long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
 			for(int i = 0;i<=noDay;i++) {
@@ -817,14 +759,14 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	        return chart;
 		}
 		 
-		 public PieDataset  createDatasetGio() throws RemoteException {
+		 @SuppressWarnings("deprecation")
+		public PieDataset  createDatasetGio() throws RemoteException {
 			 final DefaultPieDataset  dataset = new DefaultPieDataset ();
 			
 				java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
 				java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
-				@SuppressWarnings("deprecation")
+
 				Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-				@SuppressWarnings("deprecation")
 				Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
 				long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
 				for(int i = 0;i<=noDay;i++) {

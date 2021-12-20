@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-//import java.awt.event.ItemEvent;
-//import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
@@ -65,7 +63,6 @@ import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
 public class FrmNhanVien extends JFrame implements ActionListener, MouseListener, FocusListener, KeyListener {
-
 	/**
 	 * 
 	 */
@@ -581,8 +578,6 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 	 * @param defaultTableModel trả về modelNV
 	 */
 	private void removeDanhSachNV(DefaultTableModel defaultTableModel) {
-		//DefaultTableModel dtm = (DefaultTableModel) tableNV.getModel();
-		//dtm.getDataVector().removeAllElements();
 		while(tblNV.getRowCount() > 0){
 			modelNV.removeRow(0);
 		}
@@ -758,7 +753,7 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 		int caLamViec = Integer.parseInt((String) cboCaLamViec.getSelectedItem());
 
 		TaiKhoan tk=new TaiKhoan(phatSinhMaNV);
-		String matKhau = phatSinhMaNV.concat(sdt); //String matKhau = ""+phatSinhMaNV +sdt;
+		String matKhau = phatSinhMaNV.concat(sdt);
 
 		if(hoTen.equals("") || sdt.equals("") || diaChi.equals("") || cccd.equals("")) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ!", "Thông báo", JOptionPane.WARNING_MESSAGE);

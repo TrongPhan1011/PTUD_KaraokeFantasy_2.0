@@ -711,12 +711,10 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			int namDangKy = dateChooserNgayDangKy.getDate().getYear();
 			int diemTichLuy = 0;
 			int tuoi = nam - namSinh;
-			
-			//System.out.println(daoKhachHang.matchedSdtKH(sdt));
+
 			if (regex.regexTen(txtHoTen) && regex.regexSDT(txtSDT) && regex.regexCCCD(txtCccd)&& regex.regexDiaChi(txtDiaChi) ) {
 				if(tuoi >= 13) {
 					if(daoKhachHang.checkSdtKH(sdt)== false) {
-						@SuppressWarnings("deprecation")
 						KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, cccd, new Date(namSinh, thangSinh, ngaySinh),
 								gioiTinh, diemTichLuy, new Date(ngayDangKy, thangDangKy, namDangKy), loaiKH);
 						daoKhachHang.themDanhSachKH(kh);
@@ -1117,16 +1115,13 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 			}else
 				cbogioiTinh.setSelectedItem(modelKhachHang.getValueAt(row, 3).toString());
 			txtPoint.setText(modelKhachHang.getValueAt(row, 9).toString());
-			//modelKhachHang.getValueAt(row, 4)--> ngay sinh
-			//modelKhachHang.getValueAt(row, 8) --> ngay đk
-			
+
 			java.util.Date d = dNow;
 			java.util.Date d1 = dNow;
 			
 			// 
 
 			try {
-				//java.util.Date d = df.parse(ngaySinh);
 				if(!modelKhachHang.getValueAt(row, 4).equals("")) {
 					d = df.parse(modelKhachHang.getValueAt(row, 4).toString());
 				}

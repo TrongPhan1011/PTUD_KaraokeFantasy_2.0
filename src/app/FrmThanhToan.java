@@ -75,7 +75,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	 */
 	private static final long serialVersionUID = 1L;
 	private String sHeaderMaNV;
-	private String sHeaderTenNV;
 	private Date dNgayHienTai;
 	private JFrame frm;
 	private Panel pMain;
@@ -137,7 +136,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 	public FrmThanhToan(JFrame frm,String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai)  {
 		
 		this.sHeaderMaNV = sHeaderMaNV;
-		this.sHeaderTenNV = sHeaderTenNV;
 		this.dNgayHienTai = dNgayHienTai;
 		this.frm = frm;
 		
@@ -1317,9 +1315,7 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 		txtSoLuong.setText(modelMatHang.getValueAt(row,2).toString());
 		}
 		if(o.equals(txtTim)) {
-			/*
-			 *thay đổi lại font của txt tìm kiếm
-			 */
+			
 			txtTim.setFont(new Font("SansSerif", Font.PLAIN, 14));
 			txtTim.setText("");
 			txtTim.setForeground(Color.black);
@@ -1329,7 +1325,6 @@ public class FrmThanhToan extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

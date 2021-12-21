@@ -42,13 +42,10 @@ import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 
 import connection.ConnectDB;
-import dao.DAOCTDDP;
 import dao.DAOCTHD;
-import dao.DAODonDatPhong;
 import dao.DAOHoaDon;
 import dao.DAOKhachHang;
 import dao.DAOLoaiMH;
-import dao.DAOLoaiPhong;
 import dao.DAOMatHang;
 import dao.DAONhanVien;
 import dao.DAOPhong;
@@ -88,9 +85,6 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	private DAOHoaDon daoHD;
 	private DAOLoaiMH daoLoaiMH;
 	private DAOMatHang daoMatHang;
-	private DAOCTDDP daoCTDDP;
-	private DAOLoaiPhong daoLoaiPhong;
-	private DAODonDatPhong daoDDP;
 	private DAOPhong daoPhong;
 	private DAOKhachHang daoKhachHang;
 	private DAONhanVien daoNhanVien;
@@ -99,8 +93,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	private JLabel lblTrangThai;
 	private JLabel lblGiaPhong;
 	private JLabel lblMaPhong;
-	private JLabel lblMaKH;
-	private JLabel lblTenKH;
+	
 	private JLabel lblGioVao;
 	private JLabel lblPhutVao;
 	private JLabel lblGioRa;
@@ -120,6 +113,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 
 
 
+	@SuppressWarnings("deprecation")
 	public FrmDanhSachHoaDon(JFrame frm) {
 		this.frm = frm;
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -142,9 +136,6 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		daoCTHD = new DAOCTHD();
 		daoLoaiMH = new DAOLoaiMH();
 		daoMatHang = new DAOMatHang();
-		daoCTDDP = new DAOCTDDP();
-		daoLoaiPhong = new DAOLoaiPhong();
-		daoDDP = new DAODonDatPhong();
 		daoPhong = new DAOPhong();
 		daoKhachHang =  new DAOKhachHang();
 		daoHD = new DAOHoaDon();
@@ -231,6 +222,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		chooserNgayBatDau.setDate(dNow);
 		pSapXep.add(chooserNgayBatDau);
 		
+		@SuppressWarnings("unused")
 		ButtonGroup bg = new ButtonGroup();
 		
 		btnExcels = new FixButton("Xuất Excels");

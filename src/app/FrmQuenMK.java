@@ -2,7 +2,7 @@ package app;
 
 
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -29,13 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 
 import connection.ConnectDB;
 import dao.DAONhanVien;
@@ -45,7 +39,6 @@ import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import java.awt.Cursor;
 
 public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,KeyListener {
 
@@ -245,6 +238,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 	   }
 
 	
+	@SuppressWarnings("deprecation")
 	public boolean kiemTraRong() {
 		if(txtTaiKhoan.getText().trim().length() == 0||txtSDT.getText().trim().length() == 0||pwMatKhauMoi.getText().trim().length() == 0||pwXacNhan.getText().trim().length() == 0) {
 			return true;
@@ -261,6 +255,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 
 	
 	//Kiểm tra đăng nhập
+	@SuppressWarnings("deprecation")
 	public void doiMK() {
 		
 		String maTK = txtTaiKhoan.getText().toString().trim();
@@ -334,7 +329,7 @@ public class FrmQuenMK extends JFrame implements ActionListener,MouseListener,Ke
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Object o = e.getSource();
+	
 	
 	}
 

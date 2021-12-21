@@ -18,30 +18,21 @@ import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Properties;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -50,9 +41,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.SqlDateModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -65,27 +53,17 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-import com.mindfusion.drawing.Colors;
-import com.toedter.calendar.DateUtil;
 import com.toedter.calendar.JDateChooser;
 
 import connection.ConnectDB;
 import dao.DAOCTHD;
 import dao.DAOHoaDon;
-import dao.DAOKhachHang;
-import dao.DAOLoaiKH;
 import dao.DAOMatHang;
 import dao.DAOPhong;
 import entity.CTHD;
 import entity.HoaDon;
-import entity.KhachHang;
 import entity.MatHang;
-import entity.NhanVien;
 import entity.Phong;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
 
@@ -97,10 +75,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String sHeaderMaNV;
-	private String sHeaderTenNV;
 	private Panel pMain;
-	private Date dNgayHienTai;
 	private JButton btnTK;
 	private JButton btnTongDoanhThu;
 	private JButton btnTGHD;
@@ -127,9 +102,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	}
 	@SuppressWarnings("deprecation")
 	public FrmThongKe(String sHeaderTenNV, String sHeaderMaNV, Date dNgayHienTai) {
-		this.sHeaderMaNV = sHeaderMaNV;
-		this.sHeaderTenNV = sHeaderTenNV;
-		this.dNgayHienTai = dNgayHienTai;
+		
 
 		//connect database
 		try {
@@ -138,7 +111,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 
-		//khai báo DAO
 		daoCTHD = new DAOCTHD();
 		daoMatHang = new DAOMatHang();
 		daoHoaDon = new DAOHoaDon();
@@ -270,7 +242,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblNgyKtThc.setBounds(25, 62, 100, 36);
 		pThongKe.add(lblNgyKtThc);
 
-		/////////////////////////////////
 		JPanel pTongDoanhThu = new JPanel();
 		pTongDoanhThu.setBackground(new Color(238,239,243,90));
 		pTongDoanhThu.setBorder(new TitledBorder(new LineBorder(new Color(114, 23 ,153), 1, true), "", TitledBorder.LEFT, TitledBorder.TOP, null, Color.BLACK));

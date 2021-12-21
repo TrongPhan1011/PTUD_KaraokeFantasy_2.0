@@ -2,6 +2,7 @@ package app;
 
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -30,20 +31,15 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import connection.ConnectDB;
 import dao.DAONhanVien;
 import dao.DAOTaiKhoan;
-import dao.Regex;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import jiconfont.icons.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import java.awt.Cursor;
 
 public class FrmDangNhap extends JFrame implements ActionListener,MouseListener, KeyListener {
 
@@ -52,7 +48,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 	private JTextField txtTaiKhoan;
 	private JButton btnThoat;
 	private JButton btnDangNhap;
-	private Regex regex;
+	
 	private DAONhanVien daoNhanVien;
 	private DAOTaiKhoan daoTK;
 	private JPasswordField txtMatKhau;
@@ -102,7 +98,6 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		
 		daoNhanVien = new DAONhanVien();
 		daoTK = new DAOTaiKhoan();
-		regex = new Regex();
 		
 		
 		

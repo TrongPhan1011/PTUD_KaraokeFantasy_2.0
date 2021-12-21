@@ -336,6 +336,7 @@ public class DAOHoaDon {
 	
 
 	
+	@SuppressWarnings("deprecation")
 	public Integer	 demSoKH(Date ngayBatDau,Date ngayKetThuc) {
 
 		//ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
@@ -360,9 +361,9 @@ public class DAOHoaDon {
 
 	}
 	
+	@SuppressWarnings("deprecation")
 	public Integer demSoMH(Date ngayBatDau,Date ngayKetThuc) {
 
-		//ArrayList<HoaDon> lsHD = new ArrayList<HoaDon>();
 		String ngayBD = (ngayBatDau.getYear()+1900) +"/"+ (ngayBatDau.getMonth()+1) +"/"+ngayBatDau.getDate();
 		String ngayKT = (ngayKetThuc.getYear()+1900) +"/"+ (ngayKetThuc.getMonth()+1) +"/"+ngayKetThuc.getDate();
 

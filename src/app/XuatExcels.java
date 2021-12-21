@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,18 +19,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-
-import dao.DAOCTDDP;
-import dao.DAOCTHD;
-import dao.DAODonDatPhong;
-import dao.DAOHoaDon;
 import dao.DAOKhachHang;
-import dao.DAOLoaiMH;
-import dao.DAOLoaiPhong;
-import dao.DAOMatHang;
 import dao.DAONhanVien;
-import dao.DAOPhong;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.NhanVien;
@@ -41,30 +28,14 @@ import entity.NhanVien;
 public class XuatExcels {
 	
 	
-	private DAOHoaDon daoHD;
-	private DAOCTHD daoCTHD;
-	private DAOLoaiMH daoLoaiMH;
-	private DAOMatHang daoMatHang;
-	private DAOCTDDP daoCTDDP;
-	private DAOLoaiPhong daoLoaiPhong;
-	private DAODonDatPhong daoDDP;
-	private DAOPhong daoPhong;
+
 	private DAOKhachHang daoKhachHang;
 	private DAONhanVien daoNhanVien;
 	private SimpleDateFormat sf;
 	private SimpleDateFormat sdf;
 	
 	public XuatExcels() {
-		 daoHD = new DAOHoaDon();
-			daoCTHD = new DAOCTHD();
-			daoLoaiMH = new DAOLoaiMH();
-			daoMatHang = new DAOMatHang();
-			daoCTDDP = new DAOCTDDP();
-			daoLoaiPhong = new DAOLoaiPhong();
-			daoDDP = new DAODonDatPhong();
-			daoPhong = new DAOPhong();
 			daoKhachHang =  new DAOKhachHang();
-			daoHD = new DAOHoaDon();
 			daoNhanVien = new DAONhanVien();
 			sf = new SimpleDateFormat("dd/MM/yyyy");
 			sdf = new SimpleDateFormat("HH:mm");

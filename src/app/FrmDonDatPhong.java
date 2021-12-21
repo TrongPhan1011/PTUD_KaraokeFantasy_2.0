@@ -898,7 +898,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		String hoTen = txtTenKH.getText();
 		String sdt = txtSDT.getText();
 		String diaChi = txtDiaChi.getText();
-		if(hoTen!=null && sdt!=null && diaChi!=null) {
+		if(!hoTen.equals("") && !sdt.equals("") && !diaChi.equals("")) {
 			String phatSinhMaDDP = daoPhatSinhMa.getMaDDP();
 			String loaiKH = cboLoaiKH.getSelectedItem().toString();
 			String trangThaiDDP = cboTrangThaiDDP.getSelectedItem().toString();

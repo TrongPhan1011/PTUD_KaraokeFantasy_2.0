@@ -994,10 +994,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				if(gio<hourNow || (gio==hourNow && phut<minNow))
 					JOptionPane.showMessageDialog(this, "Giờ đến phải được đặt sau hoặc ngay giờ hiện tại! \nGiờ hiện tại là: "+dfHienGio.format(dateNow), "Thông báo", JOptionPane.WARNING_MESSAGE);
 			}
-			if(ngayDen.after(dNgayHienTai)) 
-				checkInfoKH();
-			if(!ngayDen.equals(dNgayHienTai) && ngayDen.before(dNgayHienTai)) 
-				JOptionPane.showMessageDialog(this, "Ngày đến phải lớn hơn hoặc bằng ngày hôm nay! \nNgày hôm nay là: " +dfNgay.format(dNgayHienTai), "Thông báo", JOptionPane.WARNING_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(this, "Ngày đến phải đặt trong ngày hôm nay! \nNgày hôm nay là: " +dfNgay.format(dNgayHienTai), "Thông báo", JOptionPane.WARNING_MESSAGE);
 
 			removeDanhSachDDP(modelDDP);
 			loadDanhSachDDP(ddp);

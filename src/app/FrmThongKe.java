@@ -96,6 +96,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 	private DecimalFormat dfs;
 	private SimpleDateFormat sf;
 	private JPanel pBieuDo;
+	private JLabel lblNgayHienTai;
 
 	public Panel getFrmThongKe() {
 		return this.pMain;
@@ -116,11 +117,11 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		daoHoaDon = new DAOHoaDon();
 		daoPhong = new DAOPhong();
 
-		setLayout(null);
+		getContentPane().setLayout(null);
 		pMain = new Panel();
 		pMain.setBackground(Color.WHITE);
 		pMain.setBounds(0, 0, 1281, 629);
-		add(pMain);
+		getContentPane().add(pMain);
 		pMain.setLayout(null);
 
 		now = LocalDate.now();
@@ -137,11 +138,13 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		lblHeaderDate.setBounds(334, 0, 221, 41);
 		pMain.add(lblHeaderDate);
 
-		JLabel lblNgayHienTai = new JLabel(ngay+" / "+thang+" / "+nam);
+		lblNgayHienTai = new JLabel();
 		lblNgayHienTai.setForeground(Color.BLACK);
-		lblNgayHienTai.setFont(new Font("SansSerif", Font.BOLD, 22));
-		lblNgayHienTai.setBounds(521, -2, 151, 41);
+		lblNgayHienTai.setFont(new Font("SansSerif", Font.ITALIC, 22));
+		lblNgayHienTai.setBounds(521, -2, 267, 41);
 		pMain.add(lblNgayHienTai);
+		
+		
 
 		JPanel pThongKe = new JPanel();
 		pThongKe.setBackground(new Color(238,239,243,90));
@@ -849,6 +852,8 @@ public  void xuatExcelsSoGio() throws IOException {
 			Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
 			@SuppressWarnings("deprecation")
 			Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
+			lblNgayHienTai.setText(sf.format(ngayden)+" - "+sf.format(ngayKT));
+			
 			long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
 				if(noDay < 32) {
 					loadThongKeDoanhThu();

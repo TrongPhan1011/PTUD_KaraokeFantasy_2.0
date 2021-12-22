@@ -79,6 +79,7 @@ public class FrmDangNhap extends JFrame implements ActionListener,MouseListener,
 		ImageIcon logoApp = (ImageIcon) IconFontSwing.buildIcon(FontAwesome.FOURSQUARE, 50, new Color(164, 44,167));
 		setIconImage(logoApp.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setTitle("Đăng nhập Karaoke Fantasy");
 		setSize(500,500);
 		setLocationRelativeTo(null);

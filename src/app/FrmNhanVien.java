@@ -896,7 +896,8 @@ public class FrmNhanVien extends JFrame implements ActionListener, MouseListener
 					JOptionPane.showMessageDialog(null, "Chỉnh sửa thông tin thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}else
+		}
+		else
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin nhân viên cần sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	}
 

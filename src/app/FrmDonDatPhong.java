@@ -828,11 +828,12 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 		String regexTenKH= "^[ A-Za-za-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$";
 		String regexSDT  = "^(0[0-9]{9})$";
 
-		ArrayList<KhachHang> lstKH1 = daoKhachHang.getMaVaSDTKH(input);
-		ArrayList<KhachHang> lstKH2 = daoKhachHang.getTenKH(input);
+		ArrayList<KhachHang> lstKH1 = null;
+		ArrayList<KhachHang> lstKH2 = null;
 
 		if(regex.regexTimDDPTheoKH(txtTim)) {
 			if(input.matches(regexSDT)) {
+				lstKH1 = daoKhachHang.getMaVaSDTKH(input);
 				for(KhachHang khachHang : lstKH1) {
 					ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDDPTheoMaKH(khachHang.getMaKhangHang());
 					if(input.equals(khachHang.getSdt())) {
@@ -843,18 +844,18 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						txtTenKH.setText(khachHang.getTenKH());
 						txtSDT.setText(khachHang.getSdt());
 						txtDiaChi.setText(khachHang.getDiaChi());
-						//chooserNgayDen.setDate(dNow);
 
 						loadDDPTheoSdtKH(lstDDP);
 					}
-					if(lstKH1.size()==0) {
-						JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-						txtTim.requestFocus();
-						txtTim.selectAll();
-					}
+				}
+				if(lstKH1.size()==0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+					txtTim.requestFocus();
+					txtTim.selectAll();
 				}
 			}
-			if(input.matches(regexTenKH)) {
+			else if(input.matches(regexTenKH)) {
+				lstKH2 = daoKhachHang.getTenKH(input);
 				for(KhachHang khachHang : lstKH2) {
 					ArrayList<DonDatPhong> lstDDP = daoDonDatPhong.getDDPTheoMaKH(khachHang.getMaKhangHang());
 					if(daoKhachHang.getTenKH(input) != null) {
@@ -868,11 +869,11 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 
 						loadDDPTheoTenKH(lstDDP);
 					}
-					if(lstKH2.size()==0) {
-						JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-						txtTim.requestFocus();
-						txtTim.selectAll();
-					}
+				}
+				if(lstKH2.size()==0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin tìm kiếm phù hợp!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+					txtTim.requestFocus();
+					txtTim.selectAll();
 				}
 			}
 		}
@@ -934,8 +935,20 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 							//them vao data
 							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, kh, nv, p);
 							try {
-								daoDonDatPhong.themDDP(ddp);
-								daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
+								if(trangThaiDDP.equals("Chờ xác nhận")) {
+									daoDonDatPhong.themDDP(ddp);
+									daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
+									resetAll();
+									JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+								}
+								if(trangThaiDDP.equals("Đã xác nhận")) {
+									daoDonDatPhong.themDDP(ddp);
+									daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đang hoạt động");
+									resetAll();
+									JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+								}
+								if(trangThaiDDP.equals("Hủy") || trangThaiDDP.equals("Đã trả phòng"))
+									JOptionPane.showMessageDialog(this, "Không được thêm đơn đặt phòng có trạng thái đơn là hủy hoặc đã trả phòng!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 							}catch (SQLException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -944,23 +957,39 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 						}
 
 						if(!daoKhachHang.checkSdtKH(sdt)) {	//kq=false thì thêm KH mới
-							KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
-							daoKhachHang.themDanhSachKH(newKH);
-
-							DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, newKH, nv, p);
 							try {
-								daoDonDatPhong.themDDP(ddp);
-								daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
+								if(trangThaiDDP.equals("Chờ xác nhận")) {
+									KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
+									daoKhachHang.themDanhSachKH(newKH);
+									
+									DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, newKH, nv, p);
+									daoDonDatPhong.themDDP(ddp);
+									daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đã đặt");
+									
+									resetAll();
+									JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+								}
+								if(trangThaiDDP.equals("Đã xác nhận")) {
+									KhachHang newKH = new KhachHang(phatSinhMaKH, new LoaiKH(daoLoaiKH.getMaLoaiKHTheoTen("Khách hàng thường")), hoTen, sdt, diaChi);
+									daoKhachHang.themDanhSachKH(newKH);
+									
+									DonDatPhong ddp=new DonDatPhong(phatSinhMaDDP, ngayLap, trangThaiDDP, ngayDen, gioDen, newKH, nv, p);
+									daoDonDatPhong.themDDP(ddp);
+									daoPhong.capnhatTrangThaiPhong(maPhongChon, "Đang hoạt động");
+									
+									resetAll();
+									JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+								}
+								if(trangThaiDDP.equals("Hủy") || trangThaiDDP.equals("Đã trả phòng"))
+									JOptionPane.showMessageDialog(this, "Không được thêm đơn đặt phòng có trạng thái đơn là hủy hoặc đã trả phòng!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 							}catch (SQLException e) {
 								e.printStackTrace();
 								JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thất bại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 						
-						resetAll();
 						removeDanhSachPhong(modelPhong);
 						loadDSPhongTrongVaDaDat(p);
-						JOptionPane.showMessageDialog(this, "Thêm đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}else
@@ -1064,6 +1093,7 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 					daoPhong.capnhatTrangThaiPhong(maPhong, "Trống");
 				loadDSPhongTrongVaDaDat(new Phong());
 
+				resetAll();
 				removeDanhSachDDP(modelDDP);
 				modelDDP.setRowCount(0);
 				modelDDP.addRow(new Object[] {
@@ -1073,6 +1103,8 @@ public class FrmDonDatPhong extends JPanel implements ActionListener, FocusListe
 				JOptionPane.showMessageDialog(this, "Sửa thông tin đơn đặt phòng thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
+		else
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin đơn đặt phòng cần sửa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
 	}
 
 	/**

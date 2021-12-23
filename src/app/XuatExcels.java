@@ -19,10 +19,17 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import dao.DAOCTHD;
 import dao.DAOKhachHang;
+import dao.DAOLoaiKH;
+import dao.DAOLoaiMH;
+import dao.DAOMatHang;
 import dao.DAONhanVien;
+import entity.CTHD;
 import entity.HoaDon;
 import entity.KhachHang;
+import entity.LoaiMatHang;
+import entity.MatHang;
 import entity.NhanVien;
 
 public class XuatExcels {
@@ -33,10 +40,16 @@ public class XuatExcels {
 	private DAONhanVien daoNhanVien;
 	private SimpleDateFormat sf;
 	private SimpleDateFormat sdf;
+	private DAOCTHD daoCTHD;
+	private DAOMatHang daoMatHang;
+	private DAOLoaiMH daoLoaiMH;
 	
 	public XuatExcels() {
 			daoKhachHang =  new DAOKhachHang();
 			daoNhanVien = new DAONhanVien();
+			daoCTHD = new DAOCTHD();
+			daoMatHang = new DAOMatHang();
+			daoLoaiMH = new DAOLoaiMH();
 			sf = new SimpleDateFormat("dd/MM/yyyy");
 			sdf = new SimpleDateFormat("HH:mm");
 	}
@@ -126,6 +139,62 @@ public class XuatExcels {
 			
 	        rowIndex++;
 			
+	        ArrayList<CTHD> lsCTHD = daoCTHD.getCTHDTheoMaHD(hd.getMaHoaDon());
+	        
+	       
+	        Row headerCTHD = sheet.createRow(rowIndex);
+	        for(int i = 0; i < 5;i++) {
+	        	Cell hMaMH = headerCTHD.createCell(4,CellType.STRING);
+				hMaMH.setCellValue("Mã Mặt hàng");
+			        
+				Cell hTenMH = headerCTHD.createCell(5,CellType.STRING);
+				hTenMH.setCellValue("Tên mặt hàng");
+			        
+				Cell hLoaiMH = headerCTHD.createCell(6,CellType.STRING);
+				hLoaiMH.setCellValue("Loại mặt hàng");
+				
+				Cell hSoLuong = headerCTHD.createCell(7,CellType.STRING);
+				hSoLuong.setCellValue("Số lượng");
+				
+				Cell hDonGia = headerCTHD.createCell(8,CellType.STRING);
+				hDonGia.setCellValue("Đơn giá");
+			        
+				Cell hTongTien = headerCTHD.createCell(9,CellType.STRING);
+				hTongTien.setCellValue("Tổng tiền");
+	        }
+	        //Xuat row
+	        rowIndex++;
+	        
+			for(CTHD ct : lsCTHD) {
+				if(ct!= null) {
+					MatHang mh = daoMatHang.getMHTheoMaMH(ct.getMatHang().getMaMatHang());
+					LoaiMatHang loaiMH =daoLoaiMH.getLoaiMHTheoMaLoai(mh.getLoaiMatHang().getMaLoaiMatHang());
+					double tongTien = mh.getGiaMatHang()*ct.getSoLuong();
+					Row rCTHD = sheet.createRow(rowIndex);
+					Cell cMaMH = rCTHD.createCell(4,CellType.STRING);
+					cMaMH.setCellValue(mh.getMaMatHang());
+				        
+					Cell cTenMH = rCTHD.createCell(5,CellType.STRING);
+					cTenMH.setCellValue(mh.getTenMatHang());
+				        
+					Cell cLoaiMH = rCTHD.createCell(6,CellType.STRING);
+					cLoaiMH.setCellValue(loaiMH.getTenLoaiMatHang());
+					
+					Cell cSoLuong = rCTHD.createCell(7,CellType.NUMERIC);
+					cSoLuong.setCellValue(ct.getSoLuong());
+					
+					Cell cDonGia = rCTHD.createCell(8,CellType.NUMERIC);
+					cDonGia.setCellValue(mh.getGiaMatHang());
+				        
+					Cell cTongTien = rCTHD.createCell(9,CellType.NUMERIC);
+					cTongTien.setCellValue(tongTien);
+					
+					
+					rowIndex++;
+				}
+			}
+			rowIndex += 2;
+	        
         }
         File f = new File(path);
          try {

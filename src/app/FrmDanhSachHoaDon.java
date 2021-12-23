@@ -174,7 +174,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 		
 		txtTim = new JTextField();
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 14));
-		txtTim.setText("Nhập tên khách hàng, mã, tên nhân viên.");
+		txtTim.setText("Nhập tên khách hàng, mã nhân viên.");
 		txtTim.setForeground(Color.lightGray);
 		txtTim.setBounds(394, 11, 281, 36);
 		txtTim.setBorder(new LineBorder(new Color(114, 23 ,153), 2, true));
@@ -524,7 +524,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	
 	public void resetAll() {
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 14));
-		txtTim.setText("Nhập tên khách hàng, mã, tên nhân viên.");
+		txtTim.setText("Nhập tên khách hàng, mã nhân viên");
 		txtTim.setForeground(Color.lightGray);
 		lblMaPhong.setText("");
 		lblGioVao.setText("");
@@ -580,7 +580,7 @@ public class FrmDanhSachHoaDon extends JFrame implements ActionListener,MouseLis
 	
 	public void loadHoaDon() {
 		txtTim.setFont(new Font("SansSerif", Font.ITALIC, 14));
-		txtTim.setText("Nhập tên khách hàng, mã, tên nhân viên.");
+		txtTim.setText("Nhập tên khách hàng, mã nhân viên.");
 		txtTim.setForeground(Color.lightGray);
 		
 		java.util.Date utilngayBD = chooserNgayBatDau.getDate();

@@ -427,98 +427,6 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		else JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc!");
 	}
 
-	@SuppressWarnings({ "unused", "deprecation" })
-	public void xuatDoanhThu(ArrayList<HoaDon> lsHD,String path) throws IOException {
-		Workbook workbook = null;
-		 
-        if (path.endsWith(".xlsx")) {
-            workbook = new XSSFWorkbook();
-        } else if (path.endsWith(".xls")) {
-            workbook = new HSSFWorkbook();
-        }
-
-        Sheet sheet = workbook.createSheet("DSDT"); 
- 
-        int rowIndex = 1;
-         
-        Row title = sheet.createRow(rowIndex);
-        
-        Cell cellTitle = title.createCell(0,CellType.STRING);
-        cellTitle.setCellValue("DANH SÁCH DOANH THU");
-        rowIndex++;
-        Row headerRow = sheet.createRow(rowIndex);
-        Cell cMaNgay = headerRow.createCell(0,CellType.STRING);
-        cMaNgay.setCellValue("Ngày");
-        
-        Cell cMaDT = headerRow.createCell(1,CellType.STRING);
-        cMaDT.setCellValue("Tổng tiền");
-
-        
-        rowIndex++; 
-   
-		java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
-		java.util.Date utilngayKT = dateChooserThongKeNgayKetThuc.getDate();
-
-		Date ngayden = new Date(utilngayBD.getYear(), utilngayBD.getMonth(), utilngayBD.getDate());
-		Date ngayKT = new Date(utilngayKT.getYear(), utilngayKT.getMonth(), utilngayKT.getDate());
-		long noDay = (ngayKT.getTime() - ngayden.getTime()) / (24 * 3600 * 1000);
-		
-		for(int i = 0;i<=noDay;i++) {
-			ArrayList<HoaDon> ls = daoHoaDon.getHDtheoNgay(ngayden);
-			double tongtien =0;
-			for(HoaDon hd : ls) {
-				if(hd != null) {
-					String phuThu = hd.getPhuThu();
-					Phong p = daoPhong.getPhongTheoMa(hd.getPhong().getMaPhong());
-					double giaPhong =p.getGiaPhong();
-					double giaPhuThu = 0;
-					if(phuThu.equalsIgnoreCase("Buổi tối")) {
-						giaPhuThu = 10000;
-					}
-					if(phuThu.equalsIgnoreCase("Ngày lễ")) {
-						giaPhuThu = 30000;
-					}
-					if(phuThu.equalsIgnoreCase("Cuối tuần")) {
-						giaPhuThu = 20000;
-					}
-					giaPhong = giaPhuThu + giaPhong;
-					double tongTienThue = tinhTienThue(giaPhong, hd);
-
-					int tongGioThue = (int) ((tongTienThue)/giaPhong);
-					int tongPhutThue = (int) (((tongTienThue*60)/giaPhong) % 60);
-
-					
-
-					double thanhTien = tongTienCTHD(tongTienThue, hd);
-
-
-					thanhTien = thanhTien - hd.getGiamGia();
-					tongtien+= thanhTien;
-				}	
-			}
-			Row row = sheet.createRow(rowIndex);
-	        Cell cRowNgayLap = row.createCell(0,CellType.STRING);
-	        cRowNgayLap.setCellValue(sf.format(ngayden));
-	        Cell cRowDT = row.createCell(1, CellType.STRING);
-	        cRowDT.setCellValue(df.format(tongtien));
-			rowIndex++;
-	        
-	        Date ngayMoi = new Date(ngayden.getYear(), ngayden.getMonth(), ngayden.getDate()+1);
-			ngayden= ngayMoi;
-
-		}	
-        
-        File f = new File(path);
-         try {
-        	
-        		 FileOutputStream out = new FileOutputStream(f);
-        		 workbook.write(out);
-				
-        		 out.close();
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "Lưu không thành công!\n Tên file đã tồn tại");
-		}
-	}
 	
 	@SuppressWarnings("deprecation")
 	public void xuatSoGio(ArrayList<HoaDon> lsHD,String path) throws IOException {
@@ -546,6 +454,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
         Cell cMaGio = headerRow.createCell(1,CellType.STRING);
         cMaGio.setCellValue("Số giờ");
 
+        Cell cNgay = headerRow.createCell(2,CellType.STRING);
+        cNgay.setCellValue("Ngày hát");
         
         rowIndex++; 
    
@@ -561,8 +471,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 			String tenP = "";
 			for(HoaDon hd :ls) {
 				if(hd!=null) {
-					 tenP = hd.getPhong().getMaPhong().toString();
-					//Phong p = daoPhong.getPhongTheoMa(hd.getPhong().getMaPhong());
+					tenP = hd.getPhong().getMaPhong().toString();
 					int gioVao = hd.getGioVao().getHours(),
 							phutVao = hd.getGioVao().getMinutes();
 					int gioRa = hd.getGioRa().getHours(),
@@ -571,12 +480,14 @@ public class FrmThongKe extends JFrame implements ActionListener{
 					int tongThoiGian = (gioRa*60 + phutRa) - (gioVao*60 + phutVao);
 					count += tongThoiGian;
 				}
-				}	
+			}	
 			Row row = sheet.createRow(rowIndex);
 	        Cell cRowMaP = row.createCell(0,CellType.STRING);
 	        cRowMaP.setCellValue(tenP);
-	        Cell cRowSoGio = row.createCell(1, CellType.STRING);
+	        Cell cRowSoGio = row.createCell(1, CellType.NUMERIC);
 	        cRowSoGio.setCellValue(dfs.format(count));
+	        Cell cNgayHat = row.createCell(2, CellType.NUMERIC);
+	        cNgayHat.setCellValue(sf.format(ngayden));
 			rowIndex++;
 			
 			Date ngayMoi = new Date(ngayden.getYear(), ngayden.getMonth(), ngayden.getDate()+1);
@@ -768,7 +679,7 @@ public class FrmThongKe extends JFrame implements ActionListener{
 		        return dataset;
 		}
 		 
-			public  void xuatExcels() throws IOException {
+			public  void xuatExcel() throws IOException {
 				
 				
 				java.util.Date utilngayBD = dateChooserThongKeNgayBatDau.getDate();
@@ -792,7 +703,8 @@ public class FrmThongKe extends JFrame implements ActionListener{
 				if(!fileName.endsWith(".xlsx")||!fileName.endsWith(".xls")) {
 					fileName += ".xlsx";
 				}
-				xuatDoanhThu(lsHD, fileName);
+				XuatExcels xuat = new XuatExcels();
+				xuat.xuatHoaDon(lsHD, fileName);
 				
 					
 					
@@ -832,7 +744,7 @@ public  void xuatExcelsSoGio() throws IOException {
 		Object o = e.getSource();
 		if(o.equals(btnExcels)) {
 				try {
-					xuatExcels();
+					xuatExcel();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
